@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -10,19 +11,18 @@ const ALLOWED_REPORTS = new Set([
   "/reports/InterAcTec_Report2_Arthritis.pdf",
 ]);
 
-export default function ThanksPage({
-  searchParams,
-}: {
-  searchParams: { report?: string };
-}) {
-  const report = useMemo(() => {
-    const raw = searchParams.report ?? "";
+export default function ThanksPage() {
+  const params = useSearchParams();
 
-    let decoded = raw;
+  const rawReport = params.get("report") ?? "";
+
+  const report = useMemo(() => {
+    let decoded = rawReport;
+
     try {
-      decoded = decodeURIComponent(raw);
+      decoded = decodeURIComponent(rawReport);
     } catch {
-      decoded = raw;
+      decoded = rawReport;
     }
 
     // normalize missing leading slash
@@ -31,12 +31,14 @@ export default function ThanksPage({
     }
 
     return decoded;
-  }, [searchParams.report]);
+  }, [rawReport]);
 
   const isAllowed = ALLOWED_REPORTS.has(report);
 
   useEffect(() => {
     if (!isAllowed) return;
+
+    // Start the download/open
     window.location.assign(report);
   }, [isAllowed, report]);
 
@@ -67,10 +69,10 @@ export default function ThanksPage({
             <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
               This link is missing or invalid. Please start from the reports page.
               <div className="mt-2 text-xs text-slate-500">
-                Received: <span className="font-mono">{String(searchParams.report ?? "")}</span>
+                Received: <span className="font-mono">{rawReport || "(empty)"}</span>
               </div>
               <div className="mt-1 text-xs text-slate-500">
-                Normalized: <span className="font-mono">{report}</span>
+                Normalized: <span className="font-mono">{report || "(empty)"}</span>
               </div>
             </div>
           )}
