@@ -3,13 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-const TALLY_URL = "https://tally.so/r/NpoXBO";
-
 type Report = {
   title: string;
   subtitle: string;
   date: string;
   pdfPath: string;
+  formUrl: string; // per-report Tally form
   tags: string[];
   summary: string;
 };
@@ -20,6 +19,7 @@ const reports: Report[] = [
     subtitle: "Inflammatory Bowel Disease",
     date: "2026",
     pdfPath: "/reports/InterAcTec_Report1_IBD.pdf",
+    formUrl: "https://tally.so/r/NpoXBO",
     tags: ["IBD", "Inflammation", "Immune interactions"],
     summary: "Key interaction signatures and translational implications for inflammatory bowel disease programs.",
   },
@@ -28,14 +28,13 @@ const reports: Report[] = [
     subtitle: "Autoimmune / Inflammatory Arthritis",
     date: "2026",
     pdfPath: "/reports/InterAcTec_Report2_Arthritis.pdf",
+    formUrl: "https://tally.so/r/J9zlGd",
     tags: ["Autoimmune", "Arthritis", "Biomarkers"],
     summary: "A structured overview of interaction dynamics and candidate stratification signals for arthritis.",
   },
 ];
 
 export default function ReportsPage() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -53,58 +52,54 @@ export default function ReportsPage() {
       </div>
 
       <div className="mt-10 grid gap-6 md:grid-cols-2">
-        {reports.map((r) => {
-          // IMPORTANT: don't encode pdfPath here; we encode the full redirect URL once
-          const redirectTo = `${siteUrl}/thanks?report=${r.pdfPath}`;
-          const tallyLink = `${TALLY_URL}?redirect=${encodeURIComponent(redirectTo)}`;
-
-          return (
-            <Card key={r.pdfPath} className="rounded-3xl border-slate-200">
-              <CardHeader>
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <CardTitle className="text-xl">{r.title}</CardTitle>
-                    <p className="mt-1 text-sm text-slate-600">{r.subtitle}</p>
-                  </div>
-                  <Badge variant="outline" className="rounded-xl">
-                    {r.date}
-                  </Badge>
+        {reports.map((r) => (
+          <Card key={r.pdfPath} className="rounded-3xl border-slate-200">
+            <CardHeader>
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <CardTitle className="text-xl">{r.title}</CardTitle>
+                  <p className="mt-1 text-sm text-slate-600">{r.subtitle}</p>
                 </div>
-              </CardHeader>
+                <Badge variant="outline" className="rounded-xl">
+                  {r.date}
+                </Badge>
+              </div>
+            </CardHeader>
 
-              <CardContent className="space-y-4">
-                <p className="text-sm text-slate-600">{r.summary}</p>
+            <CardContent className="space-y-4">
+              <p className="text-sm text-slate-600">{r.summary}</p>
 
-                <div className="flex flex-wrap gap-2">
-                  {r.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
+              <div className="flex flex-wrap gap-2">
+                {r.tags.map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
 
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <Button asChild className="rounded-2xl">
-                    <a href={tallyLink}>Download (email required)</a>
-                  </Button>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Button asChild className="rounded-2xl">
+                  <a href={r.formUrl} target="_blank" rel="noreferrer">
+                    Download (email required)
+                  </a>
+                </Button>
 
-                  <Button asChild variant="outline" className="rounded-2xl">
-                    <a href={r.pdfPath} target="_blank" rel="noreferrer">
-                      Preview PDF
-                    </a>
-                  </Button>
-                </div>
+                <Button asChild variant="outline" className="rounded-2xl">
+                  <a href={r.pdfPath} target="_blank" rel="noreferrer">
+                    Preview PDF
+                  </a>
+                </Button>
+              </div>
 
-                <div className="text-xs text-slate-500">
-                  Redirect: <span className="font-mono">{redirectTo}</span>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
+              <div className="text-xs text-slate-500">
+                File: <span className="font-mono">{r.pdfPath}</span>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </main>
   );
