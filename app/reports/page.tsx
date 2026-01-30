@@ -41,12 +41,8 @@ export default function ReportsPage() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Reports</div>
-          <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950">
-            Download data reports
-          </h1>
-          <p className="mt-2 max-w-2xl text-slate-600">
-            Enter your email to download. No login required.
-          </p>
+          <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950">Download data reports</h1>
+          <p className="mt-2 max-w-2xl text-slate-600">Enter your email to download. No login required.</p>
         </div>
 
         <Button asChild variant="outline" className="rounded-2xl">
