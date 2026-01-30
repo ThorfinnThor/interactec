@@ -21,7 +21,7 @@ const reports: Report[] = [
     subtitle: "Inflammatory Bowel Disease",
     date: "2026",
     pdfPath: "/reports/InterAcTec_Report1_IBD.pdf",
-    formUrl: "https://tally.so/r/REPLACE_WITH_IBD_FORM", // TODO
+    formUrl: "https://tally.so/r/NpoXBO",
     previewImage: "/report-previews/ibd.png",
     tags: ["IBD", "Inflammation", "Immune interactions"],
     summary: "Key interaction signatures and translational implications for inflammatory bowel disease programs.",
@@ -31,7 +31,7 @@ const reports: Report[] = [
     subtitle: "Autoimmune / Inflammatory Arthritis",
     date: "2026",
     pdfPath: "/reports/InterAcTec_Report2_Arthritis.pdf",
-    formUrl: "https://tally.so/r/REPLACE_WITH_ARTHRITIS_FORM", // TODO
+    formUrl: "https://tally.so/r/J9zlGd",
     previewImage: "/report-previews/arthritis.png",
     tags: ["Autoimmune", "Arthritis", "Biomarkers"],
     summary: "A structured overview of interaction dynamics and candidate stratification signals for arthritis.",
@@ -59,7 +59,7 @@ export default function ReportsPage() {
 
       <div className="mt-10 grid gap-6 md:grid-cols-2">
         {reports.map((r) => (
-          <Card key={r.pdfPath} className="rounded-3xl border-slate-200 overflow-hidden">
+          <Card key={r.pdfPath} className="overflow-hidden rounded-3xl border-slate-200">
             <div className="relative aspect-[16/10] w-full bg-slate-50">
               <Image
                 src={r.previewImage}
@@ -70,6 +70,9 @@ export default function ReportsPage() {
                 priority={false}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-white/70 via-white/0 to-white/0" />
+              <div className="absolute bottom-3 left-3 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-xs text-slate-700">
+                Preview (image only)
+              </div>
             </div>
 
             <CardHeader>
@@ -107,7 +110,7 @@ export default function ReportsPage() {
               </div>
 
               <div className="text-xs text-slate-500">
-                Teaser image only — full report available after email submission.
+                Full PDF is delivered after form submission.
               </div>
             </CardContent>
           </Card>
