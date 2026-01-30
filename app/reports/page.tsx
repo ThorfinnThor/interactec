@@ -12,8 +12,6 @@ type Report = {
   summary: string;
 };
 
-const TALLY_URL = "https://tally.so/r/NpoXBO";
-
 const reports: Report[] = [
   {
     title: "IBD Report",
@@ -22,7 +20,7 @@ const reports: Report[] = [
     pdfPath: "/reports/InterAcTec_Report1_IBD.pdf",
     tags: ["IBD", "Inflammation", "Immune interactions"],
     summary:
-      "Key interaction signatures and translational implications for inflammatory bowel disease.",
+      "Key interaction signatures and translational implications for inflammatory bowel disease programs.",
   },
   {
     title: "Arthritis Report",
@@ -31,7 +29,7 @@ const reports: Report[] = [
     pdfPath: "/reports/InterAcTec_Report2_Arthritis.pdf",
     tags: ["Autoimmune", "Arthritis", "Biomarkers"],
     summary:
-      "A structured overview of interaction dynamics in juvenile idiopathic arthritis.",
+      "A structured overview of interaction dynamics and candidate stratification signals for arthritis.",
   },
 ];
 
