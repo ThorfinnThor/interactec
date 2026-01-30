@@ -15,21 +15,30 @@ export default function ThanksPage({
 }: {
   searchParams: { report?: string };
 }) {
-  // Tally might send encoded strings like "%2Freports%2F..."
   const report = useMemo(() => {
     const raw = searchParams.report ?? "";
+    // handle any encoding coming from redirects
+    let decoded = raw;
     try {
-      return decodeURIComponent(raw);
+      decoded = decodeURIComponent(raw);
     } catch {
-      return raw;
+      decoded = raw;
     }
+
+    // normalize: ensure it starts with "/reports/"
+    if (decoded && !decoded.startsWith("/reports/")) {
+      // Sometimes tools strip the leading slash. If it looks like reports/..., fix it.
+      if (decoded.startsWith("reports/")) decoded = "/" + decoded;
+    }
+
+    return decoded;
   }, [searchParams.report]);
 
   const isAllowed = ALLOWED_REPORTS.has(report);
 
   useEffect(() => {
     if (!isAllowed) return;
-    // Navigate to the PDF; browser will open or download depending on settings
+    // Start the download/open
     window.location.assign(report);
   }, [isAllowed, report]);
 
@@ -61,6 +70,9 @@ export default function ThanksPage({
               This link is missing or invalid. Please start from the reports page.
               <div className="mt-2 text-xs text-slate-500">
                 Received: <span className="font-mono">{String(searchParams.report ?? "")}</span>
+              </div>
+              <div className="mt-1 text-xs text-slate-500">
+                Normalized: <span className="font-mono">{report}</span>
               </div>
             </div>
           )}

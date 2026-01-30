@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,8 @@ type Report = {
   subtitle: string;
   date: string;
   pdfPath: string;
-  formUrl: string; // per-report Tally form
+  formUrl: string; // Tally form URL (redirect configured in Tally)
+  previewImage: string; // PNG teaser
   tags: string[];
   summary: string;
 };
@@ -19,7 +21,8 @@ const reports: Report[] = [
     subtitle: "Inflammatory Bowel Disease",
     date: "2026",
     pdfPath: "/reports/InterAcTec_Report1_IBD.pdf",
-    formUrl: "https://tally.so/r/NpoXBO",
+    formUrl: "https://tally.so/r/REPLACE_WITH_IBD_FORM", // TODO
+    previewImage: "/report-previews/ibd.png",
     tags: ["IBD", "Inflammation", "Immune interactions"],
     summary: "Key interaction signatures and translational implications for inflammatory bowel disease programs.",
   },
@@ -28,7 +31,8 @@ const reports: Report[] = [
     subtitle: "Autoimmune / Inflammatory Arthritis",
     date: "2026",
     pdfPath: "/reports/InterAcTec_Report2_Arthritis.pdf",
-    formUrl: "https://tally.so/r/J9zlGd",
+    formUrl: "https://tally.so/r/REPLACE_WITH_ARTHRITIS_FORM", // TODO
+    previewImage: "/report-previews/arthritis.png",
     tags: ["Autoimmune", "Arthritis", "Biomarkers"],
     summary: "A structured overview of interaction dynamics and candidate stratification signals for arthritis.",
   },
@@ -43,7 +47,9 @@ export default function ReportsPage() {
           <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950">
             Download data reports
           </h1>
-          <p className="mt-2 max-w-2xl text-slate-600">Enter your email to download. No login required.</p>
+          <p className="mt-2 max-w-2xl text-slate-600">
+            Enter your email to download. No login required.
+          </p>
         </div>
 
         <Button asChild variant="outline" className="rounded-2xl">
@@ -53,7 +59,19 @@ export default function ReportsPage() {
 
       <div className="mt-10 grid gap-6 md:grid-cols-2">
         {reports.map((r) => (
-          <Card key={r.pdfPath} className="rounded-3xl border-slate-200">
+          <Card key={r.pdfPath} className="rounded-3xl border-slate-200 overflow-hidden">
+            <div className="relative aspect-[16/10] w-full bg-slate-50">
+              <Image
+                src={r.previewImage}
+                alt={`${r.title} preview`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority={false}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-white/70 via-white/0 to-white/0" />
+            </div>
+
             <CardHeader>
               <div className="flex items-start justify-between gap-4">
                 <div>
@@ -86,16 +104,10 @@ export default function ReportsPage() {
                     Download (email required)
                   </a>
                 </Button>
-
-                <Button asChild variant="outline" className="rounded-2xl">
-                  <a href={r.pdfPath} target="_blank" rel="noreferrer">
-                    Preview PDF
-                  </a>
-                </Button>
               </div>
 
               <div className="text-xs text-slate-500">
-                File: <span className="font-mono">{r.pdfPath}</span>
+                Teaser image only — full report available after email submission.
               </div>
             </CardContent>
           </Card>
