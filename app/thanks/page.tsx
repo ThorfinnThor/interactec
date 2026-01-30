@@ -17,7 +17,7 @@ export default function ThanksPage({
 }) {
   const report = useMemo(() => {
     const raw = searchParams.report ?? "";
-    // handle any encoding coming from redirects
+
     let decoded = raw;
     try {
       decoded = decodeURIComponent(raw);
@@ -25,9 +25,8 @@ export default function ThanksPage({
       decoded = raw;
     }
 
-    // normalize: ensure it starts with "/reports/"
+    // normalize missing leading slash
     if (decoded && !decoded.startsWith("/reports/")) {
-      // Sometimes tools strip the leading slash. If it looks like reports/..., fix it.
       if (decoded.startsWith("reports/")) decoded = "/" + decoded;
     }
 
@@ -38,7 +37,6 @@ export default function ThanksPage({
 
   useEffect(() => {
     if (!isAllowed) return;
-    // Start the download/open
     window.location.assign(report);
   }, [isAllowed, report]);
 
