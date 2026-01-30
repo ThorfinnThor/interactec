@@ -103,7 +103,7 @@ export default function ReportsPage() {
 
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Button asChild className="rounded-2xl">
-                  <a href={r.formUrl}>
+                  <a href={r.formUrl} target="_blank" rel="noreferrer">
                     Download (email required)
                   </a>
                 </Button>
