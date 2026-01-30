@@ -15,14 +15,22 @@ export default function ThanksPage({
 }: {
   searchParams: { report?: string };
 }) {
-  const report = useMemo(() => searchParams.report ?? "", [searchParams.report]);
+  // Tally might send encoded strings like "%2Freports%2F..."
+  const report = useMemo(() => {
+    const raw = searchParams.report ?? "";
+    try {
+      return decodeURIComponent(raw);
+    } catch {
+      return raw;
+    }
+  }, [searchParams.report]);
 
   const isAllowed = ALLOWED_REPORTS.has(report);
 
   useEffect(() => {
     if (!isAllowed) return;
-    // Trigger download / open (browser behavior depends on settings)
-    window.location.href = report;
+    // Navigate to the PDF; browser will open or download depending on settings
+    window.location.assign(report);
   }, [isAllowed, report]);
 
   return (
@@ -51,6 +59,9 @@ export default function ThanksPage({
           {!isAllowed && (
             <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
               This link is missing or invalid. Please start from the reports page.
+              <div className="mt-2 text-xs text-slate-500">
+                Received: <span className="font-mono">{String(searchParams.report ?? "")}</span>
+              </div>
             </div>
           )}
         </CardContent>

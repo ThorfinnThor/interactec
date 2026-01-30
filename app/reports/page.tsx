@@ -41,7 +41,9 @@ export default function ReportsPage() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Reports</div>
-          <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950">Download data reports</h1>
+          <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950">
+            Download data reports
+          </h1>
           <p className="mt-2 max-w-2xl text-slate-600">Enter your email to download. No login required.</p>
         </div>
 
@@ -52,7 +54,8 @@ export default function ReportsPage() {
 
       <div className="mt-10 grid gap-6 md:grid-cols-2">
         {reports.map((r) => {
-          const redirectTo = `${siteUrl}/thanks?report=${encodeURIComponent(r.pdfPath)}`;
+          // IMPORTANT: don't encode pdfPath here; we encode the full redirect URL once
+          const redirectTo = `${siteUrl}/thanks?report=${r.pdfPath}`;
           const tallyLink = `${TALLY_URL}?redirect=${encodeURIComponent(redirectTo)}`;
 
           return (
@@ -96,7 +99,7 @@ export default function ReportsPage() {
                 </div>
 
                 <div className="text-xs text-slate-500">
-                  File: <span className="font-mono">{r.pdfPath}</span>
+                  Redirect: <span className="font-mono">{redirectTo}</span>
                 </div>
               </CardContent>
             </Card>
