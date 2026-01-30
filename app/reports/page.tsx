@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
+const TALLY_URL = "https://tally.so/r/NpoXBO";
+
 type Report = {
   title: string;
   subtitle: string;
@@ -12,11 +14,6 @@ type Report = {
   summary: string;
 };
 
-<<<<<<< HEAD
-const TALLY_URL = "https://tally.so/r/NpoXBO";
-
-=======
->>>>>>> e396f3ff4cc3c3e7bd2417e332d7fb16a0ea7a8b
 const reports: Report[] = [
   {
     title: "IBD Report",
@@ -24,12 +21,7 @@ const reports: Report[] = [
     date: "2026",
     pdfPath: "/reports/InterAcTec_Report1_IBD.pdf",
     tags: ["IBD", "Inflammation", "Immune interactions"],
-    summary:
-<<<<<<< HEAD
-      "Key interaction signatures and translational implications for inflammatory bowel disease.",
-=======
-      "Key interaction signatures and translational implications for inflammatory bowel disease programs.",
->>>>>>> e396f3ff4cc3c3e7bd2417e332d7fb16a0ea7a8b
+    summary: "Key interaction signatures and translational implications for inflammatory bowel disease programs.",
   },
   {
     title: "Arthritis Report",
@@ -37,16 +29,13 @@ const reports: Report[] = [
     date: "2026",
     pdfPath: "/reports/InterAcTec_Report2_Arthritis.pdf",
     tags: ["Autoimmune", "Arthritis", "Biomarkers"],
-    summary:
-<<<<<<< HEAD
-      "A structured overview of interaction dynamics in juvenile idiopathic arthritis.",
-=======
-      "A structured overview of interaction dynamics and candidate stratification signals for arthritis.",
->>>>>>> e396f3ff4cc3c3e7bd2417e332d7fb16a0ea7a8b
+    summary: "A structured overview of interaction dynamics and candidate stratification signals for arthritis.",
   },
 ];
 
 export default function ReportsPage() {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
   return (
     <main className="mx-auto max-w-6xl px-6 py-12">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -56,7 +45,7 @@ export default function ReportsPage() {
             Download data reports
           </h1>
           <p className="mt-2 max-w-2xl text-slate-600">
-            Short, decision-oriented PDFs. No login required. (We’ll add email capture next.)
+            Enter your email to download. No login required.
           </p>
         </div>
 
@@ -66,62 +55,57 @@ export default function ReportsPage() {
       </div>
 
       <div className="mt-10 grid gap-6 md:grid-cols-2">
-        {reports.map((r) => (
-          <Card key={r.pdfPath} className="rounded-3xl border-slate-200">
-            <CardHeader>
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <CardTitle className="text-xl">{r.title}</CardTitle>
-                  <p className="mt-1 text-sm text-slate-600">{r.subtitle}</p>
+        {reports.map((r) => {
+          const redirectTo = `${siteUrl}/thanks?report=${encodeURIComponent(r.pdfPath)}`;
+          const tallyLink = `${TALLY_URL}?redirect=${encodeURIComponent(redirectTo)}`;
+
+          return (
+            <Card key={r.pdfPath} className="rounded-3xl border-slate-200">
+              <CardHeader>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <CardTitle className="text-xl">{r.title}</CardTitle>
+                    <p className="mt-1 text-sm text-slate-600">{r.subtitle}</p>
+                  </div>
+                  <Badge variant="outline" className="rounded-xl">
+                    {r.date}
+                  </Badge>
                 </div>
-                <Badge variant="outline" className="rounded-xl">
-                  {r.date}
-                </Badge>
-              </div>
-            </CardHeader>
+              </CardHeader>
 
-            <CardContent className="space-y-4">
-              <p className="text-sm text-slate-600">{r.summary}</p>
+              <CardContent className="space-y-4">
+                <p className="text-sm text-slate-600">{r.summary}</p>
 
-              <div className="flex flex-wrap gap-2">
-                {r.tags.map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
+                <div className="flex flex-wrap gap-2">
+                  {r.tags.map((t) => (
+                    <span
+                      key={t}
+                      className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
 
-              <div className="flex flex-col gap-3 sm:flex-row">
-                {/* “download” attribute suggests download; browser may still open PDF depending on settings */}
-                <Button asChild className="rounded-2xl">
-                  <a href={r.pdfPath} download>
-                    Download PDF
-                  </a>
-                </Button>
-                <Button asChild variant="outline" className="rounded-2xl">
-                  <a href={r.pdfPath} target="_blank" rel="noreferrer">
-                    Open in new tab
-                  </a>
-                </Button>
-              </div>
+                <div className="flex flex-col gap-3 sm:flex-row">
+                  <Button asChild className="rounded-2xl">
+                    <a href={tallyLink}>Download (email required)</a>
+                  </Button>
 
-              <div className="text-xs text-slate-500">
-                File: <span className="font-mono">{r.pdfPath}</span>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+                  <Button asChild variant="outline" className="rounded-2xl">
+                    <a href={r.pdfPath} target="_blank" rel="noreferrer">
+                      Preview PDF
+                    </a>
+                  </Button>
+                </div>
 
-      <div className="mt-12 rounded-3xl border border-slate-200 bg-slate-50 p-6">
-        <h2 className="text-lg font-semibold text-slate-950">Next: Email capture</h2>
-        <p className="mt-1 text-sm text-slate-600">
-          We’ll add a simple Tally form that captures email + consent and then redirects to an auto-download “Thanks”
-          page. No login required.
-        </p>
+                <div className="text-xs text-slate-500">
+                  File: <span className="font-mono">{r.pdfPath}</span>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
     </main>
   );
