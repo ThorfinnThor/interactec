@@ -89,12 +89,11 @@ export default function HomePage() {
 
             
 
-            {/* Subtle separator to reinforce hierarchy */}
-            <div className="mx-auto mt-7 h-px w-16 bg-slate-200" />
+            
 
             {/* Main promise headline (secondary) */}
             <h2 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 sm:text-3xl">
-              Clinical-ready cytometry analytics for cellular interaction mapping and immune profiling.
+              Cellular interaction mapping and immune profiling for clinical-ready cytometry analytics. 
             </h2>
 
             {/* Supporting paragraph (includes single-cell phenotyping) */}
