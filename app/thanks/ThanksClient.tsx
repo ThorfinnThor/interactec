@@ -5,48 +5,58 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-const ALLOWED_REPORTS = new Set([
-  "/reports/InterAcTec_Report1_IBD.pdf",
-  "/reports/InterAcTec_Report2_Arthritis.pdf",
-]);
+const REPORT_SLUGS = new Set(["ibd", "arthritis"]);
+
+// Backwards compatibility: old public paths -> slug
+const LEGACY_PATH_TO_SLUG: Record<string, string> = {
+  "/reports/InterAcTec_Report1_IBD.pdf": "ibd",
+  "/reports/InterAcTec_Report2_Arthritis.pdf": "arthritis",
+};
+
+function normalizeToSlug(raw: string) {
+  let decoded = raw || "";
+
+  try {
+    decoded = decodeURIComponent(decoded);
+  } catch {
+    // ignore
+  }
+
+  // If the value is already a slug
+  if (REPORT_SLUGS.has(decoded)) return decoded;
+
+  // Normalize legacy path variants
+  if (decoded.startsWith("reports/")) decoded = "/" + decoded;
+
+  if (LEGACY_PATH_TO_SLUG[decoded]) return LEGACY_PATH_TO_SLUG[decoded];
+
+  return "";
+}
 
 export default function ThanksClient() {
   const [rawReport, setRawReport] = useState("");
 
-  // Read query params directly from the browser URL after mount
   useEffect(() => {
     try {
       const url = new URL(window.location.href);
-      const r = url.searchParams.get("report") ?? "";
-      setRawReport(r);
+      setRawReport(url.searchParams.get("report") ?? "");
     } catch {
       setRawReport("");
     }
   }, []);
 
-  const report = useMemo(() => {
-    let decoded = rawReport;
+  const reportSlug = useMemo(() => normalizeToSlug(rawReport), [rawReport]);
+  const isAllowed = REPORT_SLUGS.has(reportSlug);
 
-    try {
-      decoded = decodeURIComponent(rawReport);
-    } catch {
-      decoded = rawReport;
-    }
-
-    // normalize missing leading slash
-    if (decoded && !decoded.startsWith("/reports/")) {
-      if (decoded.startsWith("reports/")) decoded = "/" + decoded;
-    }
-
-    return decoded;
-  }, [rawReport]);
-
-  const isAllowed = ALLOWED_REPORTS.has(report);
+  const downloadUrl = useMemo(() => {
+    if (!isAllowed) return "";
+    return `/api/download/${reportSlug}`;
+  }, [isAllowed, reportSlug]);
 
   useEffect(() => {
     if (!isAllowed) return;
-    window.location.assign(report);
-  }, [isAllowed, report]);
+    window.location.assign(downloadUrl);
+  }, [isAllowed, downloadUrl]);
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-14">
@@ -56,12 +66,12 @@ export default function ThanksClient() {
             Thanks — your download is starting
           </h1>
           <p className="mt-2 text-slate-600">
-            If your PDF does not open automatically, use the button below.
+            If your PDF does not download automatically, use the button below.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button asChild className="rounded-2xl" disabled={!isAllowed}>
-              <a href={isAllowed ? report : "/reports"} download>
+              <a href={isAllowed ? downloadUrl : "/reports"} download>
                 Download again
               </a>
             </Button>
@@ -78,7 +88,7 @@ export default function ThanksClient() {
                 Received: <span className="font-mono">{rawReport || "(empty)"}</span>
               </div>
               <div className="mt-1 text-xs text-slate-500">
-                Normalized: <span className="font-mono">{report || "(empty)"}</span>
+                Normalized slug: <span className="font-mono">{reportSlug || "(empty)"}</span>
               </div>
             </div>
           )}
