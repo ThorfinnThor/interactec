@@ -24,6 +24,13 @@ import {
 
 const PUBLICATION_URL = "https://www.nature.com/articles/s41592-025-02744-w";
 
+// Shared CTA styles
+const HERO_CTA =
+  "h-11 w-full sm:w-auto min-w-[200px] rounded-2xl bg-slate-950 px-6 text-base text-white hover:bg-slate-900";
+
+const FINAL_CTA_WHITE =
+  "h-11 w-full sm:w-auto min-w-[200px] rounded-2xl bg-white px-6 text-base font-semibold text-slate-950 hover:bg-slate-100";
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white text-slate-950">
@@ -87,21 +94,17 @@ export default function HomePage() {
               InterAcTec
             </h1>
 
-            
-
-            
-
             {/* Main promise headline (secondary) */}
             <h2 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 sm:text-3xl">
-              Cellular interaction mapping and immune profiling for clinical-ready cytometry analytics. 
+              Cellular interaction mapping and immune profiling for clinical-ready cytometry analytics.
             </h2>
 
             {/* Supporting paragraph (includes single-cell phenotyping) */}
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-700 sm:text-xl">
               InterAcTec combines flow cytometry with bioinformatics and AI-assisted analysis to quantify cell–cell
               interactions rapidly, precisely, and cost-effectively. The workflow is complemented by high-dimensional
-              single-cell phenotyping and immune profiling. Our algorithms also detect cellular interaction
-              in retrospective datasets to enable extensive data mining.
+              single-cell phenotyping and immune profiling. Our algorithms also detect cellular interaction in
+              retrospective datasets to enable extensive data mining.
             </p>
 
             {/* Proof chips */}
@@ -116,17 +119,17 @@ export default function HomePage() {
               ))}
             </div>
 
-            {/* CTAs (all black) */}
+            {/* HERO CTAs */}
             <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button asChild className="h-11 rounded-2xl bg-slate-950 px-6 text-base text-white hover:bg-slate-900">
+              <Button asChild className={HERO_CTA}>
                 <a href="#contact">Request a pilot</a>
               </Button>
 
-              <Button asChild className="h-11 rounded-2xl bg-slate-950 px-6 text-base text-white hover:bg-slate-900">
+              <Button asChild className={HERO_CTA}>
                 <Link href="/reports">Download reports</Link>
               </Button>
 
-              <Button asChild className="h-11 rounded-2xl bg-slate-950 px-6 text-base text-white hover:bg-slate-900">
+              <Button asChild className={HERO_CTA}>
                 <a href={PUBLICATION_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2">
                   <BookOpen className="h-4 w-4" />
                   Nature Methods publication
@@ -143,7 +146,8 @@ export default function HomePage() {
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">What InterAcTec enables</h2>
           <p className="mt-3 text-base text-slate-700 sm:text-lg">
-            Decision-grade interaction signatures, paired with single-cell phenotyping, for modern immunotherapy programs.
+            Decision-grade interaction signatures, paired with single-cell phenotyping, for modern immunotherapy
+            programs.
           </p>
         </div>
 
@@ -350,15 +354,13 @@ export default function HomePage() {
             trial decision making while reducing program risk and costs.
           </p>
 
+          {/* FIX: make both buttons visually identical (white filled) */}
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button asChild className="h-11 rounded-2xl bg-white px-6 text-base text-slate-950 hover:bg-slate-100">
+            <Button asChild className={FINAL_CTA_WHITE}>
               <a href="mailto:hello@interactec.bio?subject=Pilot%20request%20-%20InterAcTec">Request a pilot</a>
             </Button>
 
-            <Button
-              asChild
-              className="h-11 rounded-2xl border border-white/30 bg-white/10 px-6 text-base text-white hover:bg-white/15"
-            >
+            <Button asChild className={FINAL_CTA_WHITE}>
               <Link href="/reports">Download reports</Link>
             </Button>
           </div>
