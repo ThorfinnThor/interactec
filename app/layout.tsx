@@ -12,11 +12,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Prefer setting NEXT_PUBLIC_SITE_URL in production, e.g. https://interactec.bio
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.startsWith("http")
-    ? process.env.NEXT_PUBLIC_SITE_URL
-    : "https://interactec.bio";
+// Uses env when provided; falls back to your Vercel domain.
+// Ensures https:// prefix so metadataBase is valid.
+const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || "interactec.vercel.app";
+const siteUrl = rawSiteUrl.startsWith("http") ? rawSiteUrl : `https://${rawSiteUrl}`;
 
 const title = "InterAcTec";
 const description =
