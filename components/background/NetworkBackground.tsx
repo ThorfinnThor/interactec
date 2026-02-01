@@ -10,7 +10,7 @@ export default function NetworkBackground({ className }: Props) {
   const TILE_H = 900;
 
   // Tuning knobs
-  const overallOpacity = 0.4;      // overall background strength
+  const overallOpacity = 0;      // overall background strength
   const offsetLayerOpacity = 0.15;  // smooths seams + fills gaps
 
   return (
