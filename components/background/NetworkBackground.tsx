@@ -17,7 +17,7 @@ export default function NetworkBackground({ className }: Props) {
       <div className="absolute inset-0 bg-gradient-to-b from-white via-white to-white" />
 
       <svg
-        className="absolute inset-0 h-full w-full opacity-[0.30]"
+        className="absolute inset-0 h-full w-full opacity-[1.0]"
         viewBox="0 0 1200 900"
         preserveAspectRatio="xMidYMid slice"
       >
