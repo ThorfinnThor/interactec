@@ -5,12 +5,14 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-const REPORT_SLUGS = new Set(["ibd", "arthritis"]);
+const CASE_STUDY_SLUGS = new Set(["ibd", "arthritis"]);
 
 // Backwards compatibility: old public paths -> slug
 const LEGACY_PATH_TO_SLUG: Record<string, string> = {
   "/reports/InterAcTec_Report1_IBD.pdf": "ibd",
   "/reports/InterAcTec_Report2_Arthritis.pdf": "arthritis",
+  "/case-studies/InterAcTec_Report1_IBD.pdf": "ibd",
+  "/case-studies/InterAcTec_Report2_Arthritis.pdf": "arthritis",
 };
 
 function normalizeToSlug(raw: string) {
@@ -22,11 +24,12 @@ function normalizeToSlug(raw: string) {
     // ignore
   }
 
-  // If the value is already a slug
-  if (REPORT_SLUGS.has(decoded)) return decoded;
+  // If already a slug
+  if (CASE_STUDY_SLUGS.has(decoded)) return decoded;
 
-  // Normalize legacy path variants
+  // Normalize path-ish variants
   if (decoded.startsWith("reports/")) decoded = "/" + decoded;
+  if (decoded.startsWith("case-studies/")) decoded = "/" + decoded;
 
   if (LEGACY_PATH_TO_SLUG[decoded]) return LEGACY_PATH_TO_SLUG[decoded];
 
@@ -34,24 +37,27 @@ function normalizeToSlug(raw: string) {
 }
 
 export default function ThanksClient() {
-  const [rawReport, setRawReport] = useState("");
+  const [rawValue, setRawValue] = useState("");
 
   useEffect(() => {
     try {
       const url = new URL(window.location.href);
-      setRawReport(url.searchParams.get("report") ?? "");
+      // Support both query params:
+      // - legacy: ?report=...
+      // - preferred: ?caseStudy=...
+      setRawValue(url.searchParams.get("caseStudy") ?? url.searchParams.get("report") ?? "");
     } catch {
-      setRawReport("");
+      setRawValue("");
     }
   }, []);
 
-  const reportSlug = useMemo(() => normalizeToSlug(rawReport), [rawReport]);
-  const isAllowed = REPORT_SLUGS.has(reportSlug);
+  const slug = useMemo(() => normalizeToSlug(rawValue), [rawValue]);
+  const isAllowed = CASE_STUDY_SLUGS.has(slug);
 
   const downloadUrl = useMemo(() => {
     if (!isAllowed) return "";
-    return `/api/download/${reportSlug}`;
-  }, [isAllowed, reportSlug]);
+    return `/api/download/${slug}`;
+  }, [isAllowed, slug]);
 
   useEffect(() => {
     if (!isAllowed) return;
@@ -71,24 +77,24 @@ export default function ThanksClient() {
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button asChild className="rounded-2xl" disabled={!isAllowed}>
-              <a href={isAllowed ? downloadUrl : "/reports"} download>
+              <a href={isAllowed ? downloadUrl : "/case-studies"} download>
                 Download again
               </a>
             </Button>
 
             <Button asChild variant="outline" className="rounded-2xl">
-              <Link href="/reports">Back to reports</Link>
+              <Link href="/case-studies">Back to case studies</Link>
             </Button>
           </div>
 
           {!isAllowed && (
             <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
-              This link is missing or invalid. Please start from the reports page.
+              This link is missing or invalid. Please start from the case studies page.
               <div className="mt-2 text-xs text-slate-500">
-                Received: <span className="font-mono">{rawReport || "(empty)"}</span>
+                Received: <span className="font-mono">{rawValue || "(empty)"}</span>
               </div>
               <div className="mt-1 text-xs text-slate-500">
-                Normalized slug: <span className="font-mono">{reportSlug || "(empty)"}</span>
+                Normalized slug: <span className="font-mono">{slug || "(empty)"}</span>
               </div>
             </div>
           )}

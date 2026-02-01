@@ -29,9 +29,10 @@ export const metadata: Metadata = {
   },
   description,
   applicationName: title,
-  alternates: {
-    canonical: "/",
-  },
+
+  // IMPORTANT: do NOT set a global canonical here.
+  // Canonicals should be per-page so /case-studies doesn't canonicalize to /.
+
   openGraph: {
     type: "website",
     url: "/",
@@ -39,11 +40,20 @@ export const metadata: Metadata = {
     title,
     description,
     locale: "en_US",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "InterAcTec",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
+    images: ["/og.png"],
   },
 };
 

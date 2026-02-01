@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -22,6 +23,19 @@ import {
   ArrowRight,
   BookOpen,
 } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "InterAcTec",
+  description:
+    "Cellular interaction mapping and immune profiling for clinical-ready cytometry analytics. Flow cytometry combined with bioinformatics and AI-assisted analysis.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    url: "/",
+    title: "InterAcTec",
+    description:
+      "Cellular interaction mapping and immune profiling for clinical-ready cytometry analytics. Flow cytometry combined with bioinformatics and AI-assisted analysis.",
+  },
+};
 
 const PUBLICATION_URL = "https://www.nature.com/articles/s41592-025-02744-w";
 
@@ -63,8 +77,8 @@ export default function HomePage() {
               <a href="#evidence" className="hover:text-slate-950">
                 Evidence
               </a>
-              <Link href="/reports" className="hover:text-slate-950">
-                Reports
+              <Link href="/case-studies" className="hover:text-slate-950">
+                Case studies
               </Link>
               <a href="#contact" className="hover:text-slate-950">
                 Contact
@@ -127,7 +141,7 @@ export default function HomePage() {
                 </Button>
 
                 <Button asChild className={HERO_CTA}>
-                  <Link href="/reports">Download reports</Link>
+                  <Link href="/case-studies">Download case studies</Link>
                 </Button>
 
                 <Button asChild className={HERO_CTA}>
@@ -165,7 +179,8 @@ export default function HomePage() {
                 </div>
                 <h3 className="mt-5 text-xl font-semibold">Mechanism of action</h3>
                 <p className="mt-3 text-base leading-relaxed text-slate-700">
-                  See which immune populations physically interact. Understand how therapies reshape interaction networks.
+                  See which immune populations physically interact. Understand how therapies reshape interaction
+                  networks.
                 </p>
               </CardContent>
             </Card>
@@ -386,7 +401,7 @@ export default function HomePage() {
               </Button>
 
               <Button asChild className={FINAL_CTA_WHITE}>
-                <Link href="/reports">Download reports</Link>
+                <Link href="/case-studies">Download case studies</Link>
               </Button>
             </div>
 

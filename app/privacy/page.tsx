@@ -1,9 +1,19 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  alternates: { canonical: "/privacy" },
+  openGraph: {
+    url: "/privacy",
+    title: "Privacy Policy | InterAcTec",
+  },
+};
+
 const COMPANY = "InterAcTec";
-const CONTACT_EMAIL = "hello@interactec.bio"; // change
+const CONTACT_EMAIL = "hello@interactec.bio"; // change if needed
 
 export default function PrivacyPage() {
   return (
@@ -23,13 +33,13 @@ export default function PrivacyPage() {
 
           <h2 className="text-lg font-semibold text-slate-950">What we collect</h2>
           <ul className="list-disc pl-5 space-y-2">
-            <li>Email address (when you request a report via our form)</li>
+            <li>Email address (when you request a case study via our form)</li>
             <li>Basic form metadata (time of submission) provided by the form provider</li>
           </ul>
 
           <h2 className="text-lg font-semibold text-slate-950">Why we collect it</h2>
           <ul className="list-disc pl-5 space-y-2">
-            <li>To deliver the requested report</li>
+            <li>To deliver the requested case study</li>
             <li>To send occasional updates (only if you consent)</li>
           </ul>
 
