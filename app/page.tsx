@@ -97,6 +97,7 @@ export default function HomePage() {
               </Button>
             </div>
           </div>
+          <MobileSectionBar />
         </header>
 
         {/* HERO */}
