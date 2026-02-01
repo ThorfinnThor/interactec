@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import NetworkBackground from "@/components/background/NetworkBackground";
 
+import MobileSectionBar from "@/components/navigation/MobileSectionBar";
 import {
   Sparkles,
   Network,
