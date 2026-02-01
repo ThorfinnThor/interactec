@@ -6,10 +6,8 @@ import { Button } from "@/components/ui/button";
 import { MOBILE_SECTIONS } from "./mobileSections";
 
 /**
- * Adjust this if your sticky header height changes.
- * It's the combined height of:
- * - the main sticky header row
- * - the mobile section bar itself
+ * Adjust if your sticky header height changes.
+ * (main sticky header row + this bar)
  */
 const SCROLL_OFFSET_PX = 120;
 
@@ -18,7 +16,6 @@ function scrollToIdWithOffset(id: string) {
   if (!el) return;
 
   const y = window.scrollY + el.getBoundingClientRect().top - SCROLL_OFFSET_PX;
-
   window.scrollTo({ top: y, behavior: "smooth" });
 }
 
@@ -26,6 +23,9 @@ export default function MobileSectionBar() {
   const [activeId, setActiveId] = useState<string>("");
 
   const sectionIds = useMemo(() => MOBILE_SECTIONS.map((s) => s.id), []);
+  const activeLabel = useMemo(() => {
+    return MOBILE_SECTIONS.find((s) => s.id === activeId)?.label ?? "";
+  }, [activeId]);
 
   useEffect(() => {
     const els = sectionIds
@@ -36,7 +36,6 @@ export default function MobileSectionBar() {
 
     const obs = new IntersectionObserver(
       (entries) => {
-        // Pick the most visible section that is intersecting
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
@@ -45,7 +44,6 @@ export default function MobileSectionBar() {
       },
       {
         threshold: [0.15, 0.25, 0.4],
-        // Tweaked for sticky header: this makes "active" switch a bit earlier
         rootMargin: "-20% 0px -65% 0px",
       }
     );
@@ -56,8 +54,19 @@ export default function MobileSectionBar() {
 
   return (
     <div className="md:hidden border-t border-slate-200/70 bg-white/90 backdrop-blur">
+      {/* Current section indicator */}
+      <div className="mx-auto max-w-6xl px-3 pt-2">
+        <div className="flex items-center gap-2 text-xs">
+          <span className="text-slate-500">Current:</span>
+          <span className={activeLabel ? "font-medium text-slate-950" : "text-slate-500"}>
+            {activeLabel || "—"}
+          </span>
+        </div>
+      </div>
+
+      {/* Scrollable chips */}
       <div
-        className="mx-auto max-w-6xl px-3 py-2 overflow-x-auto"
+        className="mx-auto max-w-6xl px-3 pb-2 overflow-x-auto"
         style={{ WebkitOverflowScrolling: "touch" }}
       >
         <div className="flex items-center gap-2">
@@ -70,8 +79,7 @@ export default function MobileSectionBar() {
                 variant={isActive ? "default" : "outline"}
                 className="h-9 whitespace-nowrap rounded-full px-4"
                 onClick={() => {
-                  // Make it visually consistent immediately on tap
-                  setActiveId(s.id);
+                  setActiveId(s.id); // immediate visual feedback
                   scrollToIdWithOffset(s.id);
                 }}
               >
@@ -88,4 +96,3 @@ export default function MobileSectionBar() {
     </div>
   );
 }
-
