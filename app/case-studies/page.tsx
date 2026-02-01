@@ -20,8 +20,8 @@ type CaseStudy = {
   title: string;
   subtitle: string;
   date: string;
-  formUrl: string; // Tally form URL (redirect configured in Tally)
-  previewImage: string; // PNG teaser
+  formUrl: string; // Tally form URL
+  previewImage: string; // served from /public
   tags: string[];
   summary: string;
 };
@@ -32,18 +32,20 @@ const caseStudies: CaseStudy[] = [
     subtitle: "Inflammatory Bowel Disease",
     date: "2026",
     formUrl: "https://tally.so/r/NpoXBO",
-    previewImage: "/report-previews/ibd.png",
+    previewImage: "/case-study-previews/ibd.png",
     tags: ["IBD", "Inflammation", "Immune interactions"],
-    summary: "Key interaction signatures and translational implications for inflammatory bowel disease programs.",
+    summary:
+      "Key interaction signatures and translational implications for inflammatory bowel disease programs.",
   },
   {
     title: "Arthritis Case Study",
     subtitle: "Autoimmune / Inflammatory Arthritis",
     date: "2026",
     formUrl: "https://tally.so/r/J9zlGd",
-    previewImage: "/report-previews/arthritis.png",
+    previewImage: "/case-study-previews/arthritis.png",
     tags: ["Autoimmune", "Arthritis", "Biomarkers"],
-    summary: "A structured overview of interaction dynamics and candidate stratification signals for arthritis.",
+    summary:
+      "A structured overview of interaction dynamics and candidate stratification signals for arthritis.",
   },
 ];
 
@@ -130,3 +132,4 @@ export default function CaseStudiesPage() {
     </main>
   );
 }
+
