@@ -5,10 +5,21 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { MOBILE_SECTIONS } from "./mobileSections";
 
-function scrollToId(id: string) {
+/**
+ * Adjust this if your sticky header height changes.
+ * It's the combined height of:
+ * - the main sticky header row
+ * - the mobile section bar itself
+ */
+const SCROLL_OFFSET_PX = 120;
+
+function scrollToIdWithOffset(id: string) {
   const el = document.getElementById(id);
   if (!el) return;
-  el.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  const y = window.scrollY + el.getBoundingClientRect().top - SCROLL_OFFSET_PX;
+
+  window.scrollTo({ top: y, behavior: "smooth" });
 }
 
 export default function MobileSectionBar() {
@@ -25,6 +36,7 @@ export default function MobileSectionBar() {
 
     const obs = new IntersectionObserver(
       (entries) => {
+        // Pick the most visible section that is intersecting
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0))[0];
@@ -32,9 +44,9 @@ export default function MobileSectionBar() {
         if (visible?.target?.id) setActiveId(visible.target.id);
       },
       {
-        root: null,
-        threshold: [0.1, 0.2, 0.35],
-        rootMargin: "-35% 0px -55% 0px",
+        threshold: [0.15, 0.25, 0.4],
+        // Tweaked for sticky header: this makes "active" switch a bit earlier
+        rootMargin: "-20% 0px -65% 0px",
       }
     );
 
@@ -51,12 +63,17 @@ export default function MobileSectionBar() {
         <div className="flex items-center gap-2">
           {MOBILE_SECTIONS.map((s) => {
             const isActive = activeId === s.id;
+
             return (
               <Button
                 key={s.id}
                 variant={isActive ? "default" : "outline"}
                 className="h-9 whitespace-nowrap rounded-full px-4"
-                onClick={() => scrollToId(s.id)}
+                onClick={() => {
+                  // Make it visually consistent immediately on tap
+                  setActiveId(s.id);
+                  scrollToIdWithOffset(s.id);
+                }}
               >
                 {s.label}
               </Button>
@@ -71,3 +88,4 @@ export default function MobileSectionBar() {
     </div>
   );
 }
+
