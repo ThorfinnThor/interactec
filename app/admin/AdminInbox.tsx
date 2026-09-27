@@ -30,7 +30,7 @@ export default function AdminInbox() {
   const [items, setItems] = useState<Item[] | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [filter, setFilter] = useState<"all" | "contact" | "downloads">("all");
+  const [filter, setFilter] = useState<"all" | "contact" | "downloads" | "newsletter">("all");
   const [open, setOpen] = useState<string | null>(null);
 
   async function load(k: string) {
@@ -69,7 +69,14 @@ export default function AdminInbox() {
     }
   }, []);
 
-  const shown = useMemo(() => (items ?? []).filter((i) => filter === "all" || i.kind === filter), [items, filter]);
+  const shown = useMemo(
+    () =>
+      (items ?? []).filter((i) =>
+        filter === "all" ? true : filter === "newsletter" ? i.kind === "downloads" && i.updates === true : i.kind === filter,
+      ),
+    [items, filter],
+  );
+  const newsletterCount = (items ?? []).filter((i) => i.kind === "downloads" && i.updates === true).length;
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -115,14 +122,20 @@ export default function AdminInbox() {
         {items && (
           <>
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              {(["all", "contact", "downloads"] as const).map((f) => (
+              {(["all", "contact", "downloads", "newsletter"] as const).map((f) => (
                 <button
                   key={f}
                   onClick={() => setFilter(f)}
                   aria-pressed={filter === f}
                   className={`h-10 rounded-full border px-4 text-[14px] ${filter === f ? "border-ink bg-ink text-paper" : "border-ink/20"}`}
                 >
-                  {f === "all" ? `All (${items.length})` : f === "contact" ? "Contact" : "Downloads"}
+                  {f === "all"
+                    ? `All (${items.length})`
+                    : f === "contact"
+                      ? "Contact"
+                      : f === "downloads"
+                        ? "Downloads"
+                        : `Newsletter opt-ins (${newsletterCount})`}
                 </button>
               ))}
               <button onClick={() => void load(key)} className="h-10 rounded-full border border-ink/20 px-4 text-[14px]">
@@ -142,12 +155,13 @@ export default function AdminInbox() {
                     <th className="px-4 py-3 font-normal">Email</th>
                     <th className="px-4 py-3 font-normal">Company</th>
                     <th className="px-4 py-3 font-normal">Topic</th>
+                    <th className="px-4 py-3 font-normal">Newsletter</th>
                   </tr>
                 </thead>
                 <tbody>
                   {shown.length === 0 && (
                     <tr>
-                      <td colSpan={6} className="px-4 py-8 text-center text-ink/55">
+                      <td colSpan={7} className="px-4 py-8 text-center text-ink/55">
                         Nothing yet.
                       </td>
                     </tr>
@@ -179,10 +193,11 @@ function FragmentRow({ it, open, onToggle }: { it: Item; open: boolean; onToggle
         </td>
         <td className="px-4 py-3">{it.company}</td>
         <td className="px-4 py-3">{it.kind === "contact" ? it.modality || "—" : it.caseStudy}</td>
+        <td className="px-4 py-3">{it.kind === "downloads" ? (it.updates ? "Yes" : "No") : "—"}</td>
       </tr>
       {open && (
         <tr className="border-b border-ink/8 bg-paper/60">
-          <td colSpan={6} className="px-4 py-4 text-[14px] leading-relaxed">
+          <td colSpan={7} className="px-4 py-4 text-[14px] leading-relaxed">
             {it.role && <p>Role: {it.role}</p>}
             {it.message && <p className="whitespace-pre-wrap">{it.message}</p>}
             {it.kind === "downloads" && <p>Wants updates: {it.updates ? "yes" : "no"}</p>}
