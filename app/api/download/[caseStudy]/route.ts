@@ -1,43 +1,59 @@
-// app/api/download/[caseStudy]/route.ts
-import { NextRequest } from "next/server";
-import path from "node:path";
-import { existsSync, createReadStream } from "node:fs";
-import { Readable } from "node:stream";
+type ReportMeta = {
+  file: string;
+  objectKey: string;
+  downloadName: string;
+};
 
-export const runtime = "nodejs";
-
-// Map short slugs to real filenames stored on the server (non-public folder)
-const ALLOWLIST: Record<string, { file: string; downloadName: string }> = {
+const ALLOWLIST: Record<string, ReportMeta> = {
   ibd: {
     file: "InterAcTec_Report1_IBD.pdf",
+    objectKey: "reports/InterAcTec_Report1_IBD.pdf",
     downloadName: "InterAcTec_CaseStudy_IBD.pdf",
   },
   arthritis: {
     file: "InterAcTec_Report2_Arthritis.pdf",
+    objectKey: "reports/InterAcTec_Report2_Arthritis.pdf",
     downloadName: "InterAcTec_CaseStudy_Arthritis.pdf",
   },
 };
 
-export async function GET(
-  _req: NextRequest,
-  ctx: { params: Promise<{ caseStudy: string }> }
-) {
-  const { caseStudy } = await ctx.params;
+async function getCloudflareEnv(): Promise<CloudflareEnv | null> {
+  try {
+    return (await import("cloudflare:workers")).env as CloudflareEnv;
+  } catch {
+    return null;
+  }
+}
 
-  const meta = ALLOWLIST[caseStudy];
-  if (!meta) {
+async function serveFromR2(env: CloudflareEnv, meta: ReportMeta): Promise<Response> {
+  const object = await env.REPORTS.get(meta.objectKey);
+  if (!object) {
     return new Response("Not found", { status: 404 });
   }
 
-  // NOTE: this path is NOT publicly reachable because it's outside /public
-  // Keep your PDFs here:
+  const headers = new Headers();
+  object.writeHttpMetadata(headers);
+  headers.set("Content-Type", "application/pdf");
+  headers.set("Content-Disposition", `attachment; filename="${meta.downloadName}"`);
+  headers.set("Content-Length", object.size.toString());
+  headers.set("Cache-Control", "private, no-store");
+  headers.set("ETag", object.httpEtag);
+
+  return new Response(object.body, { headers });
+}
+
+async function serveFromNodeFileSystem(meta: ReportMeta): Promise<Response> {
+  const [{ existsSync, createReadStream }, path, { Readable }] = await Promise.all([
+    import("node:fs"),
+    import("node:path"),
+    import("node:stream"),
+  ]);
   const filePath = path.join(process.cwd(), "private", "reports", meta.file);
 
   if (!existsSync(filePath)) {
     return new Response("Not found", { status: 404 });
   }
 
-  // Stream file from disk (Node stream -> Web ReadableStream)
   const nodeStream = createReadStream(filePath);
   const webStream = Readable.toWeb(nodeStream) as unknown as ReadableStream;
 
@@ -48,4 +64,21 @@ export async function GET(
       "Cache-Control": "private, no-store",
     },
   });
+}
+
+export async function GET(
+  _request: Request,
+  ctx: { params: Promise<{ caseStudy: string }> }
+) {
+  const { caseStudy } = await ctx.params;
+
+  const meta = ALLOWLIST[caseStudy];
+  if (!meta) {
+    return new Response("Not found", { status: 404 });
+  }
+
+  const cloudflareEnv = await getCloudflareEnv();
+  return cloudflareEnv
+    ? serveFromR2(cloudflareEnv, meta)
+    : serveFromNodeFileSystem(meta);
 }

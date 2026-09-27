@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
+import { getSiteUrl } from "@/lib/site-url";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || "interactec.vercel.app";
-  const siteUrl = rawSiteUrl.startsWith("http") ? rawSiteUrl : `https://${rawSiteUrl}`;
+  const siteUrl = getSiteUrl().origin;
 
   const now = new Date();
 

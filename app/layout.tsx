@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,17 +13,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Uses env when provided; falls back to your Vercel domain.
-// Ensures https:// prefix so metadataBase is valid.
-const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || "interactec.vercel.app";
-const siteUrl = rawSiteUrl.startsWith("http") ? rawSiteUrl : `https://${rawSiteUrl}`;
-
 const title = "InterAcTec";
 const description =
   "Cellular interaction mapping and immune profiling for clinical-ready cytometry analytics. Flow cytometry combined with bioinformatics and AI-assisted analysis.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: getSiteUrl(),
   title: {
     default: title,
     template: `%s | ${title}`,

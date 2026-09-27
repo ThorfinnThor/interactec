@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -36,21 +36,7 @@ function normalizeToSlug(raw: string) {
   return "";
 }
 
-export default function ThanksClient() {
-  const [rawValue, setRawValue] = useState("");
-
-  useEffect(() => {
-    try {
-      const url = new URL(window.location.href);
-      // Support both query params:
-      // - legacy: ?report=...
-      // - preferred: ?caseStudy=...
-      setRawValue(url.searchParams.get("caseStudy") ?? url.searchParams.get("report") ?? "");
-    } catch {
-      setRawValue("");
-    }
-  }, []);
-
+export default function ThanksClient({ rawValue }: { rawValue: string }) {
   const slug = useMemo(() => normalizeToSlug(rawValue), [rawValue]);
   const isAllowed = CASE_STUDY_SLUGS.has(slug);
 
