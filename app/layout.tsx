@@ -11,14 +11,6 @@ const instrumentSans = localFont({
   display: "swap",
 });
 
-const instrumentSerif = localFont({
-  src: "./fonts/InstrumentSerif-Italic.woff2",
-  variable: "--font-instrument-serif",
-  weight: "400",
-  style: "italic",
-  display: "swap",
-});
-
 const plexMono = localFont({
   src: [
     { path: "./fonts/IBMPlexMono-Regular.woff2", weight: "400", style: "normal" },
@@ -66,7 +58,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${instrumentSans.variable} ${instrumentSerif.variable} ${plexMono.variable}`}>
+    <html lang="en" className={`${instrumentSans.variable} ${plexMono.variable}`}>
       <body className="font-sans antialiased">{children}</body>
     </html>
   );

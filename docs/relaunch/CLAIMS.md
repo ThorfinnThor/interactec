@@ -20,6 +20,21 @@ Status legend: ✅ Supported by source · 🟡 Partly supported / wording to con
 | C2 | "More mechanistic than endpoint cytotoxicity." | NM25 resolves *which* cell-type pairs interact, their frequency over time (blinatumomab time course) and signalling state within interacting cells (pCD247). **NM25 does not compare against cytotoxicity assays.** | Must be framed as "adds information an endpoint kill readout does not contain", not as full MoA elucidation. Confirm that endpoint cytotoxicity is the comparator customers actually use. | 🔴 | |
 | C3 | "Scalable on existing flow-cytometry infrastructure." | NM25: "can be used in conjunction with any multicolor fluorescence flow cytometer"; applicable to "standard flow cytometry-based assays"; re-analysis of public datasets possible "provided the data acquisition followed the guidelines". Scale: up to 34.4 M cells / 36 samples in one experiment. | The paper optimised on full-spectrum cytometry. "Any cytometer" should not be generalised to "any protocol/lab" — acquisition guidelines apply. | ✅ (paper) / ❓ confirm it holds for the commercial service | |
 
+## 1b. Quantified comparisons (added 27 Sep 2026 at the founders' request)
+
+These compare **published instrument specifications and reported experiment sizes**. They are not a head-to-head benchmark run by InterAcTec. A same-sample benchmark would make them much stronger.
+
+| Wording on page | Numbers | Source | Caveat | Status |
+|---|---|---|---|---|
+| "7–17× higher maximum acquisition rate than imaging flow cytometry" / "7× faster cell acquisition" | 35,000 events/s (Cytek Aurora) vs 5,000 obj/s (ImageStreamX Mk II, 20×) and 2,000 obj/s (40×) | Imperial College facility spec page (Aurora); Cytek ImageStream page | Maximum rates. Confirm the acquisition rate actually used for interaction mapping (doublet preservation may require slower rates) and that NM25 used an Aurora-class instrument. | 🟡 |
+| "~170× more interacting cells in one experiment than in a published PIC-seq experiment" | 414,564 (NM25, LCMV) vs 2,389 PICs (Giladi et al., Nat Biotechnol 2020, in-vitro T–DC experiment) | NM25; doi:10.1038/s41587-020-0442-2 | Different biological systems; PIC-seq profiles whole transcriptomes, Interact-omics a cytometry panel. | 🟡 |
+| "52 vs 1: cell-type pairs resolved in one experiment, versus one outcome per well" | 52 cell-type pairs (NM25, LCMV) | NM25 | Kill assays can be multiplexed; "one outcome per well" describes a classic endpoint readout. | 🟡 |
+| "Costs orders of magnitude below single-cell genomics" | — | NM25 Discussion (verbatim claim of the authors) | No absolute cost figures published. | ✅ as attributed quote |
+| "0 genetic engineering or special instruments" | — | NM25 ("does not rely on reporter mouse lines"; "any multicolor fluorescence flow cytometer") | Requires a flow cytometer. | ✅ |
+| Method matrix (imaging, PIC-seq, LIPSTIC, endpoint cytotoxicity) | qualitative | NM25, Giladi 2020, instrument specs | Simplified summary; review wording with scientists. | 🟡 |
+
+Evidence section now shows four fields (Oncology, Immunology, Autoimmunity, Infectious disease). "37.8 M cells across two case studies" = 29.9 M (IBD) + 7.8 M (JIA). IBD is filed under Autoimmunity as an immune-mediated inflammatory disease — confirm this framing.
+
 ## 2. Supporting statements used on the page
 
 | Section | Wording (abbreviated) | Source | Status |

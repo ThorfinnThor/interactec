@@ -4,7 +4,8 @@ import SiteHeader from "@/components/site/SiteHeader";
 import { getSiteUrl } from "@/lib/site-url";
 import HeroVisual from "@/components/site/HeroVisual";
 import StoryScroll, { type StoryChapter } from "@/components/site/StoryScroll";
-import { IntegrationDiagram, MechanismDiagram, ScienceDiagram, SpeedDiagram } from "@/components/site/Diagrams";
+import { IntegrationDiagram, MechanismDiagram, ScienceDiagram } from "@/components/site/Diagrams";
+import { AtAGlance, BarCompare, BigStat, MethodMatrix, SourceNote } from "@/components/site/Comparison";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -91,14 +92,13 @@ function Hero() {
         <div className="lg:col-span-7">
           <h1
             id="hero-title"
-            className="text-[2.35rem] font-medium leading-[1.04] tracking-[-0.025em] text-paper sm:text-6xl lg:text-[clamp(3rem,8.5vh,4.1rem)] xl:text-[clamp(3rem,9vh,4.6rem)]"
+            className="text-[2.35rem] font-medium leading-[1.06] tracking-[-0.03em] text-paper sm:text-6xl lg:text-[clamp(3rem,8vh,3.9rem)] xl:text-[clamp(3rem,8.5vh,4.35rem)]"
           >
-            We turn{" "}
-            <em className="font-serif font-normal tracking-[-0.01em] text-teal">functional <span className="whitespace-nowrap">cell-cell</span> engagement</em>{" "}
+            We turn <span className="text-teal">functional <span className="whitespace-nowrap">cell-cell</span> engagement</span>{" "}
             into a{" "}
-            <em className="font-serif font-normal tracking-[-0.01em] underline decoration-teal/60 decoration-1 underline-offset-[0.14em]">
-              scalable drug-discovery readout
-            </em>
+            <span className="underline decoration-teal decoration-2 underline-offset-[0.16em]">
+              scalable <span className="whitespace-nowrap">drug-discovery</span> readout
+            </span>
             .
           </h1>
 
@@ -203,74 +203,144 @@ function Platform() {
 
 function Advantages() {
   return (
-    <section id="advantages" aria-labelledby="advantages-title" className="on-paper bg-paper text-ink">
-      <h2 id="advantages-title" className="sr-only">
-        What sets the readout apart
-      </h2>
-
-      {/* 01 */}
-      <article className="mx-auto grid max-w-[1240px] gap-10 px-4 py-24 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-32">
-        <div className="lg:col-span-5">
-          <p className={`${KICKER} text-teal-deep`}>01</p>
-          <h3 className="mt-4 text-4xl font-medium leading-[1.05] tracking-tight sm:text-[3.4rem]">Faster than imaging.</h3>
-          <p className="mt-6 max-w-md text-lg leading-relaxed text-ink/75">
-            Instead of acquiring, segmenting and classifying images of cell contacts, engaged pairs are read out as events in
-            a flow-cytometry run — millions of events per experiment, analysed directly from cytometry data.
-          </p>
-        </div>
-        <div className="lg:col-span-6 lg:col-start-7">
-          <SpeedDiagram />
-          <p className="mt-4 text-[14px] leading-relaxed text-ink/65">
-            Scale reported in the Nature Methods study: up to 34.4 million cells across 36 samples in a single infection
-            time-course experiment.
-          </p>
-        </div>
-      </article>
-
-      {/* 02 */}
-      <article className="border-t border-ink/10 bg-paper-2">
-        <div className="mx-auto grid max-w-[1240px] gap-10 px-4 py-24 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-32">
-          <div className="order-2 lg:order-1 lg:col-span-7">
-            <MechanismDiagram />
-          </div>
-          <div className="order-1 lg:order-2 lg:col-span-4 lg:col-start-9">
-            <p className={`${KICKER} text-teal-deep`}>02</p>
-            <h3 className="mt-4 text-4xl font-medium leading-[1.05] tracking-tight sm:text-[3.4rem]">
-              More mechanistic than endpoint cytotoxicity.
-            </h3>
-            <p className="mt-6 text-lg leading-relaxed text-ink/75">
-              An endpoint kill assay tells you whether target cells died. The interaction readout adds who engaged whom, how
-              often and when. In the Nature Methods study, T-cell receptor signalling (phospho-CD247) was measured directly
-              within interacting T cells.
-            </p>
-            <p className="mt-4 text-[15px] leading-relaxed text-ink/65">
-              It complements functional killing assays rather than replacing them.
-            </p>
-          </div>
-        </div>
-      </article>
-
-      {/* 03 */}
-      <article className="border-t border-ink/10">
-        <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-          <div className="grid gap-10 lg:grid-cols-12">
-            <div className="lg:col-span-6">
-              <p className={`${KICKER} text-teal-deep`}>03</p>
-              <h3 className="mt-4 text-4xl font-medium leading-[1.05] tracking-tight sm:text-[3.4rem]">
-                Scalable on existing flow-cytometry infrastructure.
-              </h3>
+    <>
+      {/* value proposition at a glance */}
+      <section id="advantages" aria-labelledby="advantages-title" className="border-t border-line bg-ink-2">
+        <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
+          <div className="grid gap-6 lg:grid-cols-12">
+            <p className={`${KICKER} text-teal lg:col-span-3`}>Why InterAcTec</p>
+            <div className="lg:col-span-8">
+              <h2 id="advantages-title" className="text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
+                More interactions, more cell types, less effort.
+              </h2>
+              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-mist">
+                How the readout compares with imaging, sequencing-based interaction mapping and endpoint assays — in numbers
+                from the published record.
+              </p>
             </div>
-            <p className="text-lg leading-relaxed text-ink/75 lg:col-span-5 lg:col-start-8 lg:pt-10">
-              The framework runs on multicolour fluorescence flow cytometers and standard cytometry assays. Datasets that were
-              acquired following its guidelines can be re-analysed for interactions — without new samples.
-            </p>
           </div>
           <div className="mt-14">
-            <IntegrationDiagram />
+            <AtAGlance />
           </div>
+          <p className="mt-4 text-[13px] leading-relaxed text-mist">
+            Figures compare published instrument specifications and reported experiment sizes; they are not a head-to-head
+            benchmark. Details and sources below.
+          </p>
         </div>
-      </article>
-    </section>
+      </section>
+
+      <div className="on-paper bg-paper text-ink">
+        {/* 01 */}
+        <article className="mx-auto grid max-w-[1240px] gap-12 px-4 py-24 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-32">
+          <div className="lg:col-span-5">
+            <p className={`${KICKER} text-teal-deep`}>01</p>
+            <h3 className="mt-4 text-4xl font-medium leading-[1.05] tracking-tight sm:text-[3.4rem]">Faster than imaging.</h3>
+            <p className="mt-6 max-w-md text-lg leading-relaxed text-ink/75">
+              Imaging captures, segments and classifies every contact. The interaction readout reads engaged pairs as events
+              in a standard flow run — no image processing, and far more cells per second.
+            </p>
+            <div className="mt-10">
+              <BigStat value="7–17×" label="higher maximum acquisition rate than imaging flow cytometry" />
+            </div>
+          </div>
+          <div className="self-center lg:col-span-6 lg:col-start-7">
+            <BarCompare
+              title="Maximum acquisition rate"
+              unit="cells per second"
+              bars={[
+                { label: "Full-spectrum flow cytometer (InterAcTec readout)", value: 35000, display: "35,000", ours: true },
+                { label: "Imaging flow cytometer, 20× objective", value: 5000, display: "5,000" },
+                { label: "Imaging flow cytometer, 40× objective", value: 2000, display: "2,000" },
+              ]}
+            />
+            <SourceNote
+              keys={["aurora", "imagestream"]}
+              note="Manufacturer maximum rates; practical rates depend on sample and panel. Microscopy-based contact analysis is slower still."
+            />
+          </div>
+        </article>
+
+        {/* 02 */}
+        <article className="border-t border-ink/10 bg-paper-2">
+          <div className="mx-auto grid max-w-[1240px] gap-12 px-4 py-24 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-32">
+            <div className="order-2 self-center lg:order-1 lg:col-span-7">
+              <MechanismDiagram />
+            </div>
+            <div className="order-1 lg:order-2 lg:col-span-4 lg:col-start-9">
+              <p className={`${KICKER} text-teal-deep`}>02</p>
+              <h3 className="mt-4 text-4xl font-medium leading-[1.05] tracking-tight sm:text-[3.4rem]">
+                More mechanistic than endpoint cytotoxicity.
+              </h3>
+              <p className="mt-6 text-lg leading-relaxed text-ink/75">
+                A kill assay tells you whether target cells died. The interaction readout shows who engaged whom, how often
+                and when — including T-cell receptor signalling (phospho-CD247) inside the engaged cells.
+              </p>
+              <div className="mt-10">
+                <BigStat value="52 vs 1" label="cell-type pairs resolved in one experiment, versus one outcome per well" />
+              </div>
+              <SourceNote keys={["nm25"]} note="52 pairs: LCMV infection experiment." />
+            </div>
+          </div>
+        </article>
+
+        {/* 03 */}
+        <article className="border-t border-ink/10">
+          <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+            <div className="grid gap-12 lg:grid-cols-12">
+              <div className="lg:col-span-5">
+                <p className={`${KICKER} text-teal-deep`}>03</p>
+                <h3 className="mt-4 text-4xl font-medium leading-[1.05] tracking-tight sm:text-[3.4rem]">
+                  Scalable on existing flow-cytometry infrastructure.
+                </h3>
+                <p className="mt-6 max-w-md text-lg leading-relaxed text-ink/75">
+                  No sorter, no sequencing, no reporter mice. The readout runs on multicolour fluorescence flow cytometers —
+                  at costs the authors put orders of magnitude below single-cell genomics.
+                </p>
+                <div className="mt-10">
+                  <BigStat value="~170×" label="more interacting cells in one experiment than in a published PIC-seq experiment" />
+                </div>
+              </div>
+              <div className="self-center lg:col-span-6 lg:col-start-7">
+                <BarCompare
+                  title="Interacting cells analysed in one experiment"
+                  unit="cells"
+                  bars={[
+                    { label: "Interact-omics, LCMV infection time course", value: 414564, display: "414,564", ours: true },
+                    { label: "PIC-seq, T cell–dendritic cell co-culture", value: 2389, display: "2,389" },
+                  ]}
+                />
+                <SourceNote keys={["nm25", "picseq"]} note="Experiment sizes as reported in each publication." />
+              </div>
+            </div>
+            <div className="mt-16">
+              <IntegrationDiagram />
+            </div>
+          </div>
+        </article>
+
+        {/* method matrix */}
+        <article className="border-t border-ink/10">
+          <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
+            <div className="grid gap-6 lg:grid-cols-12">
+              <p className={`${KICKER} text-teal-deep lg:col-span-3`}>Side by side</p>
+              <div className="lg:col-span-8">
+                <h3 className="text-3xl font-medium leading-[1.1] tracking-tight sm:text-4xl">
+                  Where each method stands.
+                </h3>
+                <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink/75">
+                  Every approach has its place. InterAcTec is built for the questions that need scale, breadth and existing
+                  infrastructure at once.
+                </p>
+              </div>
+            </div>
+            <div className="mt-12">
+              <MethodMatrix />
+            </div>
+            <SourceNote keys={["nm25", "picseq", "imagestream"]} note="Summary based on the cited publications and specifications." />
+          </div>
+        </article>
+      </div>
+    </>
   );
 }
 
@@ -468,11 +538,48 @@ function Translational() {
 
 /* ------------------------------ G2. Evidence ------------------------------ */
 
-const DATASETS = [
-  { e: "Anti-CD19 CAR T cells with B-cell targets", cells: "849,845", pics: "9,974", n: "4 technical replicates" },
-  { e: "Blinatumomab in PBMCs", cells: "985,735", pics: "34,362", n: "4 replicates, 1 donor" },
-  { e: "Blinatumomab, B-ALL patient bone marrow", cells: "4,292,770", pics: "29,232", n: "42 patients" },
-  { e: "LCMV infection time course (mouse)", cells: "34,369,995", pics: "414,564", n: "36 samples" },
+const FIELDS = [
+  {
+    field: "Oncology",
+    stat: "42",
+    statLabel: "patients with B-ALL",
+    points: [
+      "T-cell engager (blinatumomab) and anti-CD19 CAR T engagement of B cells",
+      "Drug-induced T–B interactions were stronger in good responders",
+    ],
+    source: "Nature Methods, 2025",
+  },
+  {
+    field: "Immunology",
+    stat: "All",
+    statLabel: "immune cell types in one panel",
+    points: [
+      "Antigen-specific T cell–APC engagement",
+      "TCR signalling (phospho-CD247) measured inside interacting T cells",
+    ],
+    source: "Nature Methods, 2025",
+  },
+  {
+    field: "Autoimmunity",
+    stat: "37.8 M",
+    statLabel: "cells across two case studies",
+    points: [
+      "Juvenile idiopathic arthritis: blood vs synovial fluid, active vs inactive disease",
+      "Inflammatory bowel disease: ulcerative colitis and Crohn’s disease vs controls",
+    ],
+    source: "InterAcTec case studies",
+    href: "/case-studies",
+  },
+  {
+    field: "Infectious disease",
+    stat: "~415,000",
+    statLabel: "interactions, 52 cell-type pairs",
+    points: [
+      "Viral infection (LCMV) time course across lymph node, spleen and bone marrow",
+      "34.4 million cells in 36 samples",
+    ],
+    source: "Nature Methods, 2025",
+  },
 ];
 
 function Evidence() {
@@ -480,7 +587,7 @@ function Evidence() {
     <section id="evidence" aria-labelledby="evidence-title" className="on-paper bg-paper text-ink">
       <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
         <div className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-4">
             <p className={`${KICKER} text-teal-deep`}>Evidence</p>
             <h2 id="evidence-title" className="mt-5 text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
               A peer-reviewed foundation.
@@ -503,59 +610,36 @@ function Evidence() {
             </a>
           </div>
 
-          <div className="min-w-0 lg:col-span-6 lg:col-start-7 lg:pt-4">
-            <ul className="divide-y divide-ink/10 rounded-2xl border border-ink/12 bg-white/60 sm:hidden">
-              <li className="px-5 pt-5 pb-3 font-mono text-[11px] uppercase tracking-[0.14em] text-ink/60">
-                Selected experiments · as reported
-              </li>
-              {DATASETS.map((d) => (
-                <li key={d.e} className="px-5 py-4">
-                  <p className="text-[15px]">{d.e}</p>
-                  <dl className="mt-2 grid grid-cols-3 gap-2 text-[13px]">
-                    <div>
-                      <dt className="text-ink/60">Cells</dt>
-                      <dd className="font-mono tabular-nums">{d.cells}</dd>
-                    </div>
-                    <div>
-                      <dt className="text-ink/60">Interacting</dt>
-                      <dd className="font-mono tabular-nums">{d.pics}</dd>
-                    </div>
-                    <div>
-                      <dt className="text-ink/60">n</dt>
-                      <dd>{d.n}</dd>
-                    </div>
-                  </dl>
+          <div className="min-w-0 lg:col-span-7 lg:col-start-6">
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink/60">Demonstrated across four fields</p>
+            <ul className="mt-4 grid gap-px overflow-hidden rounded-2xl border border-ink/12 bg-ink/12 sm:grid-cols-2">
+              {FIELDS.map((f) => (
+                <li key={f.field} className="flex flex-col bg-white/70 p-6 sm:p-7">
+                  <h3 className="text-2xl font-medium tracking-tight">{f.field}</h3>
+                  <p className="mt-4 flex flex-col">
+                    <span className="whitespace-nowrap text-4xl font-medium tracking-tight text-teal-deep tabular-nums">{f.stat}</span>
+                    <span className="mt-1 text-[14px] text-ink/65">{f.statLabel}</span>
+                  </p>
+                  <ul className="mt-4 space-y-2 text-[15px] leading-snug text-ink/80">
+                    {f.points.map((pt) => (
+                      <li key={pt} className="flex gap-2.5">
+                        <span className="mt-[0.55em] h-1 w-1 shrink-0 rounded-full bg-teal-deep" aria-hidden="true" />
+                        {pt}
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-auto pt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-ink/55">
+                    {f.href ? (
+                      <Link href={f.href} className="underline decoration-ink/30 underline-offset-4 hover:decoration-ink">
+                        {f.source} — download
+                      </Link>
+                    ) : (
+                      <>Source · {f.source}</>
+                    )}
+                  </p>
                 </li>
               ))}
             </ul>
-            <div className="hidden overflow-x-auto rounded-2xl border border-ink/12 bg-white/60 sm:block">
-              <table className="w-full min-w-[520px] border-collapse text-left text-[15px]">
-                <caption className="px-6 pt-6 text-left">
-                  <span className="block font-mono text-[11px] uppercase tracking-[0.14em] text-ink/60">
-                    Selected experiments · as reported in the publication
-                  </span>
-                </caption>
-                <thead>
-                  <tr className="border-b border-ink/12 text-ink/60">
-                    <th scope="col" className="px-6 py-3 font-normal">Experiment</th>
-                    <th scope="col" className="px-3 py-3 text-right font-normal">Cells analysed</th>
-                    <th scope="col" className="px-3 py-3 text-right font-normal">Interacting cells</th>
-                    <th scope="col" className="px-6 py-3 font-normal">n</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {DATASETS.map((d) => (
-                    <tr key={d.e} className="border-b border-ink/8 last:border-0">
-                      <th scope="row" className="px-6 py-4 font-normal">{d.e}</th>
-                      <td className="px-3 py-4 text-right font-mono tabular-nums">{d.cells}</td>
-                      <td className="px-3 py-4 text-right font-mono tabular-nums">{d.pics}</td>
-                      <td className="px-6 py-4 text-ink/70">{d.n}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <p className="mt-4 text-[13px] leading-relaxed text-ink/60">Source: {CITATION}</p>
           </div>
         </div>
       </div>
@@ -568,14 +652,6 @@ function Evidence() {
 function Contact() {
   return (
     <section id="contact" aria-labelledby="contact-title" className="relative overflow-hidden">
-      <svg
-        viewBox="0 0 400 400"
-        className="pointer-events-none absolute -right-24 top-1/2 hidden h-[520px] w-[520px] -translate-y-1/2 md:block"
-        aria-hidden="true"
-      >
-        <circle cx="160" cy="150" r="95" fill="none" stroke="#68E4D4" strokeOpacity="0.35" />
-        <circle cx="265" cy="255" r="120" fill="none" stroke="#A49BE8" strokeOpacity="0.3" strokeDasharray="2 7" />
-      </svg>
       <div className="relative mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-8 lg:py-36">
         <p className={`${KICKER} text-teal`}>Contact</p>
         <h2 id="contact-title" className="mt-5 max-w-3xl text-4xl font-medium leading-[1.05] tracking-tight sm:text-6xl">

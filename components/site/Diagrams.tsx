@@ -73,48 +73,6 @@ export function ScienceDiagram() {
   );
 }
 
-/* ---------- Differentiator 1: workflow comparison (no timings) ---------- */
-
-function Lane({ label, steps, accent }: { label: string; steps: string[]; accent?: boolean }) {
-  return (
-    <div>
-      <p className="min-h-[2.5em] font-mono text-[11px] uppercase tracking-[0.14em] text-ink/60">{label}</p>
-      <ol className="mt-3 flex flex-col">
-        {steps.map((s, i) => (
-          <li key={s} className="flex flex-col items-start">
-            <span
-              className={`rounded-full border px-4 py-2 text-[15px] ${
-                accent ? "border-teal-deep bg-teal-deep text-paper" : "border-ink/25 text-ink"
-              }`}
-            >
-              {s}
-            </span>
-            {i < steps.length - 1 && <span className="ml-6 h-5 w-px bg-ink/25" aria-hidden="true" />}
-          </li>
-        ))}
-        <li className="flex flex-col items-start" aria-hidden="true">
-          <span className="ml-6 h-5 w-px bg-ink/25" />
-          <span className={`ml-[19px] h-3.5 w-3.5 rounded-full ${accent ? "bg-teal-deep" : "border border-ink/40"}`} />
-        </li>
-      </ol>
-    </div>
-  );
-}
-
-export function SpeedDiagram() {
-  return (
-    <figure className="rounded-2xl border border-ink/12 bg-white/60 p-6 sm:p-8">
-      <div className="grid grid-cols-2 gap-6">
-        <Lane label="Image-based contact analysis" steps={["Plate & fields", "Image acquisition", "Segmentation", "Contact classification"]} />
-        <Lane label="Cytometry-based interaction readout" steps={["Cell suspension", "Event acquisition", "Interaction mapping"]} accent />
-      </div>
-      <figcaption className="mt-6 border-t border-ink/10 pt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink/60">
-        Schematic comparison of process steps — no timings implied
-      </figcaption>
-    </figure>
-  );
-}
-
 /* ---------- Differentiator 2: endpoint vs interaction readout ---------- */
 
 const PAIRS = ["Effector · Target", "Effector · Bystander", "Bystander · Target"];
