@@ -177,3 +177,15 @@ html {
 .story-mobile .story-label {
   font-size: 14px;
 }
+
+/* soft edges for the story canvas so cells never meet a hard frame */
+.story-canvas canvas {
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+    linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
+  mask-composite: intersect;
+}

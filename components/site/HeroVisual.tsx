@@ -1,3 +1,5 @@
+import HeroStage from "./HeroStage";
+import MotionToggle from "./MotionToggle";
 import { CellDefs, ContactZone, EffectorCell, TargetCell, touching, type CellSpec } from "./cells";
 
 const ID = "hero";
@@ -11,6 +13,17 @@ const CONTACT = { x: TGT.cx + Math.cos(a) * (TGT.r - 16), y: TGT.cy + Math.sin(a
 export default function HeroVisual() {
   return (
     <figure className="relative mx-auto w-full max-w-[640px]">
+      <HeroStage poster={<HeroPoster />} />
+      <figcaption className="mt-2 flex items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.14em] text-mist">
+        <MotionToggle />
+        <span className="ml-auto">Schematic visualization</span>
+      </figcaption>
+    </figure>
+  );
+}
+
+function HeroPoster() {
+  return (
       <svg
         viewBox="0 0 640 640"
         className="h-auto w-full overflow-visible"
@@ -70,9 +83,5 @@ export default function HeroVisual() {
           </text>
         </g>
       </svg>
-      <figcaption className="mt-2 text-right font-mono text-[11px] uppercase tracking-[0.14em] text-mist">
-        Schematic visualization
-      </figcaption>
-    </figure>
   );
 }

@@ -1,14 +1,22 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { story } from "@/lib/motion-store";
+import WebGLSlot from "@/components/three/WebGLSlot";
+import MotionToggle from "./MotionToggle";
 import StoryVisual, { STORY_STEPS } from "./StoryVisual";
+
+const loadStory = () => import("@/components/three/scenes").then((m) => ({ default: m.StoryScene }));
 
 export type StoryChapter = { title: string; body: string };
 
 /**
- * Desktop (lg+, motion allowed): text chapters scroll past one sticky scene; the active
- * chapter sets the scene state. State only changes on chapter boundaries — no per-frame
- * React updates. Scrolling back reverses the state.
+ * Desktop (lg+, motion allowed): text chapters scroll past one sticky scene. A single
+ * continuous scroll progress (0 = first chapter centred … 3 = last chapter centred) drives
+ * camera, cell state, the organic→data transition and the active text. It is written to a
+ * shared store and read inside the WebGL render loop — no per-frame React updates.
+ * The discrete active chapter (for text emphasis and the SVG poster) derives from the same
+ * geometry. Without WebGL the SVG scene is shown for the active chapter.
  *
  * Mobile or prefers-reduced-motion: each chapter carries its own static visual, so all
  * four states are visible without pinning or scroll-bound animation.
@@ -32,7 +40,42 @@ export default function StoryScroll({ chapters }: { chapters: StoryChapter[] }) 
       { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
     );
     els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+
+    // continuous progress between chapter centres
+    let raf = 0;
+    const measure = () => {
+      raf = 0;
+      const vc = window.innerHeight / 2;
+      const centres = els.map((el) => {
+        const r = el.getBoundingClientRect();
+        return r.top + r.height / 2;
+      });
+      let p = 0;
+      if (vc <= centres[0]) p = 0;
+      else if (vc >= centres[centres.length - 1]) p = centres.length - 1;
+      else {
+        for (let i = 0; i < centres.length - 1; i++) {
+          if (vc >= centres[i] && vc < centres[i + 1]) {
+            p = i + (vc - centres[i]) / (centres[i + 1] - centres[i]);
+            break;
+          }
+        }
+      }
+      story.target = p;
+      story.invalidate?.();
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(measure);
+    };
+    measure();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      io.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
 
   return (
@@ -84,9 +127,17 @@ export default function StoryScroll({ chapters }: { chapters: StoryChapter[] }) 
             ))}
           </div>
           <figure className="relative mx-auto aspect-square h-[62vh] max-h-[640px]">
-            <StoryVisual step={active} idPrefix="story-d" />
-            <figcaption className="absolute -bottom-6 right-0 font-mono text-[11px] uppercase tracking-[0.14em] text-mist">
-              {active === 3 ? "Illustrative data — not experimental results" : "Schematic visualization · visual metaphor"}
+            <WebGLSlot
+              poster={<StoryVisual step={active} idPrefix="story-d" />}
+              load={loadStory}
+              minWidth={1024}
+              className="story-canvas h-full w-full"
+            />
+            <figcaption className="absolute -bottom-9 left-0 right-0 flex items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.14em] text-mist">
+              <MotionToggle />
+              <span>
+                {active === 3 ? "Illustrative data — not experimental results" : "Schematic visualization · visual metaphor"}
+              </span>
             </figcaption>
           </figure>
         </div>
