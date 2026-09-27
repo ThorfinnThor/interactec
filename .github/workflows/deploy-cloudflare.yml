@@ -36,6 +36,35 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Resolve Cloudflare Web Analytics token
+        env:
+          BEACON_FROM_VARS: ${{ vars.CF_BEACON_TOKEN }}
+        run: |
+          # 1) Use the repository variable CF_BEACON_TOKEN if it is set.
+          if [ -n "$BEACON_FROM_VARS" ]; then
+            echo "NEXT_PUBLIC_CF_BEACON_TOKEN=$BEACON_FROM_VARS" >> "$GITHUB_ENV"
+            echo "Web Analytics: using repository variable CF_BEACON_TOKEN"
+            exit 0
+          fi
+          # 2) Otherwise find or create the Web Analytics site for this host via the Cloudflare API.
+          HOST="${NEXT_PUBLIC_SITE_URL#https://}"
+          API="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/rum/site_info"
+          AUTH="Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+          TOKEN=$(curl -fsS -H "$AUTH" "$API/list?per_page=100" \
+            | jq -r --arg h "$HOST" '.result[]? | select(.host == $h or .ruleset.zone_name == $h) | .site_token' \
+            | head -n1) || true
+          if [ -z "$TOKEN" ]; then
+            TOKEN=$(curl -fsS -X POST -H "$AUTH" -H "Content-Type: application/json" \
+              -d "{\"host\":\"$HOST\",\"auto_install\":false}" "$API" \
+              | jq -r '.result.site_token // empty') || true
+          fi
+          if [ -n "$TOKEN" ]; then
+            echo "NEXT_PUBLIC_CF_BEACON_TOKEN=$TOKEN" >> "$GITHUB_ENV"
+            echo "Web Analytics enabled for $HOST"
+          else
+            echo "::warning::Web Analytics not enabled. Either give CLOUDFLARE_API_TOKEN edit access to Web Analytics (account level), or create the site in the Cloudflare dashboard (Analytics & Logs → Web Analytics) and save its token as repository variable CF_BEACON_TOKEN."
+          fi
+
       - name: Build for Cloudflare
         run: npm run build:vinext
 

@@ -20,6 +20,9 @@ const plexMono = localFont({
   display: "swap",
 });
 
+// Cloudflare Web Analytics (cookieless). Token is injected at build time by the deploy workflow.
+const CF_BEACON_TOKEN = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN;
+
 const title = "InterAcTec";
 const description =
   "We turn functional cell-cell engagement into a scalable drug-discovery readout — built on Interact-omics, a cytometry-based interaction mapping framework published in Nature Methods.";
@@ -59,7 +62,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${instrumentSans.variable} ${plexMono.variable}`}>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        {children}
+        {CF_BEACON_TOKEN && (
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: CF_BEACON_TOKEN })}
+          />
+        )}
+      </body>
     </html>
   );
 }

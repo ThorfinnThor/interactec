@@ -1,74 +1,114 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import type { ReactNode } from "react";
+import SubpageShell from "@/components/site/SubpageShell";
+import { CONTACT_EMAIL, isLegalComplete } from "@/lib/legal";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy",
+  title: "Privacy policy",
   alternates: { canonical: "/privacy" },
-  openGraph: {
-    url: "/privacy",
-    title: "Privacy Policy | InterAcTec",
-  },
+  openGraph: { url: "/privacy", title: "Privacy policy | InterAcTec" },
 };
 
-const COMPANY = "InterAcTec";
-const CONTACT_EMAIL = "hello@interactec.bio"; // change if needed
+const UPDATED = "27 September 2026";
+
+function Section({ n, title, children }: { n: string; title: string; children: ReactNode }) {
+  return (
+    <section className="grid gap-4 border-t border-ink/10 py-10 lg:grid-cols-12">
+      <p className="font-mono text-xs text-teal-deep lg:col-span-1">{n}</p>
+      <h2 className="text-2xl font-medium tracking-tight lg:col-span-3">{title}</h2>
+      <div className="space-y-4 text-[16px] leading-relaxed text-ink/80 lg:col-span-7 lg:col-start-6">{children}</div>
+    </section>
+  );
+}
+
+const Mail = () => (
+  <a className="text-teal-deep underline underline-offset-4" href={`mailto:${CONTACT_EMAIL}`}>
+    {CONTACT_EMAIL}
+  </a>
+);
 
 export default function PrivacyPage() {
   return (
-    <main className="mx-auto max-w-3xl px-6 py-12">
-      <div className="flex items-center justify-between gap-4">
-        <h1 className="text-3xl font-semibold tracking-tight text-slate-950">Privacy Policy</h1>
-        <Button asChild variant="outline" className="rounded-2xl">
-          <Link href="/">← Back</Link>
-        </Button>
+    <SubpageShell
+      kicker="Privacy"
+      title="Privacy policy"
+      intro={<>What we collect on this website, why, and what you can ask us to do with it. Last updated {UPDATED}.</>}
+    >
+      <div className="mx-auto max-w-[1240px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+        <Section n="01" title="Who is responsible">
+          <p>
+            InterAcTec is responsible for the processing of personal data on this website.{" "}
+            {isLegalComplete() ? (
+              <>
+                Full company details are in our{" "}
+                <Link href="/impressum" className="text-teal-deep underline underline-offset-4">
+                  Impressum
+                </Link>
+                .
+              </>
+            ) : null}{" "}
+            For all privacy questions, contact <Mail />.
+          </p>
+        </Section>
+
+        <Section n="02" title="Hosting and server logs">
+          <p>
+            This website runs on Cloudflare Workers (Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA).
+            To deliver pages and protect the site against attacks, Cloudflare processes technical request data such as
+            IP address, date and time, requested page, browser type and referrer. Legal basis: Art. 6(1)(f) GDPR —
+            our legitimate interest in a secure and reliable website. Cloudflare participates in the EU–U.S. Data
+            Privacy Framework, and Cloudflare’s data processing addendum applies to our account.
+          </p>
+        </Section>
+
+        <Section n="03" title="Contact form">
+          <p>
+            When you send the contact form we store your name, work email, company, and — if you provide them — your
+            role, modality and message, together with the time of submission, your country (derived from the request)
+            and your browser type for spam protection. We use this data only to answer your request. Legal basis: Art.
+            6(1)(b) GDPR (pre-contractual enquiries) and Art. 6(1)(a) GDPR (your consent).
+          </p>
+          <p>
+            Submissions are stored in our Cloudflare R2 storage and deleted once your request has been fully handled,
+            unless it leads to an ongoing business relationship or statutory retention applies.
+          </p>
+        </Section>
+
+        <Section n="04" title="Case-study requests">
+          <p>
+            To download a case study we ask for your name, work email and company and store them in the same way. You
+            receive a personal download link that expires after 24 hours. If you tick the optional box, we may inform
+            you about new case studies; you can withdraw this consent at any time by emailing <Mail />. Legal basis:
+            Art. 6(1)(a) GDPR.
+          </p>
+        </Section>
+
+        <Section n="05" title="Web analytics">
+          <p>
+            We use Cloudflare Web Analytics to understand how the website is used, for example which pages are visited
+            and how fast they load. It sets no cookies, does not use local storage and does not create user profiles;
+            results are only available to us in aggregated form. Legal basis: Art. 6(1)(f) GDPR — our legitimate
+            interest in improving the website.
+          </p>
+        </Section>
+
+        <Section n="06" title="Cookies and local storage">
+          <p>
+            We do not use cookies. If you press “Pause motion”, your browser remembers this preference in its local
+            storage; it never leaves your device. Fonts are hosted on our own server — no requests go to external font
+            services.
+          </p>
+        </Section>
+
+        <Section n="07" title="Your rights">
+          <p>
+            You have the right to access, rectify and erase your data, to restrict or object to its processing, to data
+            portability, and to withdraw consent at any time with effect for the future. You can also lodge a complaint
+            with a data-protection supervisory authority. To exercise your rights, email <Mail />.
+          </p>
+        </Section>
       </div>
-
-      <Card className="mt-6 rounded-3xl border-slate-200">
-        <CardContent className="p-8 space-y-5 text-slate-700">
-          <p>
-            This website is operated by <strong>{COMPANY}</strong>.
-          </p>
-
-          <h2 className="text-lg font-semibold text-slate-950">What we collect</h2>
-          <ul className="list-disc pl-5 space-y-2">
-            <li>Email address (when you request a case study via our form)</li>
-            <li>Basic form metadata (time of submission) provided by the form provider</li>
-          </ul>
-
-          <h2 className="text-lg font-semibold text-slate-950">Why we collect it</h2>
-          <ul className="list-disc pl-5 space-y-2">
-            <li>To deliver the requested case study</li>
-            <li>To send occasional updates (only if you consent)</li>
-          </ul>
-
-          <h2 className="text-lg font-semibold text-slate-950">How we store and share</h2>
-          <p>
-            Form submissions are processed by our form provider (e.g., Tally). We do not sell your data.
-          </p>
-
-          <h2 className="text-lg font-semibold text-slate-950">Your rights</h2>
-          <p>
-            You can request access, correction, or deletion of your data at any time by emailing{" "}
-            <a className="underline underline-offset-4" href={`mailto:${CONTACT_EMAIL}`}>
-              {CONTACT_EMAIL}
-            </a>
-            .
-          </p>
-
-          <h2 className="text-lg font-semibold text-slate-950">Contact</h2>
-          <p>
-            For privacy requests, email{" "}
-            <a className="underline underline-offset-4" href={`mailto:${CONTACT_EMAIL}`}>
-              {CONTACT_EMAIL}
-            </a>
-            .
-          </p>
-
-          <p className="text-sm text-slate-500">Last updated: {new Date().toLocaleDateString()}</p>
-        </CardContent>
-      </Card>
-    </main>
+    </SubpageShell>
   );
 }

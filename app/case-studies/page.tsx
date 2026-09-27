@@ -1,135 +1,71 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import SubpageShell from "@/components/site/SubpageShell";
+import { CaseStudyForm } from "@/components/site/forms";
+import { CASE_STUDIES } from "@/lib/case-studies";
 
 export const metadata: Metadata = {
   title: "Case studies",
-  description: "Download InterAcTec case studies (email required).",
+  description: "Download InterAcTec case studies on interaction signatures in inflammatory bowel disease and juvenile idiopathic arthritis.",
   alternates: { canonical: "/case-studies" },
-  openGraph: {
-    url: "/case-studies",
-    title: "Case studies | InterAcTec",
-    description: "Download InterAcTec case studies (email required).",
-  },
+  openGraph: { url: "/case-studies", title: "Case studies | InterAcTec" },
 };
 
-type CaseStudy = {
-  title: string;
-  subtitle: string;
-  date: string;
-  formUrl: string; // Tally form URL
-  previewImage: string; // served from /public
-  tags: string[];
-  summary: string;
-};
-
-const caseStudies: CaseStudy[] = [
-  {
-    title: "IBD Case Study",
-    subtitle: "Inflammatory Bowel Disease",
-    date: "2026",
-    formUrl: "https://tally.so/r/NpoXBO",
-    previewImage: "/case-study-previews/ibd.png",
-    tags: ["IBD", "Inflammation", "Immune interactions"],
-    summary:
-      "Key interaction signatures and translational implications for inflammatory bowel disease programs.",
-  },
-  {
-    title: "Arthritis Case Study",
-    subtitle: "Autoimmune / Inflammatory Arthritis",
-    date: "2026",
-    formUrl: "https://tally.so/r/J9zlGd",
-    previewImage: "/case-study-previews/arthritis.png",
-    tags: ["Autoimmune", "Arthritis", "Biomarkers"],
-    summary:
-      "A structured overview of interaction dynamics and candidate stratification signals for arthritis.",
-  },
-];
-
-export default function CaseStudiesPage() {
+export default async function CaseStudiesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ expired?: string }>;
+}) {
+  const { expired } = await searchParams;
   return (
-    <main className="mx-auto max-w-6xl px-6 py-12">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
-            Case studies
-          </div>
-          <h1 className="mt-1 text-3xl font-semibold tracking-tight text-slate-950">
-            Download case studies
-          </h1>
-          <p className="mt-2 max-w-2xl text-slate-600">
-            Enter your email to download. No login required.
+    <SubpageShell
+      kicker="Case studies"
+      title="Interaction signatures in patient samples."
+      intro={
+        <>
+          Two short reports from our translational work. Enter your details once per report and the PDF downloads
+          straight away.
+        </>
+      }
+    >
+      <div className="mx-auto max-w-[1240px] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+        {expired && (
+          <p role="status" className="mb-10 rounded-xl border border-ink/15 bg-white/70 px-5 py-4 text-[15px] text-ink/80">
+            That download link has expired or is invalid. Please request the report again below.
           </p>
-        </div>
-
-        <Button asChild variant="outline" className="rounded-2xl">
-          <Link href="/">← Back to home</Link>
-        </Button>
-      </div>
-
-      <div className="mt-10 grid gap-6 md:grid-cols-2">
-        {caseStudies.map((cs) => (
-          <Card key={cs.title} className="overflow-hidden rounded-3xl border-slate-200">
-            <div className="relative aspect-[16/10] w-full bg-slate-50">
-              <Image
-                src={cs.previewImage}
-                alt={`${cs.title} preview`}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                priority={false}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-white/70 via-white/0 to-white/0" />
-              <div className="absolute bottom-3 left-3 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-xs text-slate-700">
-                Preview (image only)
+        )}
+        <div className="grid gap-10 lg:grid-cols-2">
+          {CASE_STUDIES.map((cs) => (
+            <article
+              key={cs.slug}
+              id={cs.slug}
+              className="flex flex-col overflow-hidden rounded-2xl border border-ink/12 bg-white/70"
+            >
+              <div className="relative aspect-[16/9] w-full bg-paper-2">
+                <Image src={cs.previewImage} alt="" fill className="object-cover object-top" sizes="(max-width: 1024px) 100vw, 50vw" />
+                <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-ink/70">
+                  Preview
+                </span>
               </div>
-            </div>
-
-            <CardHeader>
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <CardTitle className="text-xl">{cs.title}</CardTitle>
-                  <p className="mt-1 text-sm text-slate-600">{cs.subtitle}</p>
+              <div className="flex flex-1 flex-col p-6 sm:p-8">
+                <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-teal-deep">{cs.field}</p>
+                <h2 className="mt-3 text-3xl font-medium tracking-tight">{cs.title}</h2>
+                <p className="mt-3 text-[16px] leading-relaxed text-ink/75">{cs.summary}</p>
+                <ul className="mt-5 flex flex-wrap gap-2">
+                  {cs.facts.map((f) => (
+                    <li key={f} className="rounded-full border border-ink/15 px-3 py-1 text-[13px] text-ink/75">
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-8 border-t border-ink/10 pt-6">
+                  <CaseStudyForm slug={cs.slug} title={cs.title} />
                 </div>
-                <Badge variant="outline" className="rounded-xl">
-                  {cs.date}
-                </Badge>
               </div>
-            </CardHeader>
-
-            <CardContent className="space-y-4">
-              <p className="text-sm text-slate-600">{cs.summary}</p>
-
-              <div className="flex flex-wrap gap-2">
-                {cs.tags.map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-600"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <Button asChild className="rounded-2xl">
-                  <a href={cs.formUrl} target="_blank" rel="noreferrer">
-                    Download (email required)
-                  </a>
-                </Button>
-              </div>
-
-              <div className="text-xs text-slate-500">
-                Full PDF is delivered after form submission.
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+            </article>
+          ))}
+        </div>
       </div>
-    </main>
+    </SubpageShell>
   );
 }
-

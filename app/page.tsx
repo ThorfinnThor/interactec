@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SiteHeader from "@/components/site/SiteHeader";
+import SiteFooter from "@/components/site/SiteFooter";
+import { ContactForm } from "@/components/site/forms";
+import { CONTACT_EMAIL } from "@/lib/legal";
 import { getSiteUrl } from "@/lib/site-url";
 import HeroVisual from "@/components/site/HeroVisual";
 import StoryScroll, { type StoryChapter } from "@/components/site/StoryScroll";
@@ -13,8 +16,6 @@ export const metadata: Metadata = {
 };
 
 const PUBLICATION_URL = "https://www.nature.com/articles/s41592-025-02744-w";
-const CONTACT_EMAIL = "hello@interactec.bio";
-const MAILTO = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Application discussion - InterAcTec")}`;
 const CITATION = "Vonficht D, et al. Ultra-high-scale cytometry-based cellular interaction mapping. Nature Methods 22, 1887–1899 (2025).";
 
 const CLAIMS = [
@@ -77,7 +78,7 @@ export default function HomePage() {
         <Evidence />
         <Contact />
       </main>
-      <Footer />
+      <SiteFooter />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </div>
   );
@@ -112,7 +113,7 @@ function Hero() {
           </ul>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <a href={MAILTO} className={CTA_PRIMARY}>
+            <a href="#contact" className={CTA_PRIMARY}>
               Discuss your application
             </a>
             <a href="#platform" className={CTA_SECONDARY_DARK}>
@@ -464,7 +465,7 @@ function Applications() {
 
         <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
           <p className="text-lg text-paper">Working on a different modality?</p>
-          <a href={MAILTO} className="text-lg text-teal underline decoration-teal/40 underline-offset-4 hover:decoration-teal">
+          <a href="#contact" className="text-lg text-teal underline decoration-teal/40 underline-offset-4 hover:decoration-teal">
             Discuss your application
           </a>
         </div>
@@ -651,46 +652,34 @@ function Evidence() {
 
 function Contact() {
   return (
-    <section id="contact" aria-labelledby="contact-title" className="relative overflow-hidden">
-      <div className="relative mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-8 lg:py-36">
-        <p className={`${KICKER} text-teal`}>Contact</p>
-        <h2 id="contact-title" className="mt-5 max-w-3xl text-4xl font-medium leading-[1.05] tracking-tight sm:text-6xl">
-          Let’s discuss your discovery workflow.
-        </h2>
-        <p className="mt-6 max-w-xl text-lg leading-relaxed text-mist">
-          Tell us about your modality, your cells and the decision you need to make. We’ll assess together whether an
-          interaction readout fits.
-        </p>
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-          <a href={MAILTO} className={CTA_PRIMARY}>
-            Discuss your application
-          </a>
-          <a href={`mailto:${CONTACT_EMAIL}`} className="px-2 text-lg text-paper underline decoration-paper/30 underline-offset-4 hover:decoration-paper">
-            {CONTACT_EMAIL}
-          </a>
+    <section id="contact" aria-labelledby="contact-title" className="relative">
+      <div className="mx-auto grid max-w-[1240px] gap-12 px-4 py-24 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-32">
+        <div className="lg:col-span-5">
+          <p className={`${KICKER} text-teal`}>Contact</p>
+          <h2 id="contact-title" className="mt-5 text-4xl font-medium leading-[1.05] tracking-tight sm:text-6xl">
+            Let’s discuss your discovery workflow.
+          </h2>
+          <p className="mt-6 max-w-md text-lg leading-relaxed text-mist">
+            Tell us about your modality, your cells and the decision you need to make. We’ll assess together whether an
+            interaction readout fits.
+          </p>
+          <ul className="mt-10 space-y-4 border-t border-line pt-8 text-[15px] text-mist">
+            {[
+              "Engagement readouts for T-cell engagers, CAR T and other cell-bridging modalities",
+              "Re-analysis of existing cytometry datasets",
+              "Your details are only used to answer your request",
+            ].map((t) => (
+              <li key={t} className="flex gap-3">
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-teal" aria-hidden="true" />
+                {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="lg:col-span-6 lg:col-start-7">
+          <ContactForm email={CONTACT_EMAIL} />
         </div>
       </div>
     </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="border-t border-line bg-ink text-mist">
-      <div className="mx-auto flex max-w-[1240px] flex-col gap-4 px-4 py-8 text-[14px] sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-        <p>© {new Date().getFullYear()} InterAcTec</p>
-        <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2">
-          <Link href="/case-studies" className="hover:text-paper">
-            Case studies
-          </Link>
-          <Link href="/privacy" className="hover:text-paper">
-            Privacy
-          </Link>
-          <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-paper">
-            {CONTACT_EMAIL}
-          </a>
-        </nav>
-      </div>
-    </footer>
   );
 }

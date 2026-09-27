@@ -6,9 +6,8 @@ export default function robots(): MetadataRoute.Robots {
 
   return {
     rules: [
-      { userAgent: "*", allow: "/" },
-      // Thank-you pages are not useful in search results
-      { userAgent: "*", disallow: ["/thanks"] },
+      // Utility pages and endpoints are not useful in search results
+      { userAgent: "*", allow: "/", disallow: ["/thanks", "/admin", "/api/"] },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,
   };
