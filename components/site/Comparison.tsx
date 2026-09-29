@@ -185,7 +185,11 @@ const AT_A_GLANCE = [
     label: "more cell-cell interactions analysed in one experiment than in a published PIC-seq experiment",
     sub: "414,564 vs 2,389 (droplet pairing: ~2,000)",
   },
-  { value: "Hours", label: "not days: from live co-culture to readout, vs sample prep and run time for spatial transcriptomics", sub: "0.5–3 h co-culture vs up to ~6 days (Xenium)" },
+  {
+    value: "3 h",
+    label: "of live co-culture before the flow readout — spatial transcriptomics needs up to ~6 days of prep and run",
+    sub: "0.5–3 h vs 2–3 d prep + < 3 d run (Xenium)",
+  },
   { value: "52", label: "cell-type pairs resolved in one experiment, on a standard flow cytometer", sub: "vs one value per well in an endpoint kill assay" },
 ];
 

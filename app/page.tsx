@@ -244,9 +244,9 @@ function Advantages() {
               reads engaged pairs as events in a standard flow run: no image processing, far more cells per second, and
               live samples instead of fixed sections.
             </p>
-            <div className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-1">
+            <div className="mt-10 grid gap-10">
               <BigStat value="7–17×" label="higher maximum acquisition rate than imaging flow cytometry" />
-              <BigStat value="Hours" label="from live co-culture to readout — spatial transcriptomics needs days of preparation and run time" />
+              <BigStat value="3 h vs 6 d" label="Co-culture before the flow readout: 0.5–3 hours. Spatial transcriptomics (Xenium): 2–3 days of sample prep plus up to 3 days of instrument run — up to ~6 days before data." />
             </div>
           </div>
           <div className="space-y-14 self-center lg:col-span-6 lg:col-start-7">
