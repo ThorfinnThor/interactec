@@ -8,7 +8,7 @@ import { getSiteUrl } from "@/lib/site-url";
 import HeroVisual from "@/components/site/HeroVisual";
 import StoryScroll, { type StoryChapter } from "@/components/site/StoryScroll";
 import { IntegrationDiagram, MechanismDiagram, ScienceDiagram } from "@/components/site/Diagrams";
-import { AtAGlance, BarCompare, BigStat, MethodMatrix, SourceNote } from "@/components/site/Comparison";
+import { AtAGlance, BarCompare, BigStat, MethodMatrix, ReadoutKinds, SourceNote, TimeCompare } from "@/components/site/Comparison";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -162,14 +162,15 @@ function Science() {
           </div>
           <div className="space-y-5 text-lg leading-relaxed text-mist lg:col-span-6 lg:col-start-7 lg:pt-12">
             <p>
-              Many modern therapies work by bringing cells together: T-cell engagers bridge T cells and target cells, CAR T
+              Many modern therapies work by bringing cells together: T-cell engagers bridge T cells and target cells, CAR-T
               cells bind their targets, antigen-presenting cells instruct T cells. For a candidate, the decisive question is
               easy to ask and hard to measure at scale —{" "}
               <span className="text-paper">which cells actually engage, how often, and how does that change under treatment?</span>
             </p>
             <p>
-              Imaging shows contacts in fine detail, usually for fewer conditions. Endpoint assays report the outcome, not
-              the interaction that produced it. InterAcTec reads out the interaction itself — from a signal that standard
+              Microscopy shows single contacts in fine detail, for comparatively few cells. High-plex tissue imaging and
+              spatial transcriptomics map which cells sit next to each other in fixed tissue — proximity, not binding.
+              Endpoint assays report the outcome, not the interaction that produced it. InterAcTec reads out the interaction itself — from a signal that standard
               flow cytometry normally throws away.
             </p>
           </div>
@@ -215,8 +216,9 @@ function Advantages() {
                 More interactions, more cell types, less effort.
               </h2>
               <p className="mt-5 max-w-2xl text-lg leading-relaxed text-mist">
-                How the readout compares with imaging, sequencing-based interaction mapping and endpoint assays — in numbers
-                from the published record.
+                How the readout compares with imaging — from imaging flow cytometry and nanowell microscopy to high-plex
+                tissue imaging and spatial transcriptomics — with sequencing-based mapping and with endpoint assays. In
+                numbers from the published record.
               </p>
             </div>
           </div>
@@ -237,27 +239,79 @@ function Advantages() {
             <p className={`${KICKER} text-teal-deep`}>01</p>
             <h3 className="mt-4 text-4xl font-medium leading-[1.05] tracking-tight sm:text-[3.4rem]">Faster than imaging.</h3>
             <p className="mt-6 max-w-md text-lg leading-relaxed text-ink/75">
-              Imaging captures, segments and classifies every contact. The interaction readout reads engaged pairs as events
-              in a standard flow run — no image processing, and far more cells per second.
+              Every imaging method — imaging flow cytometry, live-cell and nanowell microscopy, high-plex tissue imaging,
+              spatial transcriptomics — has to capture, segment and classify cells in pictures. The interaction readout
+              reads engaged pairs as events in a standard flow run: no image processing, far more cells per second, and
+              live samples instead of fixed sections.
             </p>
-            <div className="mt-10">
+            <div className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-1">
               <BigStat value="7–17×" label="higher maximum acquisition rate than imaging flow cytometry" />
+              <BigStat value="Hours" label="from live co-culture to readout — spatial transcriptomics needs days of preparation and run time" />
             </div>
           </div>
-          <div className="self-center lg:col-span-6 lg:col-start-7">
-            <BarCompare
-              title="Maximum acquisition rate"
-              unit="cells per second"
-              bars={[
-                { label: "Full-spectrum flow cytometer (InterAcTec readout)", value: 35000, display: "35,000", ours: true },
-                { label: "Imaging flow cytometer, 20× objective", value: 5000, display: "5,000" },
-                { label: "Imaging flow cytometer, 40× objective", value: 2000, display: "2,000" },
-              ]}
-            />
-            <SourceNote
-              keys={["aurora", "imagestream"]}
-              note="Manufacturer maximum rates; practical rates depend on sample and panel. Microscopy-based contact analysis is slower still."
-            />
+          <div className="space-y-14 self-center lg:col-span-6 lg:col-start-7">
+            <div>
+              <BarCompare
+                title="Maximum acquisition rate"
+                unit="cells per second"
+                bars={[
+                  { label: "Full-spectrum flow cytometer (InterAcTec readout)", value: 35000, display: "35,000", ours: true },
+                  { label: "Imaging flow cytometer, 20× objective", value: 5000, display: "5,000" },
+                  { label: "Imaging flow cytometer, 40× objective", value: 2000, display: "2,000" },
+                  {
+                    label: "High-plex tissue imaging (PhenoCycler-Fusion)",
+                    note: "“1 million cells in 10 minutes”, per imaging pass",
+                    value: 1667,
+                    display: "~1,700",
+                  },
+                ]}
+              />
+              <SourceNote
+                keys={["aurora", "imagestream", "phenocyclerSpec"]}
+                note="Manufacturer maximum rates; practical rates depend on sample and panel. Tissue imaging repeats its pass for every marker cycle."
+              />
+            </div>
+            <div>
+              <TimeCompare
+                title="Time before data, as reported"
+                maxHours={144}
+                spans={[
+                  {
+                    label: "InterAcTec readout",
+                    note: "Co-culture in the published CAR-T experiments, then a standard flow run",
+                    min: 0.5,
+                    max: 3,
+                    display: "0.5–3 h",
+                    ours: true,
+                  },
+                  {
+                    label: "Nanowell time-lapse microscopy (TIMING)",
+                    note: "Imaging window — producing 1–2 TB of video to analyse",
+                    min: 6,
+                    display: "6 h",
+                  },
+                  { label: "Droplet co-encapsulation killing assay", note: "Imaging window", min: 10, display: "10 h" },
+                  {
+                    label: "High-plex tissue imaging (PhenoCycler-Fusion)",
+                    note: "Instrument run, depending on markers and tissue size",
+                    min: 6,
+                    max: 26,
+                    display: "6–26 h",
+                  },
+                  {
+                    label: "Spatial transcriptomics (Xenium, 480 genes)",
+                    note: "2–3 days sample prep, then a run of under 3 days",
+                    min: 48,
+                    max: 144,
+                    display: "up to ~6 d",
+                  },
+                ]}
+              />
+              <SourceNote
+                keys={["nm25", "timingCar", "timing", "droplet", "phenocycler", "xenium"]}
+                note="Different methods report different steps, so this is not a head-to-head benchmark. Staining and acquisition add to the InterAcTec time; image analysis adds to the imaging methods."
+              />
+            </div>
           </div>
         </article>
 
@@ -294,7 +348,7 @@ function Advantages() {
                   Scalable on existing flow-cytometry infrastructure.
                 </h3>
                 <p className="mt-6 max-w-md text-lg leading-relaxed text-ink/75">
-                  No sorter, no sequencing, no reporter mice. The readout runs on multicolour fluorescence flow cytometers —
+                  No sorter, no sequencing, no reporter mice, no imaging platform. The readout runs on multicolour fluorescence flow cytometers —
                   at costs the authors put orders of magnitude below single-cell genomics.
                 </p>
                 <div className="mt-10">
@@ -303,14 +357,19 @@ function Advantages() {
               </div>
               <div className="self-center lg:col-span-6 lg:col-start-7">
                 <BarCompare
-                  title="Interacting cells analysed in one experiment"
-                  unit="cells"
+                  title="Cell-cell interactions analysed individually in one experiment"
+                  unit="interacting cells or pairs"
                   bars={[
                     { label: "Interact-omics, LCMV infection time course", value: 414564, display: "414,564", ours: true },
                     { label: "PIC-seq, T cell–dendritic cell co-culture", value: 2389, display: "2,389" },
+                    { label: "Droplet co-encapsulation, NK cells and targets", value: 2000, display: "~2,000" },
+                    { label: "Nanowell microscopy, clinical CAR-T products", value: 1589, display: "1,589" },
                   ]}
                 />
-                <SourceNote keys={["nm25", "picseq"]} note="Experiment sizes as reported in each publication." />
+                <SourceNote
+                  keys={["nm25", "picseq", "droplet", "timingCar"]}
+                  note="Experiment sizes as reported in each publication. Nanowell arrays can hold up to 200,000 wells per experiment; tissue-imaging methods infer proximity rather than count bound pairs, so they are not shown."
+                />
               </div>
             </div>
             <div className="mt-16">
@@ -326,18 +385,29 @@ function Advantages() {
               <p className={`${KICKER} text-teal-deep lg:col-span-3`}>Side by side</p>
               <div className="lg:col-span-8">
                 <h3 className="text-3xl font-medium leading-[1.1] tracking-tight sm:text-4xl">
-                  Where each method stands.
+                  Contact, proximity or outcome.
                 </h3>
                 <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink/75">
-                  Every approach has its place. InterAcTec is built for the questions that need scale, breadth and existing
-                  infrastructure at once.
+                  Methods that sound alike answer different questions. Every approach has its place — InterAcTec is built
+                  for the questions that need the actual engagement, at scale, on existing infrastructure.
                 </p>
               </div>
             </div>
             <div className="mt-12">
+              <ReadoutKinds />
+            </div>
+            <SourceNote
+              keys={["armingol", "nm25"]}
+              note="Spatial methods infer interactions from proximity or ligand–receptor co-expression; transient interactions in blood cannot be studied with them."
+            />
+            <h4 className="mt-20 text-2xl font-medium tracking-tight">Where each method stands.</h4>
+            <div className="mt-6">
               <MethodMatrix />
             </div>
-            <SourceNote keys={["nm25", "picseq", "imagestream"]} note="Summary based on the cited publications and specifications." />
+            <SourceNote
+              keys={["nm25", "imagestream", "timingCar", "timing", "beacon", "droplet", "nanovials", "phenocyclerSpec", "phenocycler", "comet", "xenium", "picseq"]}
+              note="Summary based on the cited publications and specifications; examples are named for orientation, not as endorsements."
+            />
           </div>
         </article>
       </div>
@@ -404,11 +474,11 @@ const APPLICATIONS = [
     demo: "Blinatumomab (CD3×CD19) in PBMCs and patient bone marrow",
   },
   {
-    t: "CAR T cells",
-    q: "Do CAR T cells engage their intended targets, and which other cells do they contact?",
-    r: "CAR T–target pairs alongside all other interacting cell-type pairs in the sample.",
+    t: "CAR-T cells",
+    q: "Do CAR-T cells engage their intended targets, and which other cells do they contact?",
+    r: "Pairs of CAR-T and target cells, alongside all other interacting cell-type pairs in the sample.",
     v: "Compare constructs or donors on engagement before downstream functional assays.",
-    demo: "Anti-CD19 CAR T cells with B-cell targets",
+    demo: "Anti-CD19 CAR-T cells with B-cell targets",
   },
   {
     t: "Antigen-specific T-cell responses",
@@ -545,7 +615,7 @@ const FIELDS = [
     stat: "42",
     statLabel: "patients with B-ALL",
     points: [
-      "T-cell engager (blinatumomab) and anti-CD19 CAR T engagement of B cells",
+      "T-cell engager (blinatumomab) and anti-CD19 CAR-T cell engagement of B cells",
       "Drug-induced T–B interactions were stronger in good responders",
     ],
     source: "Nature Methods, 2025",
@@ -665,7 +735,7 @@ function Contact() {
           </p>
           <ul className="mt-10 space-y-4 border-t border-line pt-8 text-[15px] text-mist">
             {[
-              "Engagement readouts for T-cell engagers, CAR T and other cell-bridging modalities",
+              "Engagement readouts for T-cell engagers, CAR-T cells and other cell-bridging modalities",
               "Re-analysis of existing cytometry datasets",
               "Your details are only used to answer your request",
             ].map((t) => (

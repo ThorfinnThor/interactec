@@ -207,7 +207,7 @@ export function ContactForm({ email }: { email: string }) {
           label="Modality"
           name="modality"
           tone={tone}
-          hint="e.g. T-cell engager, CAR T, antibody"
+          hint="e.g. T-cell engager, CAR-T cells, antibody"
           error={errors.modality}
         />
       </div>
