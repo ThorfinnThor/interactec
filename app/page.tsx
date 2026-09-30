@@ -95,7 +95,7 @@ function Hero() {
             id="hero-title"
             className="text-[2.35rem] font-medium leading-[1.06] tracking-[-0.03em] text-paper sm:text-6xl lg:text-[clamp(3rem,8vh,3.9rem)] xl:text-[clamp(3rem,8.5vh,4.35rem)]"
           >
-            We turn <span className="text-teal">functional <span className="whitespace-nowrap">cell-cell</span> engagement</span>{" "}
+            We turn <span className="text-teal"><span className="whitespace-nowrap">cell-cell</span> interactions</span>{" "}
             into a{" "}
             <span className="underline decoration-teal decoration-2 underline-offset-[0.16em]">
               scalable <span className="whitespace-nowrap">drug-discovery</span> readout

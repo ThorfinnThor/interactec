@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "InterAcTec — We turn functional cell-cell engagement into a scalable drug-discovery readout.";
+export const alt = "InterAcTec — We turn cell-cell interactions into a scalable drug-discovery readout.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -22,7 +22,7 @@ export default function OpengraphImage() {
           <div style={{ fontSize: 30, fontWeight: 600, letterSpacing: -0.5 }}>InterAcTec</div>
           <div style={{ display: "flex", flexDirection: "column", fontSize: 56, lineHeight: 1.08, letterSpacing: -1.5 }}>
             <span>We turn</span>
-            <span style={{ color: "#68e4d4" }}>functional cell-cell engagement</span>
+            <span style={{ color: "#68e4d4" }}>cell-cell interactions</span>
             <span>into a scalable drug-discovery readout.</span>
           </div>
           <div style={{ fontSize: 22, color: "#b5c0ca" }}>Built on Interact-omics · Nature Methods 2025</div>
