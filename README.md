@@ -17,8 +17,8 @@ Before deploying:
 2. Upload the two report PDFs using these object keys:
    - `reports/InterAcTec_Report1_IBD.pdf`
    - `reports/InterAcTec_Report2_Arthritis.pdf`
-3. Set `NEXT_PUBLIC_SITE_URL` as a Cloudflare build variable for the target domain.
+3. The production canonical URL defaults to `https://interactec.bio`. Set
+   `NEXT_PUBLIC_SITE_URL` only when intentionally building for another target domain.
 4. Run `npm run build:vinext` and verify the `/thanks` and `/api/download/*` flows.
 
 Deploy only after the preview environment has passed the migration smoke tests.
-

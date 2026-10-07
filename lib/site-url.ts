@@ -1,11 +1,8 @@
-const LOCAL_SITE_URL = "http://localhost:3000";
+const DEFAULT_SITE_URL = "https://interactec.bio";
 
 export function getSiteUrl(): URL {
-  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-
-  if (!configuredUrl) {
-    return new URL(LOCAL_SITE_URL);
-  }
+  const configuredUrl =
+    process.env.NEXT_PUBLIC_SITE_URL?.trim() || DEFAULT_SITE_URL;
 
   const normalizedUrl = configuredUrl.startsWith("http")
     ? configuredUrl

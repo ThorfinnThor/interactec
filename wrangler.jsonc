@@ -11,6 +11,9 @@
     "not_found_handling": "none",
     "binding": "ASSETS"
   },
+  "vars": {
+    "NEXT_PUBLIC_SITE_URL": "https://interactec.bio"
+  },
   "r2_buckets": [
     {
       "binding": "REPORTS",
