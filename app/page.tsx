@@ -288,13 +288,13 @@ function Evidence() {
     <section id="evidence" aria-labelledby="evidence-title" className="on-paper bg-paper text-ink">
       <div className="mx-auto grid max-w-[1240px] gap-12 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-28">
         <div className="lg:col-span-5">
-          <p className={`${KICKER} text-teal-deep`}>Immunotherapy evidence</p>
+          <p className={`${KICKER} text-teal-deep`}>Immunotherapy-scale resolution</p>
           <h2 id="evidence-title" className="mt-5 text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
-            Resolving engagement across cell states, modalities and patient samples.
+            From 200+ immune phenotypes to interaction networks at scale.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-ink/70">
-            The Nature Methods study quantified engagement kinetics for anti-CD19 CAR-T cells and the bispecific T-cell
-            engager blinatumomab, then identified interaction features associated with response in relapsed B-ALL samples.
+            Designed for high-dimensional studies of T-cell engagers and cell therapies across candidates, doses, donors
+            and time points — with the cellular depth to resolve both intended engagement and broader immune context.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
@@ -314,19 +314,31 @@ function Evidence() {
           </div>
         </div>
 
-        <dl className="grid gap-px overflow-hidden rounded-2xl border border-ink/12 bg-ink/12 sm:grid-cols-2 lg:col-span-6 lg:col-start-7">
-          {[
-            ["24-plex", "immune cell-type and cell-state resolution in human PBMCs"],
-            ["34,362", "interacting cells in the blinatumomab engagement landscape"],
-            ["9,974", "interacting cells in the anti-CD19 CAR-T engagement landscape"],
-            ["42", "relapsed B-ALL bone-marrow samples assessed ex vivo"],
-          ].map(([value, label]) => (
-            <div key={label} className="min-h-48 bg-white/70 p-6 sm:p-7">
-              <dt className="text-4xl font-medium tracking-tight text-teal-deep tabular-nums">{value}</dt>
-              <dd className="mt-3 text-[14px] leading-relaxed text-ink/65">{label}</dd>
-            </div>
-          ))}
-        </dl>
+        <div className="lg:col-span-6 lg:col-start-7">
+          <dl className="grid gap-px overflow-hidden rounded-t-2xl border border-b-0 border-ink/12 bg-ink/12 sm:grid-cols-2">
+            {[
+              ["40-plex", "full-spectrum panels for deep immune phenotyping"],
+              ["200+", "cell types and functional states addressable by panel design"],
+              ["~20,000", "potential heterotypic interaction classes across 200 phenotypes"],
+              ["100M+", "cell events addressable across high-scale study designs"],
+            ].map(([value, label]) => (
+              <div key={label} className="min-h-44 bg-white/70 p-6 sm:p-7">
+                <dt className="text-4xl font-medium tracking-tight text-teal-deep tabular-nums">{value}</dt>
+                <dd className="mt-3 text-[14px] leading-relaxed text-ink/65">{label}</dd>
+              </div>
+            ))}
+          </dl>
+          <div className="rounded-b-2xl border border-ink bg-ink px-6 py-5 text-paper sm:flex sm:items-baseline sm:gap-5 sm:px-7">
+            <p className="text-3xl font-medium tracking-tight text-teal tabular-nums">414,564</p>
+            <p className="mt-1 text-[14px] leading-relaxed text-mist sm:mt-0">
+              interacting cells mapped in a single published experiment
+            </p>
+          </div>
+          <p className="mt-4 text-[12px] leading-relaxed text-ink/50">
+            Interaction-space estimate: 200 × 199 ÷ 2 = 19,900 heterotypic pairings. Actual resolution and event yield
+            depend on panel, sample, controls and acquisition design.
+          </p>
+        </div>
       </div>
     </section>
   );

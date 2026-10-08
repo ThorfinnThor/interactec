@@ -11,11 +11,12 @@ The public homepage no longer uses the earlier comparative hero claims. It sells
 | "Compare candidates by the cell interactions they create." | Positioning statement; page scopes the offer to T-cell engagers, CAR-T and existing compatible cytometry datasets. | 🟡 confirm commercial scope |
 | "Interaction map, side-by-side candidate comparison and concise decision report." | Defined pilot deliverables; no clinical or performance outcome claimed. | ❓ confirm these are the standard commercial deliverables |
 | "Standard multicolour flow cytometry" | NM25 states the method can be used with multicolour fluorescence cytometers, subject to acquisition guidelines. | ✅ paper / ❓ confirm commercial workflow |
-| 24-plex panel with cell-type and cell-state resolution in human PBMCs | NM25 Fig. 2 and accompanying text. The number describes the panel, not a count of biological states. | ✅ |
-| 34,362 interacting cells in the blinatumomab engagement landscape | NM25 Fig. 3h; four technical replicates from one donor. | ✅ |
-| 9,974 interacting cells in the anti-CD19 CAR-T engagement landscape | NM25 Fig. 3c; murine splenocyte co-culture, four technical replicates. | ✅ |
-| 42 relapsed B-ALL bone-marrow samples assessed ex vivo | NM25 Fig. 4 and methods; the cohort included 42 pediatric patients. | ✅ |
-| Blinatumomab and anti-CD19 CAR-T | Demonstrations in NM25; presented as published examples, not guaranteed service outcomes. | ✅ |
+| 40-plex full-spectrum panels | 40-color single-tube full-spectrum immunophenotyping has been demonstrated on the Cytek Aurora; NM25 itself used optimized 24/25-plex assays. | 🟡 confirm InterAcTec's validated 40-plex workflow |
+| 200+ cell types and functional states addressable by panel design | Commercial maximum supplied by InterAcTec; not a result reported in NM25. Actual resolution depends on panel, biology and annotation. | ❓ internal validation required |
+| ~20,000 potential heterotypic interaction classes | Derived from the 200-phenotype maximum: 200 × 199 ÷ 2 = 19,900 unordered heterotypic pairs. This is the potential interaction space, not a claim that all pairs are observed. | ✅ arithmetic / ❓ validate the 200 input |
+| 100M+ cell events across high-scale study designs | Commercial scale target supplied by InterAcTec. NM25's largest single reported experiment contained 34,369,995 recorded cells. | ❓ internal validation required |
+| 414,564 interacting cells mapped in a single published experiment | NM25 Fig. 5; one organism-wide LCMV experiment across organs and time points. The homepage does not foreground the disease model. | ✅ |
+| T-cell engagers and cell therapies | Blinatumomab and anti-CD19 CAR-T demonstrations in NM25; presented as application scope, not guaranteed service outcomes. | ✅ demonstrated / ❓ confirm commercial scope |
 
 The historical sections below remain as a record of the earlier relaunch review; red comparative claims are not part of the current public pages.
 
