@@ -329,10 +329,7 @@ function Evidence() {
             {[
               ["40-plex", "full-spectrum panels for deep immune phenotyping"],
               ["200+", "cell phenotypes and functional states profiled by panel design"],
-              [
-                "Lineage-level",
-                "interaction assignment across CD4 T, CD8 T, B, NK, classical and nonclassical monocytes, cDC and pDC",
-              ],
+              [">25", "cell-interaction types resolved by panel design"],
               ["100M+", "cell events addressable across high-scale study designs"],
             ].map(([value, label]) => (
               <div key={label} className="min-h-44 bg-white/70 p-6 sm:p-7">
