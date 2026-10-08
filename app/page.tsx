@@ -296,6 +296,16 @@ function Evidence() {
             Designed for high-dimensional studies of T-cell engagers and cell therapies across candidates, doses, donors
             and time points — with the cellular depth to resolve both intended engagement and broader immune context.
           </p>
+          <ul className="mt-7 flex flex-wrap gap-2" aria-label="Platform attributes">
+            {["Highly scalable", "High throughput", "High precision"].map((attribute) => (
+              <li
+                key={attribute}
+                className="rounded-full border border-ink/15 bg-white/60 px-3.5 py-2 font-mono text-[11px] uppercase tracking-[0.1em] text-ink/70"
+              >
+                {attribute}
+              </li>
+            ))}
+          </ul>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/science"
@@ -332,7 +342,7 @@ function Evidence() {
             ))}
           </dl>
           <div className="rounded-b-2xl border border-ink bg-ink px-6 py-5 text-paper sm:flex sm:items-baseline sm:gap-5 sm:px-7">
-            <p className="text-3xl font-medium tracking-tight text-teal tabular-nums">414,564</p>
+            <p className="text-3xl font-medium tracking-tight text-teal tabular-nums">&gt;400k</p>
             <p className="mt-1 text-[14px] leading-relaxed text-mist sm:mt-0">
               interacting cells mapped in a single published experiment
             </p>
