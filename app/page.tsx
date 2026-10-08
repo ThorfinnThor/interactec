@@ -290,7 +290,7 @@ function Evidence() {
         <div className="lg:col-span-5">
           <p className={`${KICKER} text-teal-deep`}>Immunotherapy-scale resolution</p>
           <h2 id="evidence-title" className="mt-5 text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
-            From 200+ immune phenotypes to interaction networks at scale.
+            Deep immune phenotyping with lineage-resolved interaction maps.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-ink/70">
             Designed for high-dimensional studies of T-cell engagers and cell therapies across candidates, doses, donors
@@ -318,8 +318,11 @@ function Evidence() {
           <dl className="grid gap-px overflow-hidden rounded-t-2xl border border-b-0 border-ink/12 bg-ink/12 sm:grid-cols-2">
             {[
               ["40-plex", "full-spectrum panels for deep immune phenotyping"],
-              ["200+", "cell types and functional states addressable by panel design"],
-              ["~20,000", "potential heterotypic interaction classes across 200 phenotypes"],
+              ["200+", "cell phenotypes and functional states profiled by panel design"],
+              [
+                "Lineage-level",
+                "interaction assignment across CD4 T, CD8 T, B, NK, classical and nonclassical monocytes, cDC and pDC",
+              ],
               ["100M+", "cell events addressable across high-scale study designs"],
             ].map(([value, label]) => (
               <div key={label} className="min-h-44 bg-white/70 p-6 sm:p-7">
@@ -335,8 +338,8 @@ function Evidence() {
             </p>
           </div>
           <p className="mt-4 text-[12px] leading-relaxed text-ink/50">
-            Interaction-space estimate: 200 × 199 ÷ 2 = 19,900 heterotypic pairings. Actual resolution and event yield
-            depend on panel, sample, controls and acquisition design.
+            High-dimensional panels profile cellular states; interacting partners are assigned at the validated immune-lineage
+            level. Exact resolution and event yield depend on panel, sample, controls and acquisition design.
           </p>
         </div>
       </div>
