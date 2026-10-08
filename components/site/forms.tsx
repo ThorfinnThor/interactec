@@ -182,8 +182,8 @@ export function ContactForm({ email }: { email: string }) {
   if (status.state === "done") {
     return (
       <div role="status" className="rounded-2xl border border-teal/40 bg-ink-2 p-8">
-        <p className="font-mono text-xs uppercase tracking-[0.16em] text-teal">Message received</p>
-        <p className="mt-3 text-2xl font-medium text-paper">Thank you — we’ll get back to you shortly.</p>
+        <p className="font-mono text-xs uppercase tracking-[0.16em] text-teal">Feasibility request received</p>
+        <p className="mt-3 text-2xl font-medium text-paper">Thank you — we’ll review the project details.</p>
         <p className="mt-3 text-[15px] text-mist">
           For anything urgent, email{" "}
           <a className="text-paper underline underline-offset-4" href={`mailto:${email}`}>
@@ -213,12 +213,12 @@ export function ContactForm({ email }: { email: string }) {
       </div>
       <div className="sm:col-span-2">
         <Field
-          label="What would you like to find out?"
+          label="What should we assess?"
           name="message"
           tone={tone}
           required
           textarea
-          hint="Your cells, the question and the decision you need to make."
+          hint="Your cell system, available samples or FCS data, current assay and the decision you need to make."
           error={errors.message}
         />
       </div>
@@ -237,7 +237,7 @@ export function ContactForm({ email }: { email: string }) {
           disabled={status.state === "sending"}
           className="inline-flex h-12 items-center justify-center rounded-full bg-teal px-7 text-base font-medium text-ink transition-colors hover:bg-paper disabled:opacity-60"
         >
-          {status.state === "sending" ? "Sending…" : "Send message"}
+          {status.state === "sending" ? "Sending…" : "Request feasibility assessment"}
         </button>
         <span className="text-[14px] text-mist">
           or email{" "}

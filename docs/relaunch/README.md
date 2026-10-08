@@ -1,7 +1,8 @@
 # Website relaunch
 
-Branch: `relaunch`. Phase 1 = new positioning, structure, copy and custom SVG graphics.
-Phase 2 = WebGL cell scenes (Three.js + React Three Fiber) for the hero and the scroll story, with the SVGs kept as posters and fallbacks.
+Current branch: `main`. Phase 1 introduced the scientific positioning, copy and custom SVG graphics.
+Phase 2 added WebGL cell scenes (Three.js + React Three Fiber), with the SVGs kept as posters and fallbacks.
+The sales-funnel V1 (8 Oct 2026) shortened the homepage and moved the longer scientific explanation to `/science`.
 
 ## Run
 
@@ -13,15 +14,22 @@ npm run build && npm start
 
 Fonts are self-hosted in `app/fonts/` (SIL OFL), so builds no longer need Google Fonts.
 
-## What changed
+## Current sales funnel (V1)
 
-- `app/page.tsx` — new homepage: Hero (mandated H1 + three claims, exact order) → The question → Platform story (4 chapters) → three differentiators → workflow → applications → **Beyond discovery** (clinical/translational, secondary) → evidence → contact.
+- `app/page.tsx` — concise homepage: concrete offer and outcome → inputs/outputs → deliverables → three-step feasibility pilot → applications → compact evidence → feasibility request.
+- `app/science/page.tsx` — the detailed method story, workflow and supported published demonstrations. Unsupported speed and endpoint-cytotoxicity comparisons are intentionally excluded.
+- `components/site/forms.tsx` — the primary conversion is a feasibility request; submissions are validated server-side and stored in the existing Cloudflare R2 binding.
+- `components/site/SiteHeader.tsx` — navigation now follows the buying journey and keeps the feasibility CTA visible on desktop and mobile.
+- `app/layout.tsx` and `app/opengraph-image.tsx` — metadata and share image use the new offer-led positioning.
+- `app/sitemap.ts` — includes `/science`.
+
+## Earlier relaunch foundation
+
 - `components/site/` — `SiteHeader` (keyboard-accessible mobile menu), `HeroVisual`, `StoryScroll` + `StoryVisual` (one scene, four states), `Diagrams` (science, speed, mechanism, integration), `cells.tsx` (schematic cell primitives).
 - `lib/blob.ts` — deterministic organic outlines (no runtime randomness, SSR-safe).
-- `app/layout.tsx` — local fonts, new metadata. `app/opengraph-image.tsx` replaces the missing `/og.png`.
 - `app/globals.css` — palette tokens (ink `#080D15`, paper `#F4F7F4`, teal `#68E4D4`, violet `#A49BE8`), focus styles, motion rules.
 - Removed: `components/background/NetworkBackground.tsx`, `components/navigation/*` (no longer used).
-- Unchanged: `/case-studies`, `/privacy`, `/thanks`, `/api/download/*`, sitemap, robots.
+- Unchanged in V1: `/case-studies`, `/privacy`, `/thanks`, `/api/download/*`, robots and the submission backend.
 
 ## Design summary
 
@@ -53,14 +61,14 @@ Fonts are self-hosted in `app/fonts/` (SIL OFL), so builds no longer need Google
 
 Not tested: Firefox and WebKit (not available in the test environment), real devices, field data (INP needs real users).
 
-## Open blockers before production
+## Remaining business confirmations
 
 See `CLAIMS.md`. In short:
-1. Scientific sign-off on "Faster than imaging." and "More mechanistic than endpoint cytotoxicity." (no published comparison yet).
-2. Confirm the company's relationship to the Nature Methods work and the actual service workflow.
-3. Impressum / legal-entity details (none in repo).
-4. Team / founder content (none in repo) — About/Team section intentionally omitted.
-5. Brand spelling (InterAcTec vs Interactec).
+1. Confirm who performs new sample acquisition and the commercial turnaround; V1 deliberately describes scoping an acquisition or re-analysis plan without assigning lab ownership.
+2. Confirm the company's relationship to the Nature Methods work. The site says the method is published there but does not claim authorship or affiliation.
+3. Keep legal-entity details and the Impressum current.
+4. Team / founder content is intentionally omitted until approved source material exists.
+5. Confirm brand spelling (InterAcTec vs Interactec) before the next brand pass.
 
 ---
 

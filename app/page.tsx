@@ -1,61 +1,101 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import SiteHeader from "@/components/site/SiteHeader";
+import HeroVisual from "@/components/site/HeroVisual";
 import SiteFooter from "@/components/site/SiteFooter";
+import SiteHeader from "@/components/site/SiteHeader";
 import { ContactForm } from "@/components/site/forms";
 import { CONTACT_EMAIL } from "@/lib/legal";
 import { getSiteUrl } from "@/lib/site-url";
-import HeroVisual from "@/components/site/HeroVisual";
-import StoryScroll, { type StoryChapter } from "@/components/site/StoryScroll";
-import { IntegrationDiagram, MechanismDiagram, ScienceDiagram } from "@/components/site/Diagrams";
-import { AtAGlance, BarCompare, BigStat, MethodMatrix, ReadoutKinds, SourceNote, TimeCompare } from "@/components/site/Comparison";
 
 export const metadata: Metadata = {
+  title: "Cell-cell engagement analysis for drug discovery",
+  description:
+    "Compare T-cell engager and CAR-T candidates with a scoped flow-cytometry interaction study and a decision-ready report.",
   alternates: { canonical: "/" },
-  openGraph: { url: "/" },
+  openGraph: {
+    url: "/",
+    title: "Cell-cell engagement analysis for drug discovery | InterAcTec",
+    description:
+      "Interaction maps, candidate comparisons and decision-ready reports from new or existing flow-cytometry data.",
+  },
 };
 
 const PUBLICATION_URL = "https://www.nature.com/articles/s41592-025-02744-w";
-const CITATION = "Vonficht D, et al. Ultra-high-scale cytometry-based cellular interaction mapping. Nature Methods 22, 1887–1899 (2025).";
-
-const CLAIMS = [
-  "Faster than imaging.",
-  "More mechanistic than endpoint cytotoxicity.",
-  "Scalable on existing flow-cytometry infrastructure.",
-];
-
-const CHAPTERS: StoryChapter[] = [
-  {
-    title: "Two populations. One question.",
-    body: "Effector and target cells share the sample. What matters for a candidate is which of them actually engage — and how that changes under treatment.",
-  },
-  {
-    title: "Proximity is not engagement.",
-    body: "Cells can sit side by side by chance. The readout focuses on physically interacting pairs and on how their frequency shifts between conditions.",
-  },
-  {
-    title: "Every engaged pair becomes an event.",
-    body: "A conjugate passes the cytometer as one event carrying both marker sets. Scatter signature and marker co-expression turn it into a countable, classifiable data point.",
-  },
-  {
-    title: "Conditions become comparable.",
-    body: "Interaction frequencies per cell-type pair line up across compounds, concentrations, donors or time points — a readout you can rank and decide on.",
-  },
-];
-
+const KICKER = "font-mono text-xs uppercase tracking-[0.16em]";
 const CTA_PRIMARY =
   "inline-flex h-12 items-center justify-center rounded-full bg-teal px-6 text-base font-medium text-ink transition-colors hover:bg-paper";
-const CTA_SECONDARY_DARK =
-  "inline-flex h-12 items-center justify-center gap-2 rounded-full border border-paper/30 px-6 text-base text-paper transition-colors hover:border-paper";
-const KICKER = "font-mono text-xs uppercase tracking-[0.16em]";
+const CTA_SECONDARY =
+  "inline-flex h-12 items-center justify-center rounded-full border border-paper/30 px-6 text-base text-paper transition-colors hover:border-paper";
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "InterAcTec",
-  email: CONTACT_EMAIL,
-  url: getSiteUrl().origin,
-};
+const DELIVERABLES = [
+  {
+    title: "Interaction map",
+    text: "See which cell-type pairs engage and how frequently those interactions occur in each condition.",
+    detail: "Cell-type pairs · interaction frequencies",
+  },
+  {
+    title: "Candidate comparison",
+    text: "Compare candidates, formats, concentrations, controls or time points in one consistent readout.",
+    detail: "Conditions · controls · time points",
+  },
+  {
+    title: "Decision-ready report",
+    text: "Receive clear plots, scientific interpretation, limitations and implications for the next experiment.",
+    detail: "Visuals · interpretation · next steps",
+  },
+];
+
+const PILOT_STEPS = [
+  {
+    title: "Share the decision",
+    text: "Tell us about your modality, effector and target cells, candidate conditions, controls and the decision you need to make.",
+  },
+  {
+    title: "Scope the pilot",
+    text: "Together we define the panel, controls and acquisition or re-analysis plan for new or existing flow-cytometry data.",
+  },
+  {
+    title: "Compare engagement",
+    text: "We map interacting cell pairs, compare conditions and review the resulting report with your team.",
+  },
+];
+
+const APPLICATIONS = [
+  {
+    title: "T-cell engagers & bispecifics",
+    question: "Which candidate or format produces the intended T cell–target cell engagement?",
+    decision: "Prioritize candidates, concentrations and time points for follow-up experiments.",
+  },
+  {
+    title: "CAR-T therapies",
+    question: "Do CAR-T cells engage the intended targets, and which other cell types do they contact?",
+    decision: "Compare constructs, donors or conditions at the level of cellular engagement.",
+  },
+  {
+    title: "Existing cytometry datasets",
+    question: "Does an existing dataset contain an interaction signal that was previously gated out?",
+    decision: "Assess whether compatible FCS files can answer a new interaction-focused question.",
+  },
+];
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "InterAcTec",
+    email: CONTACT_EMAIL,
+    url: getSiteUrl().origin,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: "InterAcTec cell-cell engagement pilot",
+    provider: { "@type": "Organization", name: "InterAcTec" },
+    serviceType: "Flow-cytometry cell-cell interaction analysis",
+    description:
+      "A scoped interaction study delivering an interaction map, candidate comparison and scientific decision report.",
+  },
+];
 
 export default function HomePage() {
   return (
@@ -69,12 +109,9 @@ export default function HomePage() {
       <SiteHeader />
       <main id="main" className="bg-ink text-paper">
         <Hero />
-        <Science />
-        <Platform />
-        <Advantages />
-        <Workflow />
+        <Deliverables />
+        <Pilot />
         <Applications />
-        <Translational />
         <Evidence />
         <Contact />
       </main>
@@ -84,459 +121,66 @@ export default function HomePage() {
   );
 }
 
-/* ---------------------------------- A. Hero ---------------------------------- */
-
 function Hero() {
   return (
     <section aria-labelledby="hero-title" className="relative overflow-hidden">
-      <div className="mx-auto grid max-w-[1240px] items-center gap-10 px-4 pb-16 pt-10 sm:px-6 lg:min-h-[calc(100svh-4rem)] lg:grid-cols-12 lg:gap-6 lg:px-8 lg:pb-20 lg:pt-8">
+      <div className="mx-auto grid max-w-[1240px] items-center gap-10 px-4 pb-14 pt-10 sm:px-6 lg:grid-cols-12 lg:gap-8 lg:px-8 lg:pb-20 lg:pt-14">
         <div className="lg:col-span-7">
+          <p className={`${KICKER} text-teal`}>Cell-cell engagement pilot</p>
           <h1
             id="hero-title"
-            className="text-[2.35rem] font-medium leading-[1.06] tracking-[-0.03em] text-paper sm:text-6xl lg:text-[clamp(3rem,8vh,3.9rem)] xl:text-[clamp(3rem,8.5vh,4.35rem)]"
+            className="mt-5 text-[2.55rem] font-medium leading-[1.03] tracking-[-0.035em] text-paper sm:text-6xl lg:text-[clamp(3.15rem,5vw,4.2rem)]"
           >
-            We turn <span className="text-teal"><span className="whitespace-nowrap">cell-cell</span> interactions</span>{" "}
-            into a{" "}
-            <span className="underline decoration-teal decoration-2 underline-offset-[0.16em]">
-              scalable <span className="whitespace-nowrap">drug-discovery</span> readout
-            </span>
-            .
+            Compare candidates by the <span className="text-teal">cell interactions</span> they create.
           </h1>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mist sm:text-xl">
+            We scope a flow-cytometry interaction study and deliver an interaction map, a side-by-side candidate
+            comparison and a concise decision report.
+          </p>
 
-          <ul className="mt-9 max-w-xl border-t border-line" aria-label="Why InterAcTec">
-            {CLAIMS.map((c, i) => (
-              <li key={c} className="flex items-baseline gap-5 border-b border-line py-3.5">
-                <span className="font-mono text-xs text-teal">{String(i + 1).padStart(2, "0")}</span>
-                <span className="text-lg text-paper sm:text-xl">{c}</span>
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <a href="#contact" className={CTA_PRIMARY}>
-              Discuss your application
+              Check project feasibility
             </a>
-            <a href="#platform" className={CTA_SECONDARY_DARK}>
-              Explore the platform
-            </a>
+            <Link href="/case-studies" className={CTA_SECONDARY}>
+              View case-study reports
+            </Link>
           </div>
 
-          <p className="mt-8 text-[15px] text-mist">
-            Built on Interact-omics, peer-reviewed in{" "}
-            <a href={PUBLICATION_URL} target="_blank" rel="noreferrer" className="text-paper underline decoration-paper/30 underline-offset-4 hover:decoration-paper">
-              Nature Methods (2025)
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-            .
+          <p className="mt-5 max-w-2xl border-l-2 border-teal pl-4 text-[15px] leading-relaxed text-paper">
+            See which cells engage, how often and how that changes by candidate or condition before prioritizing follow-up
+            experiments.
           </p>
+
+          <dl className="mt-9 grid max-w-2xl gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2">
+            <div className="bg-ink-2 p-5">
+              <dt className={`${KICKER} text-teal`}>You bring</dt>
+              <dd className="mt-2 text-[15px] leading-relaxed text-mist">
+                The question, candidate conditions, cells and controls — or compatible existing FCS data.
+              </dd>
+            </div>
+            <div className="bg-ink-2 p-5">
+              <dt className={`${KICKER} text-violet`}>You receive</dt>
+              <dd className="mt-2 text-[15px] leading-relaxed text-mist">
+                An interaction map, comparative analysis and an interpreted decision report.
+              </dd>
+            </div>
+          </dl>
         </div>
 
-        <div className="lg:col-span-5 lg:-mr-10 xl:-mr-20">
+        <div className="lg:col-span-5 lg:-mr-10 xl:-mr-16">
           <HeroVisual />
         </div>
       </div>
 
-      <a
-        href="#science"
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-mist hover:text-paper lg:flex"
-      >
-        <span className="h-8 w-px bg-mist/50" aria-hidden="true" />
-        Scroll to see how it works
-      </a>
-    </section>
-  );
-}
-
-/* ------------------------------ B. The question ------------------------------ */
-
-function Science() {
-  return (
-    <section id="science" aria-labelledby="science-title" className="border-t border-line bg-ink-2">
-      <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-        <div className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-5">
-            <p className={`${KICKER} text-teal`}>The question</p>
-            <h2 id="science-title" className="mt-5 text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
-              Bring functional <span className="whitespace-nowrap">cell-cell</span> engagement into focus.
-            </h2>
-          </div>
-          <div className="space-y-5 text-lg leading-relaxed text-mist lg:col-span-6 lg:col-start-7 lg:pt-12">
-            <p>
-              Many modern therapies work by bringing cells together: T-cell engagers bridge T cells and target cells, CAR-T
-              cells bind their targets, antigen-presenting cells instruct T cells. For a candidate, the decisive question is
-              easy to ask and hard to measure at scale —{" "}
-              <span className="text-paper">which cells actually engage, how often, and how does that change under treatment?</span>
-            </p>
-            <p>
-              Microscopy shows single contacts in fine detail, for comparatively few cells. High-plex tissue imaging and
-              spatial transcriptomics map which cells sit next to each other in fixed tissue — proximity, not binding.
-              Endpoint assays report the outcome, not the interaction that produced it. InterAcTec reads out the interaction itself — from a signal that standard
-              flow cytometry normally throws away.
-            </p>
-          </div>
-        </div>
-        <div className="mt-16">
-          <ScienceDiagram />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* --------------------------- C. Story (the platform) --------------------------- */
-
-function Platform() {
-  return (
-    <section id="platform" aria-labelledby="platform-title" className="relative border-t border-line">
-      <div className="mx-auto max-w-[1240px] px-4 pt-24 sm:px-6 lg:px-8 lg:pt-32">
-        <p className={`${KICKER} text-teal`}>The platform</p>
-        <h2 id="platform-title" className="mt-5 max-w-3xl text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
-          From cell-cell engagement to a discovery readout.
-        </h2>
-      </div>
-      <div className="mx-auto max-w-[1240px] px-4 pb-16 pt-8 sm:px-6 lg:px-8 lg:pb-24">
-        <StoryScroll chapters={CHAPTERS} />
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------ D. The three differentiators ------------------------ */
-
-function Advantages() {
-  return (
-    <>
-      {/* value proposition at a glance */}
-      <section id="advantages" aria-labelledby="advantages-title" className="border-t border-line bg-ink-2">
-        <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
-          <div className="grid gap-6 lg:grid-cols-12">
-            <p className={`${KICKER} text-teal lg:col-span-3`}>Why InterAcTec</p>
-            <div className="lg:col-span-8">
-              <h2 id="advantages-title" className="text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
-                More interactions, more cell types, less effort.
-              </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-mist">
-                How the readout compares with imaging — from imaging flow cytometry and nanowell microscopy to high-plex
-                tissue imaging and spatial transcriptomics — with sequencing-based mapping and with endpoint assays. In
-                numbers from the published record.
-              </p>
-            </div>
-          </div>
-          <div className="mt-14">
-            <AtAGlance />
-          </div>
-          <p className="mt-4 text-[13px] leading-relaxed text-mist">
-            Figures compare published instrument specifications and reported experiment sizes; they are not a head-to-head
-            benchmark. Details and sources below.
-          </p>
-        </div>
-      </section>
-
-      <div className="on-paper bg-paper text-ink">
-        {/* 01 */}
-        <article className="mx-auto grid max-w-[1240px] gap-12 px-4 py-24 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-32">
-          <div className="lg:col-span-5">
-            <p className={`${KICKER} text-teal-deep`}>01</p>
-            <h3 className="mt-4 text-4xl font-medium leading-[1.05] tracking-tight sm:text-[3.4rem]">Faster than imaging.</h3>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-ink/75">
-              Every imaging method — imaging flow cytometry, live-cell and nanowell microscopy, high-plex tissue imaging,
-              spatial transcriptomics — has to capture, segment and classify cells in pictures. The interaction readout
-              reads engaged pairs as events in a standard flow run: no image processing, far more cells per second, and
-              live samples instead of fixed sections.
-            </p>
-            <div className="mt-10 grid gap-10">
-              <BigStat value="7–17×" label="higher maximum acquisition rate than imaging flow cytometry" />
-              <BigStat value="3 h vs 6 d" label="Co-culture before the flow readout: 0.5–3 hours. Spatial transcriptomics (Xenium): 2–3 days of sample prep plus up to 3 days of instrument run — up to ~6 days before data." />
-            </div>
-          </div>
-          <div className="space-y-14 self-center lg:col-span-6 lg:col-start-7">
-            <div>
-              <BarCompare
-                title="Maximum acquisition rate"
-                unit="cells per second"
-                bars={[
-                  { label: "Full-spectrum flow cytometer (InterAcTec readout)", value: 35000, display: "35,000", ours: true },
-                  { label: "Imaging flow cytometer, 20× objective", value: 5000, display: "5,000" },
-                  { label: "Imaging flow cytometer, 40× objective", value: 2000, display: "2,000" },
-                  {
-                    label: "High-plex tissue imaging (PhenoCycler-Fusion)",
-                    note: "“1 million cells in 10 minutes”, per imaging pass",
-                    value: 1667,
-                    display: "~1,700",
-                  },
-                ]}
-              />
-              <SourceNote
-                keys={["aurora", "imagestream", "phenocyclerSpec"]}
-                note="Manufacturer maximum rates; practical rates depend on sample and panel. Tissue imaging repeats its pass for every marker cycle."
-              />
-            </div>
-            <div>
-              <TimeCompare
-                title="Time before data, as reported"
-                maxHours={144}
-                spans={[
-                  {
-                    label: "InterAcTec readout",
-                    note: "Co-culture in the published CAR-T experiments, then a standard flow run",
-                    min: 0.5,
-                    max: 3,
-                    display: "0.5–3 h",
-                    ours: true,
-                  },
-                  {
-                    label: "Nanowell time-lapse microscopy (TIMING)",
-                    note: "Imaging window — producing 1–2 TB of video to analyse",
-                    min: 6,
-                    display: "6 h",
-                  },
-                  { label: "Droplet co-encapsulation killing assay", note: "Imaging window", min: 10, display: "10 h" },
-                  {
-                    label: "High-plex tissue imaging (PhenoCycler-Fusion)",
-                    note: "Instrument run, depending on markers and tissue size",
-                    min: 6,
-                    max: 26,
-                    display: "6–26 h",
-                  },
-                  {
-                    label: "Spatial transcriptomics (Xenium, 480 genes)",
-                    note: "2–3 days sample prep, then a run of under 3 days",
-                    min: 48,
-                    max: 144,
-                    display: "up to ~6 d",
-                  },
-                ]}
-              />
-              <SourceNote
-                keys={["nm25", "timingCar", "timing", "droplet", "phenocycler", "xenium"]}
-                note="Different methods report different steps, so this is not a head-to-head benchmark. Staining and acquisition add to the InterAcTec time; image analysis adds to the imaging methods."
-              />
-            </div>
-          </div>
-        </article>
-
-        {/* 02 */}
-        <article className="border-t border-ink/10 bg-paper-2">
-          <div className="mx-auto grid max-w-[1240px] gap-12 px-4 py-24 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-32">
-            <div className="order-2 self-center lg:order-1 lg:col-span-7">
-              <MechanismDiagram />
-            </div>
-            <div className="order-1 lg:order-2 lg:col-span-4 lg:col-start-9">
-              <p className={`${KICKER} text-teal-deep`}>02</p>
-              <h3 className="mt-4 text-4xl font-medium leading-[1.05] tracking-tight sm:text-[3.4rem]">
-                More mechanistic than endpoint cytotoxicity.
-              </h3>
-              <p className="mt-6 text-lg leading-relaxed text-ink/75">
-                A kill assay tells you whether target cells died. The interaction readout shows who engaged whom, how often
-                and when — including T-cell receptor signalling (phospho-CD247) inside the engaged cells.
-              </p>
-              <div className="mt-10">
-                <BigStat value="52 vs 1" label="cell-type pairs resolved in one experiment, versus one outcome per well" />
-              </div>
-              <SourceNote keys={["nm25"]} note="52 pairs: LCMV infection experiment." />
-            </div>
-          </div>
-        </article>
-
-        {/* 03 */}
-        <article className="border-t border-ink/10">
-          <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-            <div className="grid gap-12 lg:grid-cols-12">
-              <div className="lg:col-span-5">
-                <p className={`${KICKER} text-teal-deep`}>03</p>
-                <h3 className="mt-4 text-4xl font-medium leading-[1.05] tracking-tight sm:text-[3.4rem]">
-                  Scalable on existing flow-cytometry infrastructure.
-                </h3>
-                <p className="mt-6 max-w-md text-lg leading-relaxed text-ink/75">
-                  No sorter, no sequencing, no reporter mice, no imaging platform. The readout runs on multicolour fluorescence flow cytometers —
-                  at costs the authors put orders of magnitude below single-cell genomics.
-                </p>
-                <div className="mt-10">
-                  <BigStat value="~170×" label="more interacting cells in one experiment than in a published PIC-seq experiment" />
-                </div>
-              </div>
-              <div className="self-center lg:col-span-6 lg:col-start-7">
-                <BarCompare
-                  title="Cell-cell interactions analysed individually in one experiment"
-                  unit="interacting cells or pairs"
-                  bars={[
-                    { label: "Interact-omics, LCMV infection time course", value: 414564, display: "414,564", ours: true },
-                    { label: "PIC-seq, T cell–dendritic cell co-culture", value: 2389, display: "2,389" },
-                    { label: "Droplet co-encapsulation, NK cells and targets", value: 2000, display: "~2,000" },
-                    { label: "Nanowell microscopy, clinical CAR-T products", value: 1589, display: "1,589" },
-                  ]}
-                />
-                <SourceNote
-                  keys={["nm25", "picseq", "droplet", "timingCar"]}
-                  note="Experiment sizes as reported in each publication. Nanowell arrays can hold up to 200,000 wells per experiment; tissue-imaging methods infer proximity rather than count bound pairs, so they are not shown."
-                />
-              </div>
-            </div>
-            <div className="mt-16">
-              <IntegrationDiagram />
-            </div>
-          </div>
-        </article>
-
-        {/* method matrix */}
-        <article className="border-t border-ink/10">
-          <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
-            <div className="grid gap-6 lg:grid-cols-12">
-              <p className={`${KICKER} text-teal-deep lg:col-span-3`}>Side by side</p>
-              <div className="lg:col-span-8">
-                <h3 className="text-3xl font-medium leading-[1.1] tracking-tight sm:text-4xl">
-                  Contact, proximity or outcome.
-                </h3>
-                <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink/75">
-                  Methods that sound alike answer different questions. Every approach has its place — InterAcTec is built
-                  for the questions that need the actual engagement, at scale, on existing infrastructure.
-                </p>
-              </div>
-            </div>
-            <div className="mt-12">
-              <ReadoutKinds />
-            </div>
-            <SourceNote
-              keys={["armingol", "nm25"]}
-              note="Spatial methods infer interactions from proximity or ligand–receptor co-expression; transient interactions in blood cannot be studied with them."
-            />
-            <h4 className="mt-20 text-2xl font-medium tracking-tight">Where each method stands.</h4>
-            <div className="mt-6">
-              <MethodMatrix />
-            </div>
-            <SourceNote
-              keys={["nm25", "imagestream", "timingCar", "timing", "beacon", "droplet", "nanovials", "phenocyclerSpec", "phenocycler", "comet", "xenium", "picseq"]}
-              note="Summary based on the cited publications and specifications; examples are named for orientation, not as endorsements."
-            />
-          </div>
-        </article>
-      </div>
-    </>
-  );
-}
-
-/* ------------------------------- E. Workflow ------------------------------- */
-
-const STEPS = [
-  {
-    t: "Prepare",
-    d: "Any cell suspension compatible with flow cytometry — co-cultures, PBMCs, bone marrow or other liquid samples.",
-  },
-  {
-    t: "Acquire",
-    d: "Multicolour acquisition on a fluorescence flow cytometer, following the framework’s acquisition guidelines.",
-  },
-  {
-    t: "Map",
-    d: "Interacting cells are identified by scatter ratio and co-expression of mutually exclusive markers, and assigned to a cell-type pair.",
-  },
-  {
-    t: "Compare",
-    d: "Interaction frequencies per cell-type pair are compared across conditions, donors or time points.",
-  },
-];
-
-function Workflow() {
-  return (
-    <section id="workflow" aria-labelledby="workflow-title" className="on-paper border-t border-ink/10 bg-paper text-ink">
-      <div className="mx-auto max-w-[1240px] px-4 pb-24 pt-4 sm:px-6 lg:px-8 lg:pb-32">
-        <div className="grid gap-6 border-t border-ink/15 pt-16 lg:grid-cols-12">
-          <p className={`${KICKER} text-teal-deep lg:col-span-3`}>How it fits</p>
-          <h2 id="workflow-title" className="text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl lg:col-span-8">
-            A new readout. A familiar workflow.
-          </h2>
-        </div>
-        <ol className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-ink/12 bg-ink/12 sm:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map((s, i) => (
-            <li key={s.t} className="bg-paper p-7">
-              <p className="font-mono text-xs text-teal-deep">{String(i + 1).padStart(2, "0")}</p>
-              <h3 className="mt-6 text-2xl font-medium">{s.t}</h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-ink/70">{s.d}</p>
-            </li>
-          ))}
-        </ol>
-        <p className="mt-6 text-[15px] text-ink/65">
-          Panel design, controls and analysis scope are defined together for each application.
-        </p>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------ F. Applications ------------------------------ */
-
-const APPLICATIONS = [
-  {
-    t: "T-cell engagers & bispecific antibodies",
-    q: "Does the molecule bridge T cells and target cells — and how efficiently over time?",
-    r: "Frequency of T cell–target cell interacting pairs versus control, per time point.",
-    v: "Compare candidates, formats or concentrations on engagement itself.",
-    demo: "Blinatumomab (CD3×CD19) in PBMCs and patient bone marrow",
-  },
-  {
-    t: "CAR-T cells",
-    q: "Do CAR-T cells engage their intended targets, and which other cells do they contact?",
-    r: "Pairs of CAR-T and target cells, alongside all other interacting cell-type pairs in the sample.",
-    v: "Compare constructs or donors on engagement before downstream functional assays.",
-    demo: "Anti-CD19 CAR-T cells with B-cell targets",
-  },
-  {
-    t: "Antigen-specific T-cell responses",
-    q: "Are T cells engaging antigen-presenting cells in response to a stimulus?",
-    r: "T cell–APC interaction frequencies across stimulated and control conditions.",
-    v: "Read out immune activation at the level of the cellular contact.",
-    demo: "OT-II T cells with splenocytes; CytoStim-stimulated PBMCs",
-  },
-];
-
-function Applications() {
-  return (
-    <section id="applications" aria-labelledby="applications-title" className="border-t border-line">
-      <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-        <div className="grid gap-6 lg:grid-cols-12">
-          <p className={`${KICKER} text-teal lg:col-span-3`}>Applications</p>
-          <div className="lg:col-span-8">
-            <h2 id="applications-title" className="text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
-              Where engagement is the mechanism.
-            </h2>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-mist">
-              Each application below was demonstrated in the peer-reviewed study. We scope new applications together with
-              you.
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-16 divide-y divide-line border-y border-line">
-          {APPLICATIONS.map((a, i) => (
-            <article key={a.t} className="grid gap-6 py-10 lg:grid-cols-12 lg:gap-8">
-              <div className="lg:col-span-4">
-                <p className="font-mono text-xs text-teal">{String(i + 1).padStart(2, "0")}</p>
-                <h3 className="mt-3 text-2xl font-medium leading-tight">{a.t}</h3>
-              </div>
-              <dl className="grid gap-6 sm:grid-cols-3 lg:col-span-8">
-                {[
-                  ["Research question", a.q],
-                  ["Readout", a.r],
-                  ["Decision value", a.v],
-                ].map(([k, v]) => (
-                  <div key={k}>
-                    <dt className="font-mono text-[11px] uppercase tracking-[0.14em] text-mist">{k}</dt>
-                    <dd className="mt-2 text-[15px] leading-relaxed text-paper">{v}</dd>
-                  </div>
-                ))}
-                <p className="text-[13px] text-mist sm:col-span-3">
-                  <span className="font-mono uppercase tracking-[0.12em]">Demonstrated · </span>
-                  {a.demo} (Nature Methods, 2025)
-                </p>
-              </dl>
-            </article>
-          ))}
-        </div>
-
-        <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-          <p className="text-lg text-paper">Working on a different modality?</p>
-          <a href="#contact" className="text-lg text-teal underline decoration-teal/40 underline-offset-4 hover:decoration-teal">
-            Discuss your application
+      <div className="border-t border-line">
+        <div className="mx-auto flex max-w-[1240px] flex-wrap gap-x-8 gap-y-3 px-4 py-5 font-mono text-[11px] uppercase tracking-[0.12em] text-mist sm:px-6 lg:px-8">
+          <span>For T-cell engagers & CAR-T</span>
+          <span aria-hidden="true" className="text-teal">•</span>
+          <span>Standard multicolour flow cytometry</span>
+          <span aria-hidden="true" className="text-teal">•</span>
+          <a href={PUBLICATION_URL} target="_blank" rel="noreferrer" className="text-paper underline decoration-paper/30 underline-offset-4 hover:decoration-paper">
+            Peer-reviewed method · Nature Methods 2025
           </a>
         </div>
       </div>
@@ -544,61 +188,93 @@ function Applications() {
   );
 }
 
-/* ------------------- G1. Translational (secondary section) ------------------- */
-
-function Translational() {
-  const items = [
-    {
-      k: "B-ALL · 42 patients",
-      t: "Engagement tracked treatment response",
-      d: "In bone-marrow samples from paediatric patients treated with blinatumomab, drug-induced T cell–B cell interactions were stronger in good responders, and high T cell–myeloid interactions at baseline were associated with therapy failure.",
-      src: "Nature Methods, 2025",
-    },
-    {
-      k: "IBD · 31 donors",
-      t: "Interaction landscape in blood",
-      d: "PBMCs from healthy controls (n=11), ulcerative colitis (n=9) and Crohn’s disease (n=11): 29.9 million cells analysed, 362,102 interacting cells, with disease-specific differences in selected interaction pairs.",
-      src: "InterAcTec case study",
-      href: "/case-studies",
-    },
-    {
-      k: "JIA · re-analysis",
-      t: "Insights from an existing dataset",
-      d: "Publicly available spectral cytometry data from juvenile idiopathic arthritis re-analysed for interactions: 7.8 million cells, comparing healthy donors, inactive and active disease, blood and synovial fluid.",
-      src: "InterAcTec case study",
-      href: "/case-studies",
-    },
-  ];
+function Deliverables() {
   return (
-    <section id="translational" aria-labelledby="translational-title" className="border-t border-line bg-ink-2">
-      <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
+    <section id="deliverables" aria-labelledby="deliverables-title" className="on-paper bg-paper text-ink">
+      <div className="mx-auto max-w-[1240px] px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
         <div className="grid gap-6 lg:grid-cols-12">
-          <p className={`${KICKER} text-violet lg:col-span-3`}>Beyond discovery</p>
+          <p className={`${KICKER} text-teal-deep lg:col-span-3`}>What you get</p>
           <div className="lg:col-span-8">
-            <h2 id="translational-title" className="text-3xl font-medium leading-[1.1] tracking-tight sm:text-4xl">
-              The same readout in patient samples.
+            <h2 id="deliverables-title" className="text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
+              A concrete output for a concrete decision.
             </h2>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-mist">
-              Interaction signatures can be measured in clinical material and mined from existing cytometry data — for
-              translational research and biomarker exploration. These are research findings, not a validated diagnostic.
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink/70">
+              The pilot is designed around the comparison your team needs to make — not around producing another generic
+              assay endpoint.
             </p>
           </div>
         </div>
-        <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-3">
-          {items.map((it) => (
-            <article key={it.k} className="flex flex-col bg-ink-2 p-7">
-              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-violet">{it.k}</p>
-              <h3 className="mt-4 text-xl font-medium leading-snug">{it.t}</h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-mist">{it.d}</p>
-              <p className="mt-auto pt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-mist">
-                {it.href ? (
-                  <Link href={it.href} className="text-paper underline decoration-paper/30 underline-offset-4 hover:decoration-paper">
-                    {it.src} — download
-                  </Link>
-                ) : (
-                  <>Source · {it.src}</>
-                )}
-              </p>
+
+        <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-ink/12 bg-ink/12 md:grid-cols-3">
+          {DELIVERABLES.map((item, index) => (
+            <li key={item.title} className="flex flex-col bg-white/70 p-7 sm:p-8">
+              <p className="font-mono text-xs text-teal-deep">{String(index + 1).padStart(2, "0")}</p>
+              <h3 className="mt-6 text-2xl font-medium tracking-tight">{item.title}</h3>
+              <p className="mt-3 text-[16px] leading-relaxed text-ink/70">{item.text}</p>
+              <p className="mt-auto pt-8 font-mono text-[11px] uppercase tracking-[0.12em] text-ink/50">{item.detail}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+function Pilot() {
+  return (
+    <section id="pilot" aria-labelledby="pilot-title" className="border-t border-line bg-ink-2">
+      <div className="mx-auto max-w-[1240px] px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <p className={`${KICKER} text-teal`}>The feasibility pilot</p>
+            <h2 id="pilot-title" className="mt-5 text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
+              Start with one decision-critical question.
+            </h2>
+            <p className="mt-5 text-lg leading-relaxed text-mist">
+              We first establish whether the sample, controls and acquisition plan can support a useful interaction
+              comparison. If the fit is right, we define a focused pilot with your team.
+            </p>
+            <a href="#contact" className={`${CTA_PRIMARY} mt-8`}>
+              Check project feasibility
+            </a>
+          </div>
+
+          <ol className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-3 lg:col-span-7 lg:col-start-6">
+            {PILOT_STEPS.map((step, index) => (
+              <li key={step.title} className="bg-ink p-6 sm:p-7">
+                <p className="font-mono text-xs text-teal">{String(index + 1).padStart(2, "0")}</p>
+                <h3 className="mt-6 text-xl font-medium">{step.title}</h3>
+                <p className="mt-3 text-[15px] leading-relaxed text-mist">{step.text}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Applications() {
+  return (
+    <section id="applications" aria-labelledby="applications-title" className="border-t border-line bg-ink">
+      <div className="mx-auto max-w-[1240px] px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+        <div className="grid gap-6 lg:grid-cols-12">
+          <p className={`${KICKER} text-violet lg:col-span-3`}>Where it fits</p>
+          <div className="lg:col-span-8">
+            <h2 id="applications-title" className="text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
+              Built for questions where engagement is the mechanism.
+            </h2>
+          </div>
+        </div>
+
+        <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-line bg-line lg:grid-cols-3">
+          {APPLICATIONS.map((application) => (
+            <article key={application.title} className="bg-ink-2 p-7">
+              <h3 className="text-2xl font-medium tracking-tight">{application.title}</h3>
+              <p className={`${KICKER} mt-7 text-mist`}>Question</p>
+              <p className="mt-2 text-[15px] leading-relaxed text-paper">{application.question}</p>
+              <p className={`${KICKER} mt-6 text-mist`}>Decision value</p>
+              <p className="mt-2 text-[15px] leading-relaxed text-paper">{application.decision}</p>
             </article>
           ))}
         </div>
@@ -607,141 +283,76 @@ function Translational() {
   );
 }
 
-/* ------------------------------ G2. Evidence ------------------------------ */
-
-const FIELDS = [
-  {
-    field: "Oncology",
-    stat: "42",
-    statLabel: "patients with B-ALL",
-    points: [
-      "T-cell engager (blinatumomab) and anti-CD19 CAR-T cell engagement of B cells",
-      "Drug-induced T–B interactions were stronger in good responders",
-    ],
-    source: "Nature Methods, 2025",
-  },
-  {
-    field: "Immunology",
-    stat: "All",
-    statLabel: "immune cell types in one panel",
-    points: [
-      "Antigen-specific T cell–APC engagement",
-      "TCR signalling (phospho-CD247) measured inside interacting T cells",
-    ],
-    source: "Nature Methods, 2025",
-  },
-  {
-    field: "Autoimmunity",
-    stat: "37.8 M",
-    statLabel: "cells across two case studies",
-    points: [
-      "Juvenile idiopathic arthritis: blood vs synovial fluid, active vs inactive disease",
-      "Inflammatory bowel disease: ulcerative colitis and Crohn’s disease vs controls",
-    ],
-    source: "InterAcTec case studies",
-    href: "/case-studies",
-  },
-  {
-    field: "Infectious disease",
-    stat: "~415,000",
-    statLabel: "interactions, 52 cell-type pairs",
-    points: [
-      "Viral infection (LCMV) time course across lymph node, spleen and bone marrow",
-      "34.4 million cells in 36 samples",
-    ],
-    source: "Nature Methods, 2025",
-  },
-];
-
 function Evidence() {
   return (
     <section id="evidence" aria-labelledby="evidence-title" className="on-paper bg-paper text-ink">
-      <div className="mx-auto max-w-[1240px] px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
-        <div className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <p className={`${KICKER} text-teal-deep`}>Evidence</p>
-            <h2 id="evidence-title" className="mt-5 text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
-              A peer-reviewed foundation.
-            </h2>
-            <p className="mt-6 text-lg leading-relaxed text-ink/75">
-              Interact-omics maps cellular landscapes and interactions across immune cell types from cytometry data. The
-              framework and its analysis toolkit, PICtR, are described and validated — including against imaging flow
-              cytometry — in Nature Methods.
-            </p>
-            <blockquote className="mt-8 border-l-2 border-teal-deep pl-5 text-[15px] leading-relaxed text-ink/80">
-              {CITATION}
-            </blockquote>
+      <div className="mx-auto grid max-w-[1240px] gap-12 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-28">
+        <div className="lg:col-span-5">
+          <p className={`${KICKER} text-teal-deep`}>Peer-reviewed foundation</p>
+          <h2 id="evidence-title" className="mt-5 text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
+            Demonstrated in therapeutic and translational settings.
+          </h2>
+          <p className="mt-6 text-lg leading-relaxed text-ink/70">
+            The underlying Interact-omics framework was published in Nature Methods and demonstrated with blinatumomab,
+            anti-CD19 CAR-T cells, antigen-specific T-cell responses and large immune-cell datasets.
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/science"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-ink px-6 text-base text-paper transition-colors hover:bg-ink-3"
+            >
+              Explore the science
+            </Link>
             <a
               href={PUBLICATION_URL}
               target="_blank"
               rel="noreferrer"
-              className="mt-6 inline-flex h-12 items-center rounded-full bg-ink px-6 text-base text-paper transition-colors hover:bg-ink-3"
+              className="inline-flex h-12 items-center justify-center rounded-full border border-ink/20 px-6 text-base text-ink transition-colors hover:border-ink"
             >
               Read the publication<span className="sr-only"> (opens in a new tab)</span>
             </a>
           </div>
-
-          <div className="min-w-0 lg:col-span-7 lg:col-start-6">
-            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink/60">Demonstrated across four fields</p>
-            <ul className="mt-4 grid gap-px overflow-hidden rounded-2xl border border-ink/12 bg-ink/12 sm:grid-cols-2">
-              {FIELDS.map((f) => (
-                <li key={f.field} className="flex flex-col bg-white/70 p-6 sm:p-7">
-                  <h3 className="text-2xl font-medium tracking-tight">{f.field}</h3>
-                  <p className="mt-4 flex flex-col">
-                    <span className="whitespace-nowrap text-4xl font-medium tracking-tight text-teal-deep tabular-nums">{f.stat}</span>
-                    <span className="mt-1 text-[14px] text-ink/65">{f.statLabel}</span>
-                  </p>
-                  <ul className="mt-4 space-y-2 text-[15px] leading-snug text-ink/80">
-                    {f.points.map((pt) => (
-                      <li key={pt} className="flex gap-2.5">
-                        <span className="mt-[0.55em] h-1 w-1 shrink-0 rounded-full bg-teal-deep" aria-hidden="true" />
-                        {pt}
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="mt-auto pt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-ink/55">
-                    {f.href ? (
-                      <Link href={f.href} className="underline decoration-ink/30 underline-offset-4 hover:decoration-ink">
-                        {f.source} — download
-                      </Link>
-                    ) : (
-                      <>Source · {f.source}</>
-                    )}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
+
+        <dl className="grid gap-px overflow-hidden rounded-2xl border border-ink/12 bg-ink/12 sm:grid-cols-3 lg:col-span-6 lg:col-start-7">
+          {[
+            ["2025", "Nature Methods publication"],
+            ["52", "cell-type pairs resolved in the published LCMV experiment"],
+            ["414,564", "interacting cells mapped in the published LCMV experiment"],
+          ].map(([value, label]) => (
+            <div key={label} className="bg-white/70 p-6 sm:p-7">
+              <dt className="text-4xl font-medium tracking-tight text-teal-deep tabular-nums">{value}</dt>
+              <dd className="mt-3 text-[14px] leading-relaxed text-ink/65">{label}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );
 }
 
-/* ------------------------------- H. Contact ------------------------------- */
-
 function Contact() {
   return (
-    <section id="contact" aria-labelledby="contact-title" className="relative">
-      <div className="mx-auto grid max-w-[1240px] gap-12 px-4 py-24 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-32">
+    <section id="contact" aria-labelledby="contact-title" className="border-t border-line bg-ink">
+      <div className="mx-auto grid max-w-[1240px] gap-12 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-28">
         <div className="lg:col-span-5">
-          <p className={`${KICKER} text-teal`}>Contact</p>
+          <p className={`${KICKER} text-teal`}>Feasibility assessment</p>
           <h2 id="contact-title" className="mt-5 text-4xl font-medium leading-[1.05] tracking-tight sm:text-6xl">
-            Let’s discuss your discovery workflow.
+            See whether InterAcTec fits your program.
           </h2>
           <p className="mt-6 max-w-md text-lg leading-relaxed text-mist">
-            Tell us about your modality, your cells and the decision you need to make. We’ll assess together whether an
-            interaction readout fits.
+            Share the modality, cell system, available data and decision you are working toward. We will assess whether a
+            focused interaction pilot is technically suitable.
           </p>
-          <ul className="mt-10 space-y-4 border-t border-line pt-8 text-[15px] text-mist">
+          <ul className="mt-9 space-y-4 border-t border-line pt-7 text-[15px] text-mist">
             {[
-              "Engagement readouts for T-cell engagers, CAR-T cells and other cell-bridging modalities",
-              "Re-analysis of existing cytometry datasets",
-              "Your details are only used to answer your request",
-            ].map((t) => (
-              <li key={t} className="flex gap-3">
+              "T-cell engagers, CAR-T therapies and other cell-bridging modalities",
+              "New studies or compatible existing flow-cytometry datasets",
+              "A focused first conversation — not a generic sales call",
+            ].map((item) => (
+              <li key={item} className="flex gap-3">
                 <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-teal" aria-hidden="true" />
-                {t}
+                {item}
               </li>
             ))}
           </ul>

@@ -1,6 +1,20 @@
 # Relaunch — claim & sign-off list
 
-Internal document. Every scientific or comparative statement on the relaunched homepage is listed here with its evidence and approval status. **Nothing marked "Needs evidence" or "Needs confirmation" should go to production until a named scientist has signed it off.**
+Internal document. Scientific and comparative statements used across the relaunch are listed here with their evidence and approval status. **Nothing marked "Needs evidence" or "Needs confirmation" should go to production until a named scientist has signed it off.**
+
+## Sales-funnel V1 status — 8 Oct 2026
+
+The public homepage no longer uses the earlier comparative hero claims. It sells a scoped cell-cell engagement pilot and states the concrete outputs without promising an unconfirmed turnaround, lab workflow or clinical outcome. The longer method explanation lives at `/science` and also excludes the unsupported speed and endpoint-cytotoxicity comparisons below.
+
+| Current public wording (abbreviated) | Evidence / scope | Status |
+|---|---|---|
+| "Compare candidates by the cell interactions they create." | Positioning statement; page scopes the offer to T-cell engagers, CAR-T and existing compatible cytometry datasets. | 🟡 confirm commercial scope |
+| "Interaction map, side-by-side candidate comparison and concise decision report." | Defined pilot deliverables; no clinical or performance outcome claimed. | ❓ confirm these are the standard commercial deliverables |
+| "Standard multicolour flow cytometry" | NM25 states the method can be used with multicolour fluorescence cytometers, subject to acquisition guidelines. | ✅ paper / ❓ confirm commercial workflow |
+| 34.4 M cells, 52 interaction types, 414,564 interacting cells | NM25 LCMV experiment; the homepage explicitly labels the experiment context. | ✅ |
+| Blinatumomab, anti-CD19 CAR-T and antigen-specific immune responses | Demonstrations in NM25; presented as published examples, not guaranteed service outcomes. | ✅ |
+
+The historical sections below remain as a record of the earlier relaunch review; red comparative claims are not part of the current public pages.
 
 Primary source used throughout:
 **[NM25]** Vonficht D, Jopp-Saile L, … Haas S. *Ultra-high-scale cytometry-based cellular interaction mapping.* Nature Methods 22(9):1887–1899 (2025). doi:10.1038/s41592-025-02744-w — open access: https://pmc.ncbi.nlm.nih.gov/articles/PMC12446065/
@@ -51,7 +65,7 @@ Evidence section now shows four fields (Oncology, Immunology, Autoimmunity, Infe
 | Differentiator 1 | Workflow graphic imaging vs cytometry — no timings, no bars. Footnote cites throughput numbers from NM25 only. | NM25 | ✅ graphic / 🔴 headline (C1) |
 | Differentiator 2 | pCD247 measured within interacting T cells; engagement resolved over time. | NM25 | ✅ |
 | Differentiator 3 | Works with multicolour fluorescence cytometers; public datasets re-analysed. | NM25 | ✅ |
-| Workflow | Prepare suspension → acquire on cytometer following guidelines → map interactions (PICtR) → compare. No reagents, times or automation claimed. | NM25 | ❓ confirm this is the actual service workflow (who acquires? who analyses? turnaround?) |
+| Workflow | Define decision and cell system → agree acquisition or re-analysis plan → map and compare engagement. No reagents, turnaround or lab ownership claimed. | NM25 + deliberately bounded commercial wording | ❓ confirm who acquires, who analyses and the turnaround |
 | Applications | T-cell engagers (blinatumomab, CD3×CD19), CAR-T (anti-CD19), antigen-specific T cell–APC engagement. | NM25 demonstrations | ✅ demonstrated in paper / ❓ confirm offered as service |
 | Translational | B-ALL cohort, 42 paediatric patients: blinatumomab-induced T–B interactions stronger in good responders; high T–myeloid interactions at baseline associated with therapy failure. | NM25 | ✅ (retrospective association, not a validated predictive test) |
 | Translational | IBD case study: PBMCs from HC n=11, UC n=9, CD n=11; 29.9 M cells; 362,102 interacting cells. | Report 1 | ✅ |
@@ -74,7 +88,7 @@ Evidence section now shows four fields (Oncology, Immunology, Autoimmunity, Infe
 
 - Brand spelling: **InterAcTec** (used on page) vs "Interactec" (briefing).
 - Relationship to the Nature Methods authors / DKFZ (spin-off? licence?). The page currently says "built on Interact-omics, published in Nature Methods" and does **not** claim authorship or affiliation.
-- Contact address hello@interactec.bio is the only contact route (mailto). No form backend exists.
+- Contact address hello@interactec.bio and the feasibility form are the primary contact routes. Form submissions are validated and stored in the existing Cloudflare R2 binding.
 - No team / founder / address / legal-entity information in the repo → no "About" or "Team" section, no Imprint. **A German company needs an Impressum before production launch.**
 - `/og.png` was referenced but did not exist; replaced by a generated Open Graph image.
 - Note: `/api/download/{ibd,arthritis}` serves the PDFs without checking the Tally form — the email gate is advisory only.

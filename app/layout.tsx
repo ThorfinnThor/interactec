@@ -25,7 +25,7 @@ const CF_BEACON_TOKEN = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN;
 
 const title = "InterAcTec";
 const description =
-  "We turn cell-cell interactions into a scalable drug-discovery readout — built on Interact-omics, a cytometry-based interaction mapping framework published in Nature Methods.";
+  "Compare T-cell engager and CAR-T candidates with cell-cell engagement maps, side-by-side analysis and decision-ready reports from flow-cytometry data.";
 
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),

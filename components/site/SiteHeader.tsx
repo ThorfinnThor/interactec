@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const NAV = [
-  { href: "/#platform", label: "Platform" },
-  { href: "/#science", label: "Science" },
+  { href: "/#deliverables", label: "What you get" },
+  { href: "/#pilot", label: "How it works" },
   { href: "/#applications", label: "Applications" },
-  { href: "/#evidence", label: "Evidence" },
+  { href: "/science", label: "Science" },
   { href: "/case-studies", label: "Case studies" },
 ];
 
@@ -63,7 +63,7 @@ export default function SiteHeader() {
             href="/#contact"
             className="hidden h-10 items-center rounded-full bg-teal px-5 text-[15px] font-medium text-ink transition-colors hover:bg-paper sm:inline-flex"
           >
-            Discuss your application
+            Check project feasibility
           </Link>
           <button
             ref={btnRef}
@@ -105,7 +105,7 @@ export default function SiteHeader() {
           onClick={() => setOpen(false)}
           className="mt-5 flex h-12 items-center justify-center rounded-full bg-teal text-base font-medium text-ink"
         >
-          Discuss your application
+          Check project feasibility
         </Link>
       </nav>
     </header>
