@@ -288,13 +288,13 @@ function Evidence() {
     <section id="evidence" aria-labelledby="evidence-title" className="on-paper bg-paper text-ink">
       <div className="mx-auto grid max-w-[1240px] gap-12 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-28">
         <div className="lg:col-span-5">
-          <p className={`${KICKER} text-teal-deep`}>Peer-reviewed foundation</p>
+          <p className={`${KICKER} text-teal-deep`}>Immunotherapy evidence</p>
           <h2 id="evidence-title" className="mt-5 text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
-            Demonstrated in therapeutic and translational settings.
+            Resolving engagement across cell states, modalities and patient samples.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-ink/70">
-            The underlying Interact-omics framework was published in Nature Methods and demonstrated with blinatumomab,
-            anti-CD19 CAR-T cells, antigen-specific T-cell responses and large immune-cell datasets.
+            The Nature Methods study quantified engagement kinetics for anti-CD19 CAR-T cells and the bispecific T-cell
+            engager blinatumomab, then identified interaction features associated with response in relapsed B-ALL samples.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link
@@ -314,13 +314,14 @@ function Evidence() {
           </div>
         </div>
 
-        <dl className="grid gap-px overflow-hidden rounded-2xl border border-ink/12 bg-ink/12 sm:grid-cols-3 lg:col-span-6 lg:col-start-7">
+        <dl className="grid gap-px overflow-hidden rounded-2xl border border-ink/12 bg-ink/12 sm:grid-cols-2 lg:col-span-6 lg:col-start-7">
           {[
-            ["2025", "Nature Methods publication"],
-            ["52", "cell-type pairs resolved in the published LCMV experiment"],
-            ["414,564", "interacting cells mapped in the published LCMV experiment"],
+            ["24-plex", "immune cell-type and cell-state resolution in human PBMCs"],
+            ["34,362", "interacting cells in the blinatumomab engagement landscape"],
+            ["9,974", "interacting cells in the anti-CD19 CAR-T engagement landscape"],
+            ["42", "relapsed B-ALL bone-marrow samples assessed ex vivo"],
           ].map(([value, label]) => (
-            <div key={label} className="bg-white/70 p-6 sm:p-7">
+            <div key={label} className="min-h-48 bg-white/70 p-6 sm:p-7">
               <dt className="text-4xl font-medium tracking-tight text-teal-deep tabular-nums">{value}</dt>
               <dd className="mt-3 text-[14px] leading-relaxed text-ink/65">{label}</dd>
             </div>
