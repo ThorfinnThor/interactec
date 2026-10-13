@@ -104,10 +104,6 @@ export default function TeamPage() {
             <h2 id="project-status-title" className="text-2xl font-medium tracking-tight sm:text-3xl">
               InterAcTec is currently a pre-incorporation project.
             </h2>
-            <p className="mt-4 max-w-3xl text-[16px] leading-relaxed text-mist">
-              The titles on this page describe current project responsibilities and anticipated roles for the future
-              venture. Institutional origins do not imply endorsement of a future company.
-            </p>
           </div>
         </div>
       </section>
