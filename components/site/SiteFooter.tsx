@@ -10,6 +10,9 @@ export default function SiteFooter() {
           <Link href="/science" className="hover:text-paper">
             Science
           </Link>
+          <Link href="/team" className="hover:text-paper">
+            Team
+          </Link>
           <Link href="/case-studies" className="hover:text-paper">
             Case studies
           </Link>

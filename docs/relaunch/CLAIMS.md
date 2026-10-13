@@ -18,6 +18,8 @@ The public homepage no longer uses the earlier comparative hero claims. It sells
 | ">400k interacting cells mapped in a single published experiment" | NM25 Fig. 5 reports 414,564 interacting cells in one organism-wide LCMV experiment across organs and time points. The homepage does not foreground the disease model. | ✅ |
 | "Highly scalable · High throughput · High precision" | NM25 describes the framework as ultra-high scale and high precision and demonstrates high cellular throughput. These remain unquantified attributes on the homepage, not comparative performance claims. | ✅ as framework attributes |
 | T-cell engagers and cell therapies | Blinatumomab and anti-CD19 CAR-T demonstrations in NM25; presented as application scope, not guaranteed service outcomes. | ✅ demonstrated / ❓ confirm commercial scope |
+| Pre-spin-out project developed from research at Charité and DKFZ; independent spin-out targeted by the end of 2026 | Team source deck and project-owner confirmation supplied 13 Oct 2026. Wording avoids claiming that a company has already been incorporated or that the institutions endorse a future company. | ❓ keep timing and institutional wording current |
+| Schayan Yousefian as scientific lead and CSO-designate; Dr. Steffen Schabel leading business operations; Prof. Dr. Simon Haas and PD Dr. Dr. Daniel Hübschmann as strategic advisors | Team source deck plus project-owner role update supplied 13 Oct 2026. Public page distinguishes the venture team from advisors and qualifies future-company roles. | ❓ confirm before incorporation and after any role change |
 
 The historical sections below remain as a record of the earlier relaunch review; red comparative claims are not part of the current public pages.
 
@@ -94,6 +96,6 @@ Evidence section now shows four fields (Oncology, Immunology, Autoimmunity, Infe
 - Brand spelling: **InterAcTec** (used on page) vs "Interactec" (briefing).
 - Relationship to the Nature Methods authors / DKFZ (spin-off? licence?). The page currently says "built on Interact-omics, published in Nature Methods" and does **not** claim authorship or affiliation.
 - Contact address hello@interactec.bio and the feasibility form are the primary contact routes. Form submissions are validated and stored in the existing Cloudflare R2 binding.
-- No team / founder / address / legal-entity information in the repo → no "About" or "Team" section, no Imprint. **A German company needs an Impressum before production launch.**
+- Team roles are now published with a pre-incorporation qualification. Address and legal-entity information remain unavailable; keep the Impressum aligned with the applicable legal status.
 - `/og.png` was referenced but did not exist; replaced by a generated Open Graph image.
 - Note: `/api/download/{ibd,arthritis}` serves the PDFs without checking the Tally form — the email gate is advisory only.

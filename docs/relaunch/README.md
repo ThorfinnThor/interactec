@@ -18,10 +18,11 @@ Fonts are self-hosted in `app/fonts/` (SIL OFL), so builds no longer need Google
 
 - `app/page.tsx` — concise homepage: concrete offer and outcome → inputs/outputs → deliverables → three-step feasibility pilot → applications → compact evidence → feasibility request.
 - `app/science/page.tsx` — the detailed method story, workflow and supported published demonstrations. Unsupported speed and endpoint-cytotoxicity comparisons are intentionally excluded.
+- `app/team/page.tsx` — the pre-spin-out project team and strategic advisors, with role language that distinguishes current responsibilities from future company roles.
 - `components/site/forms.tsx` — the primary conversion is a feasibility request; submissions are validated server-side and stored in the existing Cloudflare R2 binding.
 - `components/site/SiteHeader.tsx` — navigation now follows the buying journey and keeps the feasibility CTA visible on desktop and mobile.
 - `app/layout.tsx` and `app/opengraph-image.tsx` — metadata and share image use the new offer-led positioning.
-- `app/sitemap.ts` — includes `/science`.
+- `app/sitemap.ts` — includes `/science`, `/team` and `/case-studies`.
 
 ## Earlier relaunch foundation
 
@@ -67,7 +68,7 @@ See `CLAIMS.md`. In short:
 1. Confirm who performs new sample acquisition and the commercial turnaround; V1 deliberately describes scoping an acquisition or re-analysis plan without assigning lab ownership.
 2. Confirm the company's relationship to the Nature Methods work. The site says the method is published there but does not claim authorship or affiliation.
 3. Keep legal-entity details and the Impressum current.
-4. Team / founder content is intentionally omitted until approved source material exists.
+4. Keep the team page's role descriptions and the planned spin-out timing current as incorporation progresses.
 5. Confirm brand spelling (InterAcTec vs Interactec) before the next brand pass.
 
 ---
