@@ -8,15 +8,15 @@ import { CONTACT_EMAIL } from "@/lib/legal";
 import { getSiteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
-  title: "Cell-cell engagement analysis for drug discovery",
+  title: "Cell-cell interaction maps for immunotherapy candidate selection",
   description:
-    "Compare T-cell engager and CAR-T candidates with a scoped flow-cytometry interaction study and a decision-ready report.",
+    "See which immune and target cells physically engage across immunotherapy candidates, doses and conditions using flow-cytometry interaction maps.",
   alternates: { canonical: "/" },
   openGraph: {
     url: "/",
-    title: "Cell-cell engagement analysis for drug discovery | InterAcTec",
+    title: "Cell-cell interaction maps for immunotherapy candidate selection | InterAcTec",
     description:
-      "Interaction maps, candidate comparisons and decision-ready reports from new or existing flow-cytometry data.",
+      "See which immune and target cells physically engage across candidates, doses and conditions.",
   },
 };
 
@@ -126,16 +126,16 @@ function Hero() {
     <section aria-labelledby="hero-title" className="relative overflow-hidden">
       <div className="mx-auto grid max-w-[1240px] items-center gap-10 px-4 pb-14 pt-10 sm:px-6 lg:grid-cols-12 lg:gap-8 lg:px-8 lg:pb-20 lg:pt-14">
         <div className="lg:col-span-7">
-          <p className={`${KICKER} text-teal`}>Cell-cell engagement pilot</p>
+          <p className={`${KICKER} text-teal`}>Flow-cytometry interaction analysis</p>
           <h1
             id="hero-title"
             className="mt-5 text-[2.55rem] font-medium leading-[1.03] tracking-[-0.035em] text-paper sm:text-6xl lg:text-[clamp(3.15rem,5vw,4.2rem)]"
           >
-            Compare candidates by the <span className="text-teal">cell interactions</span> they create.
+            Cell-cell interaction maps for <span className="text-teal">immunotherapy candidate selection.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mist sm:text-xl">
-            We scope a flow-cytometry interaction study and deliver an interaction map, a side-by-side candidate
-            comparison and a concise decision report.
+            See which immune and target cells physically engage, how often and how engagement changes across candidates,
+            doses and conditions.
           </p>
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -148,8 +148,7 @@ function Hero() {
           </div>
 
           <p className="mt-5 max-w-2xl border-l-2 border-teal pl-4 text-[15px] leading-relaxed text-paper">
-            See which cells engage, how often and how that changes by candidate or condition before prioritizing follow-up
-            experiments.
+            Compare candidates with a cellular readout before prioritizing follow-up experiments.
           </p>
 
           <dl className="mt-9 grid max-w-2xl gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2">
