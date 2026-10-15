@@ -68,5 +68,20 @@ jobs:
       - name: Build for Cloudflare
         run: npm run build:vinext
 
-      - name: Deploy production Worker
-        run: npm run deploy:vinext
+      # Custom domains are already attached to this Worker. Uploading and
+      # promoting a version updates code/assets without requiring the CI token
+      # to reconfigure zone-level routes on every deployment.
+      - name: Upload production Worker version
+        run: >-
+          npx wrangler versions upload
+          --config dist/server/wrangler.json
+          --tag "$GITHUB_SHA"
+          --message "$GITHUB_SHA"
+
+      - name: Deploy production Worker version
+        run: >-
+          npx wrangler versions deploy
+          --config dist/server/wrangler.json
+          --version-tag "$GITHUB_SHA@100%"
+          --message "$GITHUB_SHA"
+          --yes
