@@ -25,12 +25,12 @@ const CF_BEACON_TOKEN = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN;
 
 const title = "InterAcTec";
 const description =
-  "Compare T-cell engager and CAR-T candidates with cell-cell engagement maps, side-by-side analysis and decision-ready reports from flow-cytometry data.";
+  "Cell-cell interaction maps for comparing immunotherapy candidates, doses and conditions using flow-cytometry data.";
 
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),
   title: {
-    default: `${title} — Cell-cell engagement as a drug-discovery readout`,
+    default: `${title} — Cell-cell interaction maps for immunotherapy`,
     template: `%s | ${title}`,
   },
   description,
@@ -40,13 +40,13 @@ export const metadata: Metadata = {
     type: "website",
     url: "/",
     siteName: title,
-    title,
+    title: "Cell-cell interaction maps for immunotherapy candidate selection | InterAcTec",
     description,
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title,
+    title: "Cell-cell interaction maps for immunotherapy candidate selection | InterAcTec",
     description,
   },
 };

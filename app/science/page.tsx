@@ -4,6 +4,7 @@ import { ScienceDiagram } from "@/components/site/Diagrams";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 import StoryScroll, { type StoryChapter } from "@/components/site/StoryScroll";
+import { getSiteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = {
   title: "Science and evidence",
@@ -69,6 +70,17 @@ const DEMONSTRATIONS = [
   },
 ];
 
+const publicationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  headline: "Ultra-high-scale cytometry-based cellular interaction mapping",
+  datePublished: "2025",
+  url: PUBLICATION_URL,
+  sameAs: PUBLICATION_URL,
+  isPartOf: { "@type": "Periodical", name: "Nature Methods" },
+  mainEntityOfPage: `${getSiteUrl().origin}/science`,
+};
+
 export default function SciencePage() {
   return (
     <div className="bg-ink">
@@ -99,6 +111,10 @@ export default function SciencePage() {
         <Evidence />
       </main>
       <SiteFooter />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(publicationJsonLd) }}
+      />
     </div>
   );
 }

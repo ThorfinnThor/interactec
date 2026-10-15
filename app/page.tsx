@@ -82,15 +82,35 @@ const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": `${getSiteUrl().origin}/#organization`,
     name: "InterAcTec",
+    alternateName: "InterAcTec project",
+    description:
+      "A pre-incorporation project developing flow-cytometry cell-cell interaction analysis for immunotherapy research.",
     email: CONTACT_EMAIL,
     url: getSiteUrl().origin,
+    logo: {
+      "@type": "ImageObject",
+      url: `${getSiteUrl().origin}/icon.svg`,
+      width: 512,
+      height: 512,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${getSiteUrl().origin}/#website`,
+    url: getSiteUrl().origin,
+    name: "InterAcTec",
+    alternateName: "InterAcTec cell-cell interaction analysis",
+    publisher: { "@id": `${getSiteUrl().origin}/#organization` },
   },
   {
     "@context": "https://schema.org",
     "@type": "Service",
+    "@id": `${getSiteUrl().origin}/#service`,
     name: "InterAcTec cell-cell engagement pilot",
-    provider: { "@type": "Organization", name: "InterAcTec" },
+    provider: { "@id": `${getSiteUrl().origin}/#organization` },
     serviceType: "Flow-cytometry cell-cell interaction analysis",
     description:
       "A scoped interaction study delivering an interaction map, candidate comparison and scientific decision report.",

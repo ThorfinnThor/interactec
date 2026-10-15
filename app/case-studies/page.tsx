@@ -58,6 +58,34 @@ export default async function CaseStudiesPage({
                     </li>
                   ))}
                 </ul>
+                <div className="mt-7 grid gap-6 border-t border-ink/10 pt-6 sm:grid-cols-2">
+                  <div>
+                    <h3 className="font-mono text-[11px] uppercase tracking-[0.12em] text-teal-deep">
+                      Comparisons
+                    </h3>
+                    <ul className="mt-3 space-y-2 text-[14px] leading-relaxed text-ink/70">
+                      {cs.comparisons.map((comparison) => (
+                        <li key={comparison} className="flex gap-2">
+                          <span aria-hidden="true">—</span>
+                          <span>{comparison}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="font-mono text-[11px] uppercase tracking-[0.12em] text-violet-deep">
+                      Readouts
+                    </h3>
+                    <ul className="mt-3 space-y-2 text-[14px] leading-relaxed text-ink/70">
+                      {cs.readouts.map((readout) => (
+                        <li key={readout} className="flex gap-2">
+                          <span aria-hidden="true">—</span>
+                          <span>{readout}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
                 <div className="mt-8 border-t border-ink/10 pt-6">
                   <CaseStudyForm slug={cs.slug} title={cs.title} />
                 </div>

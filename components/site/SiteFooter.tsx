@@ -16,6 +16,9 @@ export default function SiteFooter() {
           <Link href="/case-studies" className="hover:text-paper">
             Case studies
           </Link>
+          <Link href="/faq" className="hover:text-paper">
+            FAQ
+          </Link>
           <Link href="/#contact" className="hover:text-paper">
             Contact
           </Link>
