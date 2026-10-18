@@ -8,6 +8,7 @@ const NAV = [
   { href: "/#pilot", label: "How it works" },
   { href: "/#applications", label: "Applications" },
   { href: "/science", label: "Science" },
+  { href: "/insights", label: "Insights" },
   { href: "/team", label: "Team" },
   { href: "/case-studies", label: "Case studies" },
 ];
@@ -51,7 +52,7 @@ export default function SiteHeader() {
           <Logo />
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-7 text-[15px] text-mist lg:flex">
+        <nav aria-label="Main" className="hidden items-center gap-6 text-[15px] text-mist xl:flex">
           {NAV.map((n) => (
             <Link key={n.href} href={n.href} className="rounded-sm transition-colors hover:text-paper">
               {n.label}
@@ -69,7 +70,7 @@ export default function SiteHeader() {
           <button
             ref={btnRef}
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full text-paper lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full text-paper xl:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             onClick={() => setOpen((o) => !o)}
@@ -86,7 +87,7 @@ export default function SiteHeader() {
         id="mobile-nav"
         aria-label="Mobile"
         hidden={!open}
-        className="border-t border-line bg-ink px-4 pb-6 pt-2 sm:px-6 lg:hidden"
+        className="border-t border-line bg-ink px-4 pb-6 pt-2 sm:px-6 xl:hidden"
       >
         <ul className="flex flex-col">
           {NAV.map((n) => (
