@@ -95,7 +95,7 @@ Evidence section now shows four fields (Oncology, Immunology, Autoimmunity, Infe
 
 - Brand spelling: **InterAcTec** (used on page) vs "Interactec" (briefing).
 - Relationship to the Nature Methods authors / DKFZ (spin-off? licence?). The page currently says "built on Interact-omics, published in Nature Methods" and does **not** claim authorship or affiliation.
-- Contact address hello@interactec.bio and the feasibility form are the primary contact routes. Form submissions are validated and stored in the existing Cloudflare R2 binding.
+- Contact address contact@interactec.bio and the feasibility form are the primary contact routes. Form submissions are validated, stored in the existing Cloudflare R2 binding and forwarded to the contact mailbox through Cloudflare Email Service.
 - Team roles are now published with a pre-incorporation qualification. Address and legal-entity information remain unavailable; keep the Impressum aligned with the applicable legal status.
 - `/og.png` was referenced but did not exist; replaced by a generated Open Graph image.
 - Note: `/api/download/{ibd,arthritis}` serves the PDFs without checking the Tally form — the email gate is advisory only.

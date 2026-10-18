@@ -1,4 +1,5 @@
 import { INSIGHTS } from "@/lib/insights";
+import { CONTACT_EMAIL } from "@/lib/legal";
 import { getSiteUrl } from "@/lib/site-url";
 
 export const dynamic = "force-static";
@@ -23,7 +24,7 @@ export function GET() {
         <guid isPermaLink="true">${url}</guid>
         <description>${escapeXml(insight.description)}</description>
         <pubDate>${new Date(`${insight.published}T12:00:00Z`).toUTCString()}</pubDate>
-        <author>hello@interactec.bio (${escapeXml(insight.author)})</author>
+        <author>${CONTACT_EMAIL} (${escapeXml(insight.author)})</author>
       </item>`;
   }).join("");
 

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: { url: "/privacy", title: "Privacy policy | InterAcTec" },
 };
 
-const UPDATED = "27 September 2026";
+const UPDATED = "19 October 2026";
 
 function Section({ n, title, children }: { n: string; title: string; children: ReactNode }) {
   return (
@@ -72,6 +72,10 @@ export default function PrivacyPage() {
           <p>
             Submissions are stored in our Cloudflare R2 storage and deleted once your request has been fully handled,
             unless it leads to an ongoing business relationship or statutory retention applies.
+          </p>
+          <p>
+            To alert our team to a new request, Cloudflare Email Service sends a notification to our contact mailbox.
+            Your work email is used as the reply-to address so that we can respond directly.
           </p>
         </Section>
 

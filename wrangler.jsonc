@@ -30,6 +30,12 @@
       "bucket_name": "interactec-reports"
     }
   ],
+  "send_email": [
+    {
+      "name": "CONTACT_EMAIL",
+      "destination_address": "contact@interactec.bio"
+    }
+  ],
   "observability": {
     "enabled": true,
     "head_sampling_rate": 1

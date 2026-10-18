@@ -9,7 +9,7 @@ export const LEGAL = {
   postalCodeCity: "",
   country: "Germany",
   representedBy: "", // managing directors
-  email: "hello@interactec.bio",
+  email: "contact@interactec.bio",
   phone: "", // optional
   registerCourt: "", // e.g. "Amtsgericht Heidelberg" (if registered)
   registerNumber: "", // e.g. "HRB 123456"
