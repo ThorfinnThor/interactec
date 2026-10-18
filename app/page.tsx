@@ -91,7 +91,7 @@ const jsonLd = [
     url: getSiteUrl().origin,
     logo: {
       "@type": "ImageObject",
-      url: `${getSiteUrl().origin}/icon.svg`,
+      url: `${getSiteUrl().origin}/icon.png`,
       width: 512,
       height: 512,
     },

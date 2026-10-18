@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <clipPath id="interactec-effector">
+      <circle cx="190" cy="202" r="132"/>
+    </clipPath>
+  </defs>
+  <rect width="512" height="512" fill="#080d15"/>
+  <circle
+    cx="318"
+    cy="310"
+    r="128"
+    fill="#f4f7f4"
+    opacity=".9"
+    clip-path="url(#interactec-effector)"
+  />
+  <circle cx="190" cy="202" r="132" fill="none" stroke="#68e4d4" stroke-width="30"/>
+  <circle
+    cx="318"
+    cy="310"
+    r="128"
+    fill="none"
+    stroke="#a49be8"
+    stroke-width="30"
+    stroke-dasharray="44 29"
+    transform="rotate(-18 318 310)"
+  />
+</svg>
