@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: { url: "/privacy", title: "Privacy policy | InterAcTec" },
 };
 
-const UPDATED = "19 October 2026";
+const UPDATED = "23 October 2026";
 
 function Section({ n, title, children }: { n: string; title: string; children: ReactNode }) {
   return (
@@ -97,15 +97,66 @@ export default function PrivacyPage() {
           </p>
         </Section>
 
-        <Section n="06" title="Cookies and local storage">
+        <Section n="06" title="Google Analytics">
           <p>
-            We do not use cookies. If you press “Pause motion”, your browser remembers this preference in its local
-            storage; it never leaves your device. Fonts are hosted on our own server — no requests go to external font
-            services.
+            Only if you click “Accept” in the cookie banner, we use Google Analytics 4, a web analytics service provided
+            by Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland (“Google”). Without your consent
+            the Google Analytics script is not loaded and no data is sent to Google. We use it for audience measurement:
+            to understand how many people visit the website, which pages they view and how they found us, so that we can
+            improve our content. Our internal admin area never loads Google Analytics.
+          </p>
+          <p>
+            Google Analytics stores cookies on your device and processes usage data such as pages visited, time and
+            duration of the visit, referring website, approximate location (derived from a shortened IP address), device
+            and browser information. IP addresses are not logged or stored by Google Analytics 4. Google signals and
+            advertising features are switched off, and the advertising-related consent signals (ad_storage, ad_user_data,
+            ad_personalization) always remain “denied”.
+          </p>
+          <p>Cookies set by Google Analytics:</p>
+          <ul className="list-disc space-y-1 pl-5">
+            <li>
+              <code className="font-mono text-[14px]">_ga</code> — distinguishes visitors; lifetime 2 years.
+            </li>
+            <li>
+              <code className="font-mono text-[14px]">_ga_KVYTEEZMF7</code> — keeps the session state; lifetime 2 years.
+            </li>
+          </ul>
+          <p>
+            Data linked to cookies and user identifiers is automatically deleted after 14 months. Legal basis: your
+            consent, Art. 6(1)(a) GDPR and § 25(1) TTDSG (now TDDDG). Your choice is saved in your browser’s local
+            storage (key <code className="font-mono text-[14px]">ia-analytics-consent-v1</code>) so that the banner is
+            not shown again.
+          </p>
+          <p>
+            Google may transfer data to Google LLC in the USA. Google LLC is certified under the EU–U.S. Data Privacy
+            Framework, for which the European Commission has adopted an adequacy decision (Art. 45 GDPR).
+            Google’s data processing terms apply to our Google Analytics account.
+          </p>
+          <p>
+            You can withdraw your consent at any time with effect for the future via “Cookie settings” in the footer of
+            every page by choosing “Decline”. The Google Analytics cookies are then deleted and no further data is
+            collected. More information:{" "}
+            <a
+              className="text-teal-deep underline underline-offset-4"
+              href="https://policies.google.com/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Google privacy policy
+            </a>
+            .
           </p>
         </Section>
 
-        <Section n="07" title="Your rights">
+        <Section n="07" title="Cookies and local storage">
+          <p>
+            Cookies are only set if you consent to Google Analytics (see section 06). Your cookie choice and, if you
+            press “Pause motion”, your motion preference are remembered in your browser’s local storage; they never
+            leave your device. Fonts are hosted on our own server — no requests go to external font services.
+          </p>
+        </Section>
+
+        <Section n="08" title="Your rights">
           <p>
             You have the right to access, rectify and erase your data, to restrict or object to its processing, to data
             portability, and to withdraw consent at any time with effect for the future. You can also lodge a complaint
