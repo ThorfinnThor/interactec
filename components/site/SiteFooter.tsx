@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CONTACT_EMAIL, isLegalComplete } from "@/lib/legal";
+import CookieSettingsButton from "./CookieSettingsButton";
 
 export default function SiteFooter() {
   return (
@@ -28,6 +29,7 @@ export default function SiteFooter() {
           <Link href="/privacy" className="hover:text-paper">
             Privacy
           </Link>
+          <CookieSettingsButton />
           {isLegalComplete() && (
             <Link href="/impressum" className="hover:text-paper">
               Impressum

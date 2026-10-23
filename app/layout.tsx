@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import CookieConsent from "@/components/site/CookieConsent";
 import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
@@ -64,6 +65,7 @@ export default function RootLayout({
     <html lang="en" className={`${instrumentSans.variable} ${plexMono.variable}`}>
       <body className="font-sans antialiased">
         {children}
+        <CookieConsent />
         {CF_BEACON_TOKEN && (
           <script
             defer
