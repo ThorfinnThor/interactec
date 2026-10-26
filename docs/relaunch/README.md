@@ -30,6 +30,7 @@ Fonts are self-hosted in `app/fonts/` (SIL OFL), so builds no longer need Google
 - `components/site/CytometryVisuals.tsx` adds the flow-cytometer schematic, sample-to-readout strip, cell-profile scatter, lineage interaction network, condition comparison and 40-column marker matrix. They reuse the existing cell primitives, palette, gradients and mono annotations; no new client chart runtime or image dependency is added.
 - The homepage pairs the three deliverables with visual readouts. The Science page includes the same cytometer schematic and a panel-resolution explanation.
 - All charts are explicitly illustrative. The 40-plex/200+/interaction capability figures retain their existing panel-dependent scope; the Science page distinguishes them from the published 24/25-plex experiments. State profiling and lineage-level interaction assignment remain separate.
+- The cytometer now uses a real, lazy-loaded Three.js scene (`CytometerScene.tsx`) with rounded geometry, glass, shadows and the same cell shaders as the hero. `CytometerStage.tsx` uses the existing offscreen/pause/context-loss lifecycle. A 1200 × 700 render of the scene is the poster for reduced motion, no WebGL and initial loading, so those paths retain the same 3D appearance.
 
 ## Earlier relaunch foundation
 

@@ -1,4 +1,6 @@
-import { CellDefs, ContactZone, EffectorCell, TargetCell } from "./cells";
+import Image from "next/image";
+import CytometerStage from "./CytometerStage";
+import MotionToggle from "./MotionToggle";
 
 const TEAL = "#68e4d4";
 const VIOLET = "#a49be8";
@@ -19,9 +21,6 @@ const CLUSTERS = [
 ];
 
 export function CytometryHero() {
-  const id = "cytometer";
-  const eff = { cx: 456, cy: 159, r: 12, seed: 5 };
-  const tgt = { cx: 456, cy: 183, r: 16, seed: 21 };
   return (
     <figure className="mx-auto w-full max-w-[620px] overflow-hidden rounded-2xl border border-line bg-ink-2">
       <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-4">
@@ -32,48 +31,16 @@ export function CytometryHero() {
           40-plex
         </span>
       </div>
-      <svg viewBox="0 0 600 350" className="h-auto w-full" role="img" aria-labelledby="cytometer-title cytometer-desc">
-        <title id="cytometer-title">Schematic of a spectral flow cytometer and its measurement principle</title>
-        <desc id="cytometer-desc">A sample enters a benchtop cytometer. The magnified flow cell shows single cells and a physically interacting pair passing a laser. Multiple marker signals are read from each event.</desc>
-        <defs>
-          <CellDefs id={id} />
-          <linearGradient id="cytometer-body" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#24313d" /><stop offset="1" stopColor="#0c131e" /></linearGradient>
-          <linearGradient id="cytometer-side"><stop stopColor="#121b28" /><stop offset="1" stopColor="#192534" /></linearGradient>
-          <linearGradient id="cytometer-stream"><stop stopColor={TEAL} stopOpacity="0" /><stop offset=".5" stopColor={TEAL} stopOpacity=".13" /><stop offset="1" stopColor={TEAL} stopOpacity="0" /></linearGradient>
-        </defs>
-        <g fill="none" stroke="#f4f7f4" strokeOpacity=".08">
-          <ellipse cx="184" cy="295" rx="142" ry="15" />
-          <circle cx="456" cy="174" r="108" strokeDasharray="1 6" />
-        </g>
-        <path d="M55 96l48-25h207v207l-48 25H55Z" fill="url(#cytometer-body)" stroke="#b5c0ca" strokeOpacity=".4" />
-        <path d="M262 96l48-25v207l-48 25Z" fill="url(#cytometer-side)" stroke="#b5c0ca" strokeOpacity=".25" />
-        <path d="M55 96h207l48-25M262 96v207" fill="none" stroke="#b5c0ca" strokeOpacity=".3" />
-        <rect x="74" y="117" width="169" height="62" rx="5" fill="#080d15" stroke="#b5c0ca" strokeOpacity=".16" />
-        <path d="M90 156h17l7-12 7 18 8-29 8 23h22l8-10 8 16 9-26 7 20h32" stroke={TEAL} strokeWidth="1.5" fill="none" />
-        <rect x="74" y="192" width="97" height="91" rx="5" fill="#080d15" stroke="#b5c0ca" strokeOpacity=".16" />
-        <path d="M111 211v43a13 13 0 0 0 26 0v-43" fill="url(#cytometer-stream)" stroke={TEAL} strokeOpacity=".65" />
-        <rect x="108" y="204" width="32" height="8" rx="2" fill="#1c5a57" stroke={TEAL} strokeOpacity=".5" />
-        <EffectorCell id={id} c={{ cx: 121, cy: 239, r: 4, seed: 3 }} detail={false} />
-        <TargetCell id={id} c={{ cx: 128, cy: 252, r: 5, seed: 6 }} detail={false} />
-        <circle cx="224" cy="207" r="3" fill={TEAL} />
-        <path d="M187 235h43m-43 8h43m-43 8h43m-43 8h43" stroke={MIST} strokeOpacity=".2" />
-        <path d="M279 155l83-33M279 251l83-22" fill="none" stroke={MIST} strokeOpacity=".4" strokeDasharray="3 5" />
-        <rect x="424" y="58" width="64" height="233" rx="32" fill="url(#cytometer-stream)" stroke={TEAL} strokeOpacity=".3" />
-        <path d="M446 69v210m20-210v210" stroke={TEAL} strokeOpacity=".12" strokeDasharray="2 6" />
-        <EffectorCell id={id} c={{ cx: 456, cy: 102, r: 10, seed: 11 }} />
-        <TargetCell id={id} c={tgt} /><EffectorCell id={id} c={eff} /><ContactZone id={id} eff={eff} tgt={tgt} />
-        <TargetCell id={id} c={{ cx: 456, cy: 247, r: 12, seed: 15 }} />
-        <path d="M355 176h72m46 0h80" stroke={TEAL} strokeWidth="1.5" />
-        <path d="M355 176h72m46 0h80" stroke={TEAL} strokeWidth="9" opacity=".1" />
-        <path d="M474 171l73-33m-73 43 73 33" stroke={VIOLET} strokeWidth="1.3" opacity=".7" />
-        <g fontFamily="var(--font-plex-mono), ui-monospace, monospace" fontSize="10" letterSpacing="1">
-          <text x="55" y="53" fill={MIST}>FLOW CYTOMETER</text>
-          <text x="95" y="324" fill={TEAL}>SAMPLE</text>
-          <path d="M120 306v-29" stroke={TEAL} strokeOpacity=".6" />
-          <text x="359" y="162" fill={TEAL}>LASER</text>
-          <text x="456" y="321" fill={MIST} textAnchor="middle">SINGLE CELLS + CELL PAIRS</text>
-        </g>
-      </svg>
+      <CytometerStage poster={
+        <Image
+          src="/visuals/cytometer-3d-poster.webp"
+          alt="3D schematic of a spectral flow cytometer with a sample tube and a magnified glass flow cell, showing single cells and an interacting cell pair passing the laser."
+          width={1200}
+          height={700}
+          sizes="(max-width: 1023px) 90vw, 560px"
+          className="block h-auto w-full"
+        />
+      } />
       <div className="border-t border-line px-5 pb-5 pt-4">
         <div className="mb-3 flex items-baseline justify-between gap-4">
           <p className="text-sm text-paper">40 markers. One high-dimensional readout.</p>
@@ -93,7 +60,8 @@ export function CytometryHero() {
         </div>
       </div>
       <figcaption className="border-t border-line bg-ink px-5 py-3 text-[11px] leading-relaxed text-mist">
-        Schematic visualization · compatible flow cytometry, study-specific panels and acquisition controls.
+        <div className="mb-1 flex flex-wrap items-center justify-between gap-x-4"><span>Schematic 3D visualization</span><MotionToggle /></div>
+        Compatible flow cytometry, study-specific panels and acquisition controls.
       </figcaption>
     </figure>
   );
