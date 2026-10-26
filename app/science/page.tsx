@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ScienceDiagram } from "@/components/site/Diagrams";
+import { CytometryHero, HighPlexReadout } from "@/components/site/CytometryVisuals";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 import StoryScroll, { type StoryChapter } from "@/components/site/StoryScroll";
@@ -93,19 +94,24 @@ export default function SciencePage() {
       <SiteHeader />
       <main id="main" className="bg-ink text-paper">
         <header className="border-b border-line">
-          <div className="mx-auto max-w-[1240px] px-4 pb-16 pt-14 sm:px-6 lg:px-8 lg:pb-24 lg:pt-20">
-            <p className={`${KICKER} text-teal`}>Science and evidence</p>
-            <h1 className="mt-5 max-w-4xl text-4xl font-medium leading-[1.05] tracking-tight sm:text-6xl">
-              Measure the cellular engagement behind the endpoint.
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mist">
-              Interact-omics maps physically interacting cells from multicolour flow-cytometry data. InterAcTec applies
-              that measurement principle to defined therapeutic and translational questions.
-            </p>
+          <div className="mx-auto grid max-w-[1240px] items-center gap-10 px-4 pb-16 pt-14 sm:px-6 lg:grid-cols-2 lg:px-8 lg:pb-20 lg:pt-16">
+            <div>
+              <p className={`${KICKER} text-teal`}>Science and evidence</p>
+              <h1 className="mt-5 max-w-4xl text-4xl font-medium leading-[1.05] tracking-tight sm:text-6xl">
+                Measure the cellular engagement behind the endpoint.
+              </h1>
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mist">
+                Interact-omics maps physically interacting cells from multicolour flow-cytometry data. InterAcTec applies
+                that measurement principle to defined therapeutic and translational questions, combining deep immune
+                phenotyping with lineage-resolved interaction mapping.
+              </p>
+            </div>
+            <CytometryHero />
           </div>
         </header>
 
         <Measurement />
+        <HighPlex />
         <Method />
         <Workflow />
         <Evidence />
@@ -116,6 +122,23 @@ export default function SciencePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(publicationJsonLd) }}
       />
     </div>
+  );
+}
+
+function HighPlex() {
+  return (
+    <section aria-labelledby="science-highplex-title" className="on-paper border-b border-ink/10 bg-paper text-ink">
+      <div className="mx-auto grid max-w-[1240px] items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-20">
+        <div>
+          <p className={`${KICKER} text-teal-deep`}>Full-spectrum flow cytometry</p>
+          <h2 id="science-highplex-title" className="mt-5 text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">High-plex phenotyping, plus physical interactions.</h2>
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-ink/70">Study-specific panels combine lineage-defining and cell-state markers. The result is a multidimensional protein profile alongside an interaction map of the cell lineages present in the sample.</p>
+          <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-ink/65">State-marker measurements add biological context. They do not imply that every possible state-to-state interaction is independently resolved.</p>
+          <p className="mt-6 max-w-xl border-t border-ink/15 pt-4 text-xs leading-relaxed text-ink/55">40-plex describes the panel-design capability shown here. The Nature Methods study demonstrated optimized 24/25-plex assays; performance is established for each study panel and sample system.</p>
+        </div>
+        <HighPlexReadout id="science-highplex-plot" />
+      </div>
+    </section>
   );
 }
 

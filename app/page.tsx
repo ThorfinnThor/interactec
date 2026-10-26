@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import HeroVisual from "@/components/site/HeroVisual";
+import { AcquisitionStrip, CellProfilePlot, ComparisonPlot, CytometryHero, HighPlexReadout, InteractionNetwork } from "@/components/site/CytometryVisuals";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 import { ContactForm } from "@/components/site/forms";
@@ -29,19 +30,22 @@ const CTA_SECONDARY =
 
 const DELIVERABLES = [
   {
-    title: "Interaction map",
-    text: "See which cell-type pairs engage and how frequently those interactions occur in each condition.",
+    title: "High-plex cell profiles",
+    text: "Resolve immune-cell identities and functional states with a study-specific marker panel.",
+    detail: "Identity · phenotype · state",
+    visual: CellProfilePlot,
+  },
+  {
+    title: "Cell-interaction maps",
+    text: "See which cell lineages physically engage and how frequently each pair occurs.",
     detail: "Cell-type pairs · interaction frequencies",
+    visual: InteractionNetwork,
   },
   {
-    title: "Candidate comparison",
-    text: "Compare candidates, formats, concentrations, controls or time points in one consistent readout.",
-    detail: "Conditions · controls · time points",
-  },
-  {
-    title: "Decision-ready report",
-    text: "Receive clear plots, scientific interpretation, limitations and implications for the next experiment.",
-    detail: "Visuals · interpretation · next steps",
+    title: "Comparative insights",
+    text: "Compare candidates, doses or conditions, with scientific interpretation in a concise report.",
+    detail: "Comparison · interpretation · next steps",
+    visual: ComparisonPlot,
   },
 ];
 
@@ -154,8 +158,8 @@ function Hero() {
             Cell-cell interaction maps for <span className="text-teal">immunotherapy candidate selection.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mist sm:text-xl">
-            See which immune and target cells physically engage, how often and how engagement changes across candidates,
-            doses and conditions.
+            High-plex flow cytometry combines deep immune-cell profiling with maps of physical cell-cell interactions.
+            See what changes across candidates, doses and conditions.
           </p>
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
@@ -167,24 +171,15 @@ function Hero() {
             </Link>
           </div>
 
-          <p className="mt-5 max-w-2xl border-l-2 border-teal pl-4 text-[15px] leading-relaxed text-paper">
-            Compare candidates with a cellular readout before prioritizing follow-up experiments.
-          </p>
-
-          <dl className="mt-9 grid max-w-2xl gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2">
-            <div className="bg-ink-2 p-5">
-              <dt className={`${KICKER} text-teal`}>You bring</dt>
-              <dd className="mt-2 text-[15px] leading-relaxed text-mist">
-                The question, candidate conditions, cells and controls — or compatible existing FCS data.
-              </dd>
-            </div>
-            <div className="bg-ink-2 p-5">
-              <dt className={`${KICKER} text-violet`}>You receive</dt>
-              <dd className="mt-2 text-[15px] leading-relaxed text-mist">
-                An interaction map, comparative analysis and an interpreted decision report.
-              </dd>
-            </div>
+          <dl className="mt-8 flex flex-wrap gap-x-8 gap-y-4 border-t border-line pt-5">
+            {[["40-plex", "Marker panels"], ["200+", "Phenotypes & states"], [">25", "Interaction types"]].map(([value, label]) => (
+              <div key={label}>
+                <dt className="text-2xl font-medium tracking-tight text-teal">{value}</dt>
+                <dd className="mt-1 text-xs text-mist">{label}</dd>
+              </div>
+            ))}
           </dl>
+          <p className="mt-3 text-[11px] leading-relaxed text-mist">Panel-dependent resolution. Interaction partners assigned at immune-lineage level.</p>
         </div>
 
         <div className="lg:col-span-5 lg:-mr-10 xl:-mr-16">
@@ -211,29 +206,34 @@ function Deliverables() {
   return (
     <section id="deliverables" aria-labelledby="deliverables-title" className="on-paper bg-paper text-ink">
       <div className="mx-auto max-w-[1240px] px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-        <div className="grid gap-6 lg:grid-cols-12">
-          <p className={`${KICKER} text-teal-deep lg:col-span-3`}>What you get</p>
-          <div className="lg:col-span-8">
-            <h2 id="deliverables-title" className="text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
-              A concrete output for a concrete decision.
+        <div className="grid items-center gap-9 lg:grid-cols-2 lg:gap-14">
+          <div>
+            <p className={`${KICKER} text-teal-deep`}>Cytometry in. Insight out.</p>
+            <h2 id="deliverables-title" className="mt-5 text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
+              From high-plex measurements to biological insight.
             </h2>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink/70">
-              The pilot is designed around the comparison your team needs to make — not around producing another generic
-              assay endpoint.
+              One cytometry study connects cell identity, cell state and physical engagement with the comparison your team needs.
             </p>
           </div>
+          <CytometryHero />
         </div>
 
-        <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-ink/12 bg-ink/12 md:grid-cols-3">
-          {DELIVERABLES.map((item, index) => (
-            <li key={item.title} className="flex flex-col bg-white/70 p-7 sm:p-8">
-              <p className="font-mono text-xs text-teal-deep">{String(index + 1).padStart(2, "0")}</p>
-              <h3 className="mt-6 text-2xl font-medium tracking-tight">{item.title}</h3>
-              <p className="mt-3 text-[16px] leading-relaxed text-ink/70">{item.text}</p>
-              <p className="mt-auto pt-8 font-mono text-[11px] uppercase tracking-[0.12em] text-ink/50">{item.detail}</p>
+        <div className="mt-9"><AcquisitionStrip /></div>
+
+        <ol className="mt-6 grid gap-4 md:grid-cols-3">
+          {DELIVERABLES.map((item) => (
+            <li key={item.title} className="flex min-w-0 flex-col overflow-hidden rounded-2xl border border-ink/12 bg-white/70">
+              <div className="bg-ink-2 px-3 py-4"><item.visual /></div>
+              <div className="flex flex-1 flex-col p-6">
+                <h3 className="text-2xl font-medium tracking-tight">{item.title}</h3>
+                <p className="mt-3 text-[15px] leading-relaxed text-ink/70">{item.text}</p>
+                <p className="mt-auto pt-5 font-mono text-[10px] uppercase tracking-[0.12em] text-ink/50">{item.detail}</p>
+              </div>
             </li>
           ))}
         </ol>
+        <p className="mt-4 text-[11px] leading-relaxed text-ink/55">Illustrative visualizations, not experimental results. Your report is based on your study data and controls.</p>
       </div>
     </section>
   );
@@ -307,13 +307,13 @@ function Evidence() {
     <section id="evidence" aria-labelledby="evidence-title" className="on-paper bg-paper text-ink">
       <div className="mx-auto grid max-w-[1240px] gap-12 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:px-8 lg:py-28">
         <div className="lg:col-span-5">
-          <p className={`${KICKER} text-teal-deep`}>Immunotherapy-scale resolution</p>
+          <p className={`${KICKER} text-teal-deep`}>High-plex by design</p>
           <h2 id="evidence-title" className="mt-5 text-4xl font-medium leading-[1.08] tracking-tight sm:text-5xl">
-            Deep immune phenotyping with lineage-resolved interaction maps.
+            Many markers. Deep cell profiles. One connected picture.
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-ink/70">
-            Designed for high-dimensional studies of T-cell engagers and cell therapies across candidates, doses, donors
-            and time points — with the cellular depth to resolve both intended engagement and broader immune context.
+            A 40-plex panel measures a broad set of protein markers in the same sample. Resolve immune-cell phenotypes
+            and functional states, then map physical interactions between immune lineages.
           </p>
           <ul className="mt-7 flex flex-wrap gap-2" aria-label="Platform attributes">
             {["Highly scalable", "High throughput", "High precision"].map((attribute) => (
@@ -344,20 +344,8 @@ function Evidence() {
         </div>
 
         <div className="lg:col-span-6 lg:col-start-7">
-          <dl className="grid gap-px overflow-hidden rounded-t-2xl border border-b-0 border-ink/12 bg-ink/12 sm:grid-cols-2">
-            {[
-              ["40-plex", "full-spectrum panels for deep immune phenotyping"],
-              ["200+", "cell phenotypes and functional states profiled by panel design"],
-              [">25", "cell-interaction types resolved by panel design"],
-              ["100M+", "cell events addressable across high-scale study designs"],
-            ].map(([value, label]) => (
-              <div key={label} className="min-h-44 bg-white/70 p-6 sm:p-7">
-                <dt className="text-4xl font-medium tracking-tight text-teal-deep tabular-nums">{value}</dt>
-                <dd className="mt-3 text-[14px] leading-relaxed text-ink/65">{label}</dd>
-              </div>
-            ))}
-          </dl>
-          <div className="rounded-b-2xl border border-ink bg-ink px-6 py-5 text-paper sm:flex sm:items-baseline sm:gap-5 sm:px-7">
+          <HighPlexReadout id="home-highplex" />
+          <div className="mt-4 rounded-2xl border border-ink bg-ink px-6 py-5 text-paper sm:flex sm:items-baseline sm:gap-5 sm:px-7">
             <p className="text-3xl font-medium tracking-tight text-teal tabular-nums">&gt;400k</p>
             <p className="mt-1 text-[14px] leading-relaxed text-mist sm:mt-0">
               interacting cells mapped in a single published experiment
@@ -365,7 +353,8 @@ function Evidence() {
           </div>
           <p className="mt-4 text-[12px] leading-relaxed text-ink/50">
             High-dimensional panels profile cellular states; interacting partners are assigned at the validated immune-lineage
-            level. Exact resolution and event yield depend on panel, sample, controls and acquisition design.
+            level. 100M+ cell events are addressable across high-scale study designs; exact event yield depends on sample,
+            controls and acquisition design.
           </p>
         </div>
       </div>

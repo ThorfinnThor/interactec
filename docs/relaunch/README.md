@@ -24,6 +24,13 @@ Fonts are self-hosted in `app/fonts/` (SIL OFL), so builds no longer need Google
 - `app/layout.tsx` and `app/opengraph-image.tsx` — metadata and share image use the new offer-led positioning.
 - `app/sitemap.ts` — includes `/science`, `/team` and `/case-studies`.
 
+## Cytometry and high-plex visuals — 26 Oct 2026
+
+- The original animated cell-contact hero is retained. The hero copy and compact metrics now introduce high-plex cytometry earlier.
+- `components/site/CytometryVisuals.tsx` adds the flow-cytometer schematic, sample-to-readout strip, cell-profile scatter, lineage interaction network, condition comparison and 40-column marker matrix. They reuse the existing cell primitives, palette, gradients and mono annotations; no new client chart runtime or image dependency is added.
+- The homepage pairs the three deliverables with visual readouts. The Science page includes the same cytometer schematic and a panel-resolution explanation.
+- All charts are explicitly illustrative. The 40-plex/200+/interaction capability figures retain their existing panel-dependent scope; the Science page distinguishes them from the published 24/25-plex experiments. State profiling and lineage-level interaction assignment remain separate.
+
 ## Earlier relaunch foundation
 
 - `components/site/` — `SiteHeader` (keyboard-accessible mobile menu), `HeroVisual`, `StoryScroll` + `StoryVisual` (one scene, four states), `Diagrams` (science, speed, mechanism, integration), `cells.tsx` (schematic cell primitives).
