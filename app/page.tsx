@@ -43,8 +43,8 @@ const DELIVERABLES = [
   },
   {
     title: "Comparative insights",
-    text: "Compare candidates, doses or conditions, with scientific interpretation in a concise report.",
-    detail: "Comparison · interpretation · next steps",
+    text: "Compare response groups, candidates or conditions, with scientific interpretation in a concise report.",
+    detail: "Group comparison · interpretation · next steps",
     visual: ComparisonPlot,
   },
 ];
@@ -235,7 +235,7 @@ function Deliverables() {
         </ol>
         <p className="mt-4 text-[11px] leading-relaxed text-ink/55">
           UMAP: <Link href="/case-studies" className="underline underline-offset-2 hover:text-ink">IBD case study</Link>, 71,662 sketched cells; colours adapted for this page.
-          {" "}Interaction network and candidate comparison are illustrative. Your report is based on your study data and controls.
+          {" "}The network and cohort comparison share illustrative values, not results from this UMAP. Your report is based on your study data and controls.
         </p>
       </div>
     </section>

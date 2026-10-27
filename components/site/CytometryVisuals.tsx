@@ -26,6 +26,22 @@ const INTERACTION_COHORTS = [
   { key: "nonResponder", label: "Non-responder", colour: VIOLET, offset: -18, dash: "4 3" },
   { key: "responder", label: "Responder", colour: TEAL, offset: 18, dash: undefined },
 ] as const;
+const COMPARISON_EXAMPLE = INTERACTION_EXAMPLE.filter(
+  ({ from, to }) => ((from === 0 || from === 1) && to === 2) || (from === 1 && to === 4),
+);
+
+function CohortLegend({ showMarkers = false }: { showMarkers?: boolean }) {
+  return (
+    <g fill={MIST} fontSize="9.5">
+      <path d="M35 11h22" fill="none" stroke={TEAL} strokeWidth="3" strokeLinecap="round" />
+      {showMarkers ? <circle cx="46" cy="11" r="3.5" fill={TEAL} /> : null}
+      <text x="64" y="14">Responder</text>
+      <path d="M188 11h22" fill="none" stroke={VIOLET} strokeWidth="3" strokeDasharray="4 3" strokeLinecap="round" />
+      {showMarkers ? <path d="M199 7l4 4-4 4-4-4Z" fill={VIOLET} /> : null}
+      <text x="217" y="14">Non-responder</text>
+    </g>
+  );
+}
 
 export function CytometryHero() {
   return (
@@ -109,12 +125,7 @@ export function InteractionNetwork() {
     <svg viewBox="0 0 340 230" className="h-auto w-full" role="img" aria-labelledby="interaction-network-title" aria-describedby="interaction-network-desc">
       <title id="interaction-network-title">Illustrative cell-interaction map: responder and non-responder comparison</title>
       <desc id="interaction-network-desc">Eight immune lineages share one network. Solid teal lines represent responders; dashed violet lines represent non-responders. Line thickness encodes relative interaction frequency on the same scale for both groups. Example patterns are illustrative, not patient results or validated predictors of treatment response.</desc>
-      <g fill={MIST} fontSize="9.5">
-        <path d="M35 11h22" fill="none" stroke={TEAL} strokeWidth="3" strokeLinecap="round" />
-        <text x="64" y="14">Responder</text>
-        <path d="M188 11h22" fill="none" stroke={VIOLET} strokeWidth="3" strokeDasharray="4 3" strokeLinecap="round" />
-        <text x="217" y="14">Non-responder</text>
-      </g>
+      <CohortLegend />
       <circle cx="170" cy="111" r="70" fill="none" stroke={MIST} strokeOpacity=".16" />
       {INTERACTION_COHORTS.map((cohort) => (
         <g key={cohort.key} data-cohort={cohort.key} fill="none" stroke={cohort.colour} strokeLinecap="round" strokeDasharray={cohort.dash}>
@@ -155,26 +166,30 @@ export function InteractionNetwork() {
 }
 
 export function ComparisonPlot() {
-  const rows = [
-    { label: "Control", a: 0.16, b: 0.13 },
-    { label: "Candidate A", a: 0.39, b: 0.19 },
-    { label: "Candidate B", a: 0.76, b: 0.24 },
-  ];
   return (
-    <svg viewBox="0 0 340 230" className="h-auto w-full" role="img" aria-label="Illustrative side-by-side comparison of two cell-pair interaction frequencies across a control and two candidates; not experimental results.">
-      {[0, 1, 2, 3, 4].map((i) => <line key={i} x1={108 + i * 45} y1="40" x2={108 + i * 45} y2="174" stroke={MIST} strokeOpacity=".12" />)}
-      {rows.map((row, index) => (
-        <g key={row.label}>
-          <text x="92" y={68 + index * 44} textAnchor="end" fill={MIST} fontSize="10">{row.label}</text>
-          <line x1={108 + row.b * 200} y1={65 + index * 44} x2={108 + row.a * 200} y2={65 + index * 44} stroke={MIST} strokeOpacity=".4" />
-          <circle cx={108 + row.a * 200} cy={65 + index * 44} r="5" fill={TEAL} />
-          <path d={`M${108 + row.b * 200} ${60 + index * 44}l5 5-5 5-5-5Z`} fill={VIOLET} />
-        </g>
-      ))}
-      <path d="M108 174h188" stroke={MIST} strokeOpacity=".35" />
-      <text x="202" y="195" textAnchor="middle" fill={MIST} fontSize="9">Interaction frequency →</text>
-      <circle cx="82" cy="218" r="3" fill={TEAL} /><text x="91" y="221" fontSize="9" fill={MIST}>Cell pair 1</text>
-      <path d="M191 214l4 4-4 4-4-4Z" fill={VIOLET} /><text x="202" y="221" fontSize="9" fill={MIST}>Cell pair 2</text>
+    <svg viewBox="0 0 340 230" className="h-auto w-full" role="img" aria-labelledby="cohort-comparison-title" aria-describedby="cohort-comparison-desc">
+      <title id="cohort-comparison-title">Illustrative interaction-frequency comparison: responder and non-responder</title>
+      <desc id="cohort-comparison-desc">Three cell pairs use the same illustrative relative frequencies as the adjacent interaction network. Teal circles represent responders; violet diamonds represent non-responders. CD4 T–B and CD8 T–B interactions are higher in the responder example, while CD8 T–classical monocyte interactions are higher in the non-responder example. These are not patient results, not derived from the IBD UMAP, and not validated predictors of treatment response.</desc>
+      <CohortLegend showMarkers />
+      {[0, 1, 2, 3, 4].map((i) => <line key={i} x1={112 + i * 48} y1="37" x2={112 + i * 48} y2="176" stroke={MIST} strokeOpacity=".12" />)}
+      {COMPARISON_EXAMPLE.map((row, index) => {
+        const y = 60 + index * 47;
+        const responderX = 112 + row.responder * 192;
+        const nonResponderX = 112 + row.nonResponder * 192;
+        return (
+          <g key={`${row.from}-${row.to}`} data-comparison-pair={`${row.from}-${row.to}`}>
+            <text x="98" y={y + 3} textAnchor="end" fill={MIST} fontSize="10">{LINEAGES[row.from]}–{LINEAGES[row.to]}</text>
+            <line x1={nonResponderX} y1={y} x2={responderX} y2={y} stroke={MIST} strokeOpacity=".5" strokeWidth="1.5" />
+            <circle cx={responderX} cy={y} r="5" fill={TEAL} data-cohort="responder" data-relative-frequency={row.responder} />
+            <path d={`M${nonResponderX} ${y - 5}l5 5-5 5-5-5Z`} fill={VIOLET} data-cohort="nonResponder" data-relative-frequency={row.nonResponder} />
+          </g>
+        );
+      })}
+      <path d="M112 176h192" stroke={MIST} strokeOpacity=".35" />
+      <text x="112" y="190" fill={MIST} fontSize="9">Low</text>
+      <text x="304" y="190" textAnchor="end" fill={MIST} fontSize="9">High</text>
+      <text x="208" y="212" textAnchor="middle" fill={MIST} fontSize="9">Relative interaction frequency →</text>
+      <text x="170" y="228" textAnchor="middle" fill={MIST} fillOpacity=".7" fontSize="8">Illustrative cohort comparison</text>
     </svg>
   );
 }
