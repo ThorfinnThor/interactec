@@ -233,7 +233,10 @@ function Deliverables() {
             </li>
           ))}
         </ol>
-        <p className="mt-4 text-[11px] leading-relaxed text-ink/55">Illustrative visualizations, not experimental results. Your report is based on your study data and controls.</p>
+        <p className="mt-4 text-[11px] leading-relaxed text-ink/55">
+          UMAP: <Link href="/case-studies" className="underline underline-offset-2 hover:text-ink">IBD case study</Link>, 71,662 sketched cells; colours adapted for this page.
+          {" "}Interaction network and candidate comparison are illustrative. Your report is based on your study data and controls.
+        </p>
       </div>
     </section>
   );

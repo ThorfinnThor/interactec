@@ -8,18 +8,6 @@ const MIST = "#b5c0ca";
 const LINEAGES = ["CD4 T", "CD8 T", "B", "NK", "cMono", "ncMono", "cDC", "pDC"];
 const LINEAGE_COLORS = [TEAL, "#2f9f97", VIOLET, "#7769b3", "#a3cfc5", "#57877f", "#c2bbe8", "#736e91"];
 
-// Deterministic illustrative shapes: no random data or client-side chart runtime.
-const CLUSTERS = [
-  { x: 76, y: 67, sx: 31, sy: 19 },
-  { x: 107, y: 114, sx: 28, sy: 24 },
-  { x: 222, y: 69, sx: 34, sy: 20 },
-  { x: 242, y: 131, sx: 25, sy: 23 },
-  { x: 165, y: 166, sx: 31, sy: 13 },
-  { x: 74, y: 170, sx: 17, sy: 10 },
-  { x: 171, y: 48, sx: 12, sy: 10 },
-  { x: 285, y: 73, sx: 10, sy: 12 },
-];
-
 export function CytometryHero() {
   return (
     <figure className="mx-auto w-full max-w-[620px] overflow-hidden rounded-2xl border border-line bg-ink-2">
@@ -69,19 +57,26 @@ export function CytometryHero() {
 
 export function CellProfilePlot() {
   return (
-    <svg viewBox="0 0 340 230" className="h-auto w-full" role="img" aria-label="Illustrative cell-profile map with eight immune lineages and distinct subpopulations; not experimental data.">
-      <path d="M30 18v184h289" fill="none" stroke={MIST} strokeOpacity=".35" />
-      {CLUSTERS.map((cluster, row) => (
-        <g key={row} fill={LINEAGE_COLORS[row]}>
-          {Array.from({ length: row < 5 ? 90 : 35 }, (_, index) => {
-            const angle = index * 2.39996;
-            const radius = Math.sqrt(((index * 37 + row * 11) % 101) / 101);
-            return <circle key={index} cx={cluster.x + Math.cos(angle) * radius * cluster.sx} cy={cluster.y + Math.sin(angle) * radius * cluster.sy} r="1.5" opacity=".76" />;
-          })}
-        </g>
-      ))}
-      <text x="315" y="220" fill={MIST} fontSize="9" textAnchor="end">Cell-profile dimension 1</text>
-      <text transform="translate(13 136) rotate(-90)" fill={MIST} fontSize="9">Cell-profile dimension 2</text>
+    <svg viewBox="0 0 340 230" className="h-auto w-full" role="img" aria-labelledby="cell-profile-umap-title cell-profile-umap-desc">
+      <title id="cell-profile-umap-title">UMAP of live cells from the InterAcTec IBD case study</title>
+      <desc id="cell-profile-umap-desc">The original UMAP from panel B of the IBD report, showing 71,662 sketched cells from 29.9 million recorded cells. Cell positions and annotations are preserved; colours are adapted to the website palette.</desc>
+      <defs>
+        <filter id="cell-profile-palette" colorInterpolationFilters="sRGB">
+          {/* Keep coloured marks and dark annotations, not the report's pale grey panel connector. */}
+          <feColorMatrix in="SourceGraphic" values="1 -1 0 0 .5 0 1 -1 0 .5 -1 0 1 0 .5 0 0 0 1 0" result="chroma-deltas" />
+          <feComposite in="chroma-deltas" in2="chroma-deltas" operator="arithmetic" k1="1" result="chroma-squared" />
+          <feColorMatrix in="chroma-squared" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 400 400 400 0 -301.2" result="colour-mask" />
+          <feColorMatrix in="SourceGraphic" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -7 -7 -7 0 18" result="annotation-mask" />
+          <feComposite in="colour-mask" in2="annotation-mask" operator="arithmetic" k2="1" k3="1" result="foreground-mask" />
+          <feColorMatrix in="SourceGraphic" type="matrix" values="-0.9 -0.18 -0.27 0 1.397 -0.18 -1.08 -0.27 0 1.605 -0.72 -0.72 -0.09 0 1.648 0 0 0 1 0" result="palette" />
+          <feComposite in="palette" in2="foreground-mask" operator="in" />
+        </filter>
+      </defs>
+      {/* Display panel B of the existing report image without altering its embedding or point geometry. */}
+      <svg x="40" y="0" width="260" height="208" viewBox="428 59 480 384" preserveAspectRatio="xMidYMid meet" overflow="hidden">
+        <image href="/case-study-previews/ibd.png" width="1359" height="820" filter="url(#cell-profile-palette)" />
+      </svg>
+      <text x="170" y="226" fill={MIST} fontSize="9" textAnchor="middle">IBD case study · 71,662 cells displayed</text>
     </svg>
   );
 }
