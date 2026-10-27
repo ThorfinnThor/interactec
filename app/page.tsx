@@ -37,8 +37,8 @@ const DELIVERABLES = [
   },
   {
     title: "Cell-interaction maps",
-    text: "See which cell lineages physically engage and how frequently each pair occurs.",
-    detail: "Cell-type pairs · interaction frequencies",
+    text: "See which cell lineages physically engage and how interaction frequencies differ between groups.",
+    detail: "Cell-type pairs · group comparison",
     visual: InteractionNetwork,
   },
   {

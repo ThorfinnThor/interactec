@@ -6,7 +6,26 @@ const TEAL = "#68e4d4";
 const VIOLET = "#a49be8";
 const MIST = "#b5c0ca";
 const LINEAGES = ["CD4 T", "CD8 T", "B", "NK", "cMono", "ncMono", "cDC", "pDC"];
-const LINEAGE_COLORS = [TEAL, "#2f9f97", VIOLET, "#7769b3", "#a3cfc5", "#57877f", "#c2bbe8", "#736e91"];
+
+// Illustrative relative frequencies, not patient measurements or response biomarkers.
+// Both cohorts share the same lineage positions and stroke-width scale.
+const INTERACTION_EXAMPLE = [
+  { from: 0, to: 2, responder: 0.84, nonResponder: 0.24 },
+  { from: 1, to: 2, responder: 1.0, nonResponder: 0.18 },
+  { from: 0, to: 4, responder: 0.2, nonResponder: 0.62 },
+  { from: 0, to: 6, responder: 0.55, nonResponder: 0.12 },
+  { from: 0, to: 7, responder: 0.28, nonResponder: 0.1 },
+  { from: 1, to: 4, responder: 0.36, nonResponder: 0.76 },
+  { from: 1, to: 6, responder: 0.68, nonResponder: 0.26 },
+  { from: 2, to: 3, responder: 0.58, nonResponder: 0.4 },
+  { from: 3, to: 5, responder: 0.15, nonResponder: 0.5 },
+  { from: 4, to: 5, responder: 0.1, nonResponder: 0.38 },
+  { from: 4, to: 6, responder: 0.32, nonResponder: 0.16 },
+];
+const INTERACTION_COHORTS = [
+  { key: "nonResponder", label: "Non-responder", colour: VIOLET, offset: -18, dash: "4 3" },
+  { key: "responder", label: "Responder", colour: TEAL, offset: 18, dash: undefined },
+] as const;
 
 export function CytometryHero() {
   return (
@@ -84,25 +103,53 @@ export function CellProfilePlot() {
 export function InteractionNetwork() {
   const nodes = LINEAGES.map((label, i) => {
     const a = ((i * 45 - 90) * Math.PI) / 180;
-    return { label, x: 170 + Math.cos(a) * 80, y: 114 + Math.sin(a) * 80 };
+    return { label, x: 170 + Math.cos(a) * 70, y: 111 + Math.sin(a) * 70 };
   });
-  const edges = [[0, 2], [0, 4], [0, 6], [0, 7], [1, 2], [1, 4], [1, 6], [1, 7], [2, 3], [3, 4], [3, 5], [4, 5], [4, 6]];
   return (
-    <svg viewBox="0 0 340 230" className="h-auto w-full" role="img" aria-label="Illustrative interaction network linking CD4 T, CD8 T, B, NK, classical and nonclassical monocytes, cDC and pDC; not experimental data.">
-      <circle cx="170" cy="114" r="80" fill="none" stroke={MIST} strokeOpacity=".12" />
-      {edges.map(([a, b], index) => (
-        <path key={`${a}-${b}`} d={`M${nodes[a].x} ${nodes[a].y} Q170 114 ${nodes[b].x} ${nodes[b].y}`} fill="none" stroke={index < 5 ? TEAL : VIOLET} strokeOpacity={index < 5 ? ".4" : ".22"} strokeWidth={index % 3 + 1} />
+    <svg viewBox="0 0 340 230" className="h-auto w-full" role="img" aria-labelledby="interaction-network-title" aria-describedby="interaction-network-desc">
+      <title id="interaction-network-title">Illustrative cell-interaction map: responder and non-responder comparison</title>
+      <desc id="interaction-network-desc">Eight immune lineages share one network. Solid teal lines represent responders; dashed violet lines represent non-responders. Line thickness encodes relative interaction frequency on the same scale for both groups. Example patterns are illustrative, not patient results or validated predictors of treatment response.</desc>
+      <g fill={MIST} fontSize="9.5">
+        <path d="M35 11h22" fill="none" stroke={TEAL} strokeWidth="3" strokeLinecap="round" />
+        <text x="64" y="14">Responder</text>
+        <path d="M188 11h22" fill="none" stroke={VIOLET} strokeWidth="3" strokeDasharray="4 3" strokeLinecap="round" />
+        <text x="217" y="14">Non-responder</text>
+      </g>
+      <circle cx="170" cy="111" r="70" fill="none" stroke={MIST} strokeOpacity=".16" />
+      {INTERACTION_COHORTS.map((cohort) => (
+        <g key={cohort.key} data-cohort={cohort.key} fill="none" stroke={cohort.colour} strokeLinecap="round" strokeDasharray={cohort.dash}>
+          {INTERACTION_EXAMPLE.map((edge) => {
+            const start = nodes[edge.from];
+            const end = nodes[edge.to];
+            const dx = end.x - start.x;
+            const dy = end.y - start.y;
+            const distance = Math.hypot(dx, dy);
+            const cx = 170 - (dy / distance) * cohort.offset;
+            const cy = 111 + (dx / distance) * cohort.offset;
+            const frequency = edge[cohort.key];
+            return (
+              <path
+                key={`${edge.from}-${edge.to}`}
+                d={`M${start.x} ${start.y} Q${cx} ${cy} ${end.x} ${end.y}`}
+                strokeWidth={0.7 + frequency * 5.6}
+                strokeOpacity={0.4 + frequency * 0.42}
+              />
+            );
+          })}
+        </g>
       ))}
-      {nodes.map((node, i) => {
+      {nodes.map((node) => {
         const dx = node.x - 170;
-        const dy = node.y - 114;
+        const dy = node.y - 111;
         return (
           <g key={node.label}>
-            <circle cx={node.x} cy={node.y} r="7" fill={LINEAGE_COLORS[i]} />
-            <text x={node.x + dx * 0.3} y={node.y + dy * 0.23 + 3} textAnchor={dx < -10 ? "end" : dx > 10 ? "start" : "middle"} fill={MIST} fontSize="10">{node.label}</text>
+            <circle cx={node.x} cy={node.y} r="7" fill="#cad6d9" stroke="#0c131e" strokeWidth="2" />
+            <text x={node.x + dx * 0.24} y={node.y + dy * 0.23 + 3} textAnchor={dx < -10 ? "end" : dx > 10 ? "start" : "middle"} fill={MIST} fontSize="10">{node.label}</text>
           </g>
         );
       })}
+      <text x="170" y="215" textAnchor="middle" fill={MIST} fontSize="9">Thicker lines = higher interaction frequency</text>
+      <text x="170" y="228" textAnchor="middle" fill={MIST} fillOpacity=".7" fontSize="8">Illustrative cohort comparison</text>
     </svg>
   );
 }
